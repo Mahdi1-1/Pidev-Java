@@ -1,0 +1,84 @@
+/* Style global pour l'arrière-plan de toutes les fenêtres */
+.root {
+    -fx-background-color: #f4f4f4; /* Couleur de fond gris clair */
+    -fx-font-family: "Arial";
+}
+
+/* Style pour les labels */
+.label {
+    -fx-font-size: 14px;
+    -fx-text-fill: #333333; /* Texte gris foncé */
+}
+
+/* Style pour les titres (labels spécifiques) */
+.title-label {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50; /* Bleu foncé */
+}
+
+/* Style pour les boutons */
+.button {
+    -fx-background-color: #3498db; /* Bleu */
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-padding: 8px 16px;
+    -fx-background-radius: 5px;
+    -fx-border-radius: 5px;
+    -fx-cursor: hand;
+}
+
+.button:hover {
+    -fx-background-color: #2980b9; /* Bleu plus foncé au survol */
+}
+
+/* Style pour les tables */
+.table-view {
+    -fx-background-color: white;
+    -fx-border-color: #dcdcdc;
+    -fx-border-width: 1px;
+}
+
+.table-view .column-header {
+    -fx-background-color: #ecf0f1; /* Gris clair pour les en-têtes */
+    -fx-font-weight: bold;
+}
+
+.table-view .table-cell {
+    -fx-alignment: center;
+    -fx-font-size: 13px;
+    -fx-text-fill: #333333;
+}
+
+.table-row-cell:odd {
+    -fx-background-color: #f9f9f9; /* Lignes impaires légèrement grisées */
+}
+
+.table-row-cell:even {
+    -fx-background-color: white; /* Lignes paires blanches */
+}
+
+.table-row-cell:selected {
+    -fx-background-color: #3498db; /* Bleu pour les lignes sélectionnées */
+    -fx-text-fill: white;
+}
+
+/* Style pour les champs de texte */
+.text-field {
+    -fx-background-color: white;
+    -fx-border-color: #dcdcdc;
+    -fx-border-width: 1px;
+    -fx-border-radius: 3px;
+    -fx-padding: 5px;
+    -fx-font-size: 13px;
+}
+
+.text-field:focused {
+    -fx-border-color: #3498db; /* Bordure bleue lorsqu'un champ est sélectionné */
+}
+
+/* Style pour les conteneurs (VBox, HBox) */
+.vbox, .hbox {
+    -fx-spacing: 10px;
+    -fx-alignment: center;
+}

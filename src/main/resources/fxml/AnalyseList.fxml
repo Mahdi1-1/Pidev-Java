@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import java.net.URL?>
+<AnchorPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tests.AnalyseListController">
+    <stylesheets>
+        <URL value="@../Styles.css" />
+    </stylesheets>
+    <children>
+        <VBox spacing="10.0" layoutX="10.0" layoutY="10.0" prefHeight="580.0" prefWidth="880.0">
+            <children>
+                <Label text="Liste des Analyses" style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+                <TableView fx:id="analyseTable" onMouseClicked="#showAnalyseDetails">
+                    <columns>
+                        <TableColumn fx:id="analyseIdColumn" prefWidth="50.0" text="ID" />
+                        <TableColumn fx:id="analyseDossierIdColumn" prefWidth="100.0" text="Dossier ID" />
+                        <TableColumn fx:id="analyseTypeColumn" prefWidth="150.0" text="Type" />
+                        <TableColumn fx:id="analyseDateColumn" prefWidth="100.0" text="Date" />
+                        <TableColumn fx:id="analyseDonneesColumn" prefWidth="150.0" text="Données" />
+                        <TableColumn fx:id="analyseDiagnosticColumn" prefWidth="150.0" text="Diagnostic" />
+                    </columns>
+                </TableView>
+                <HBox spacing="10.0" alignment="CENTER">
+                    <children>
+                        <Button fx:id="addAnalyseButton" text="Ajouter" onAction="#addAnalyse" />
+                        <Button fx:id="editAnalyseButton" text="Modifier" onAction="#editAnalyse" />
+                        <Button fx:id="deleteAnalyseButton" text="Supprimer" onAction="#deleteAnalyse" />
+                    </children>
+                </HBox>
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>

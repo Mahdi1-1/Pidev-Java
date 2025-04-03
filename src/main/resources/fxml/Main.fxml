@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="552.0" prefWidth="849.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tests.MainController">
+    <stylesheets>
+        <URL value="@../css/Styles.css" />
+    </stylesheets>
+    <children>
+        <!-- ImageView en arrière-plan, ancrée aux bords, sans préserver les proportions -->
+        <ImageView fx:id="backgroundImageView" AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+            <image>
+                <Image url="@../image/main.jpg" />
+            </image>
+        </ImageView>
+        <!-- VBox centré dynamiquement -->
+        <VBox alignment="CENTER" spacing="10.0" styleClass="vbox" AnchorPane.topAnchor="20.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
+            <children>
+                <Button fx:id="goToDossierButton" text="Voir les Dossiers Médicaux" onAction="#goToDossierList" />
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>
