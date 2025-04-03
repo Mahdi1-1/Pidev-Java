@@ -4,37 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="55a3e1c6-e460-47be-a547-a8ab5d612b9d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/entities/Analyse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/entities/DossierMedical.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/entities/Utilisateur.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/services/IService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/services/ServiceAnalyse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/services/ServiceDossierMedical.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/services/ServiceUtilisateur.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/tests/AnalyseDetailsController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/tests/AnalyseListController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/tests/DossierMedicalDetailsController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/tests/DossierMedicalListController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/tests/Main.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/tests/MainController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/utils/MyDatabase.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/Styles.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/fxml/AnalyseDetails.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/fxml/AnalyseList.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/fxml/DossierMedicalDetails.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/fxml/DossierMedicalList.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/fxml/FormAnalyse.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/fxml/FormDossierMedical.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/fxml/Main.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/image/main.jpg" afterDir="false" />
-    </list>
+    <list default="true" id="55a3e1c6-e460-47be-a547-a8ab5d612b9d" name="Changes" comment="crud cbon" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -51,7 +21,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <branch-grouping />
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GithubDefaultAccount">
+    <option name="defaultAccountId" value="c7e13da9-92b6-4811-b773-cb8f3918fb2c" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 6
@@ -83,7 +57,7 @@
     "project.structure.last.edited": "Libraries",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "File.Encoding",
+    "settings.editor.selected.configurable": "org.jetbrains.plugins.github.ui.GithubSettingsConfigurable",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -136,22 +110,57 @@
       <option name="presentableId" value="Default" />
       <updated>1742468143005</updated>
       <workItem from="1742468143946" duration="5223000" />
-      <workItem from="1742898708282" duration="28079000" />
+      <workItem from="1742898708282" duration="28527000" />
     </task>
+    <task id="LOCAL-00001" summary="crud cbon">
+      <option name="closed" value="true" />
+      <created>1743692171126</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1743692171126</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
-    <option name="TAB_STATES">
+    <option name="RECENT_FILTERS">
       <map>
-        <entry key="MAIN">
+        <entry key="User">
           <value>
-            <State />
+            <list>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="*" />
+                </option>
+              </RecentGroup>
+            </list>
           </value>
         </entry>
       </map>
     </option>
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="COLUMN_ID_WIDTH">
+                <map>
+                  <entry key="Table.Default.Author.ColumnIdWidth" value="140" />
+                  <entry key="Table.Default.Date.ColumnIdWidth" value="139" />
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="crud cbon" />
+    <option name="LAST_COMMIT_MESSAGE" value="crud cbon" />
   </component>
 </project>
