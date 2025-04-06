@@ -4,7 +4,62 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="55a3e1c6-e460-47be-a547-a8ab5d612b9d" name="Changes" comment="crud cbon" />
+    <list default="true" id="55a3e1c6-e460-47be-a547-a8ab5d612b9d" name="Changes" comment="crud cbon">
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/entities/Prediction.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/services/EmailService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/services/ServicePrediction.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/tests/Admin/DossierMedicalDetailsAdminController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/tests/Admin/DossierMedicalFormController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/tests/Admin/DossierMedicalListAdminController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/tests/Admin/PredictionListAdminController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/tests/AnalyseFormController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/tests/Doctor/DossierMedicalDetailsDoctorController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/tests/Doctor/DossierMedicalListDoctorController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/tests/Doctor/FormPredictionController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/tests/Doctor/PredictionListDoctorController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/tests/EmailSender.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/tests/Main/MainAdmin.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/tests/Main/MainController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/tests/Main/MainDoctor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/tests/Main/MainPatient.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/tests/Patient/DossierMedicalDetailsPatientController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/tests/Patient/PredictionListPatientController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/utils/ApiClient.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/fxml/Admin/AnalyseDetailsAdmin.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/fxml/Admin/AnalyseListAdmin.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/fxml/Admin/DossierMedicalDetailsAdmin.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/fxml/Admin/DossierMedicalListAdmin.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/fxml/Admin/PredictionListAdmin.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/fxml/Doctor/AnalyseDetailsDoctor.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/fxml/Doctor/AnalyseListDoctor.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/fxml/Doctor/DossierMedicalDetailsDoctor.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/fxml/Doctor/DossierMedicalListDoctor.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/fxml/Doctor/FormPrediction.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/fxml/Doctor/PredictionListDoctor.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/fxml/Patient/AnalyseDetails.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/fxml/Patient/AnalyseListPatient.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/fxml/Patient/PredictionListPatient.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/services/ServiceAnalyse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/services/ServiceAnalyse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/services/ServiceDossierMedical.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/services/ServiceDossierMedical.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tests/AnalyseDetailsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tests/AnalyseDetailsController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tests/AnalyseListController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tests/AnalyseListController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tests/DossierMedicalDetailsController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tests/DossierMedicalListController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tests/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tests/Main/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tests/MainController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/Styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Styles.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/fxml/AnalyseDetails.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/fxml/AnalyseList.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/fxml/DossierMedicalDetails.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/fxml/Patient/DossierMedicalDetails.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/fxml/DossierMedicalList.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/fxml/FormAnalyse.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/fxml/Patient/FormAnalyse.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/fxml/FormDossierMedical.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/fxml/Admin/FormDossierMedicalAdmin.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/fxml/Main.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/fxml/Main.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/image/main.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/image/main.jpg" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -24,9 +79,21 @@
     <branch-grouping />
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Mahdi1-1&quot;
+  }
+}</component>
   <component name="GithubDefaultAccount">
     <option name="defaultAccountId" value="c7e13da9-92b6-4811-b773-cb8f3918fb2c" />
   </component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Mahdi1-1/Pidev-Java.git&quot;,
+    &quot;accountId&quot;: &quot;c7e13da9-92b6-4811-b773-cb8f3918fb2c&quot;
+  }
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 6
 }</component>
@@ -38,15 +105,22 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Application.EmailApp.executor": "Run",
+    "Application.MAinDoctor.executor": "Run",
     "Application.Main.executor": "Run",
+    "Application.MainAdmin.executor": "Run",
+    "Application.MainDoctor.executor": "Run",
+    "Application.MainPatient.executor": "Run",
+    "Application.Prediction.executor": "Run",
     "Application.Unnamed.executor": "Run",
+    "Application.mail.executor": "Run",
     "Application.test.executor": "Run",
     "Application.tests.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "master",
+    "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/21693/IdeaProjects/pidev2/src/main/resources/image",
+    "last_opened_file_path": "C:/Users/21693/IdeaProjects/pidev2/src/main/resources/fxml/Doctor",
     "list.type.of.created.stylesheet": "CSS",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -54,32 +128,35 @@
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "onboarding.tips.debug.path": "C:/Users/21693/IdeaProjects/pidev2/src/main/java/org/example/Main.java",
-    "project.structure.last.edited": "Libraries",
+    "project.structure.last.edited": "SDKs",
     "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "vcs.Git",
+    "project.structure.side.proportion": "0.2226311",
+    "settings.editor.selected.configurable": "reference.settings.project.maven.repository.indices",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\21693\IdeaProjects\pidev2\src\main\resources\fxml\Doctor" />
+      <recent name="C:\Users\21693\IdeaProjects\pidev2\src\main\resources\fxml\Admin" />
       <recent name="C:\Users\21693\IdeaProjects\pidev2\src\main\resources\image" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\21693\IdeaProjects\pidev2\src\main\resources\fxml\Doctor" />
+      <recent name="C:\Users\21693\IdeaProjects\pidev2\src\main\resources\fxml\Patient" />
       <recent name="C:\Users\21693\IdeaProjects\pidev2\src\main\resources\fxml" />
       <recent name="C:\Users\21693\IdeaProjects\pidev2\target\classes" />
       <recent name="C:\Users\21693\IdeaProjects\pidev2\src\main\resources" />
-      <recent name="C:\Users\21693\IdeaProjects\pidev2\src\main\resources\Fxml" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.MainDoctor">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="tests.Main" />
+      <option name="MAIN_CLASS_NAME" value="tests.Main.Main" />
       <module name="pidev2" />
       <option name="VM_PARAMETERS" value="--module-path &quot;C:\Users\21693\Downloads\openjfx-17.0.14_windows-x64_bin-sdk\javafx-sdk-17.0.14\lib&quot; --add-modules javafx.controls,javafx.fxml" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="tests.*" />
+          <option name="PATTERN" value="tests.Main.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -87,6 +164,45 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="MainAdmin" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="tests.Main.MainAdmin" />
+      <module name="pidev2" />
+      <option name="VM_PARAMETERS" value="--module-path &quot;C:\Users\21693\Downloads\openjfx-17.0.14_windows-x64_bin-sdk\javafx-sdk-17.0.14\lib&quot; --add-modules javafx.controls,javafx.fxml" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MainDoctor" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="tests.Main.MainDoctor" />
+      <module name="pidev2" />
+      <option name="VM_PARAMETERS" value="--module-path &quot;C:\Users\21693\Downloads\openjfx-17.0.14_windows-x64_bin-sdk\javafx-sdk-17.0.14\lib&quot; --add-modules javafx.controls,javafx.fxml" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MainPatient" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="tests.Main.MainPatient" />
+      <module name="pidev2" />
+      <option name="VM_PARAMETERS" value="--module-path &quot;C:\Users\21693\Downloads\openjfx-17.0.14_windows-x64_bin-sdk\javafx-sdk-17.0.14\lib&quot; --add-modules javafx.controls,javafx.fxml" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Prediction" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="tests.DiabetesPredictionClient" />
+      <module name="pidev2" />
+      <option name="VM_PARAMETERS" value="--module-path &quot;C:\Users\21693\Downloads\openjfx-17.0.14_windows-x64_bin-sdk\javafx-sdk-17.0.14\lib&quot; --add-modules javafx.controls,javafx.fxml" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Application.MainPatient" />
+      <item itemvalue="Application.Prediction" />
+      <item itemvalue="Application.MainAdmin" />
+      <item itemvalue="Application.MainDoctor" />
+      <item itemvalue="Application.Main" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Application.Main" />
@@ -110,7 +226,8 @@
       <option name="presentableId" value="Default" />
       <updated>1742468143005</updated>
       <workItem from="1742468143946" duration="5223000" />
-      <workItem from="1742898708282" duration="29272000" />
+      <workItem from="1742898708282" duration="57452000" />
+      <workItem from="1743805057954" duration="33321000" />
     </task>
     <task id="LOCAL-00001" summary="crud cbon">
       <option name="closed" value="true" />
@@ -128,7 +245,15 @@
       <option name="project" value="LOCAL" />
       <updated>1743692493905</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="crud cbon">
+      <option name="closed" value="true" />
+      <created>1743693399303</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1743693399303</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -170,5 +295,15 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="crud cbon" />
     <option name="LAST_COMMIT_MESSAGE" value="crud cbon" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.RuntimeException" package="java.lang" />
+          <option name="timeStamp" value="1" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

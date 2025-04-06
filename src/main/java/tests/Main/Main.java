@@ -1,5 +1,4 @@
-// src/main/java/tests/Main.java
-package tests;
+package tests.Main;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -14,11 +13,12 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         URL location = getClass().getResource("/fxml/Main.fxml");
         if (location == null) {
-            throw new RuntimeException("Impossible de trouver /Main.fxml dans les ressources");
+            throw new RuntimeException("Impossible de trouver /fxml/Main.fxml dans les ressources");
         }
         Parent root = FXMLLoader.load(location);
         primaryStage.setTitle("Gestion Médicale");
-        primaryStage.setScene(new Scene(root, 900, 600));
+        primaryStage.setScene(new Scene(root, 849, 552));
+        primaryStage.setResizable(true);
         primaryStage.show();
     }
 

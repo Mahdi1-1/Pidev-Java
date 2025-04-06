@@ -1,26 +1,26 @@
-/* Style global pour l'arrière-plan de toutes les fenêtres */
+/* Style global pour l'arrière-plan */
 .root {
-    -fx-background-color: #f4f4f4; /* Couleur de fond gris clair */
+    -fx-background-color: #ffff;
     -fx-font-family: "Arial";
 }
 
 /* Style pour les labels */
 .label {
     -fx-font-size: 14px;
-    -fx-text-fill: #333333; /* Texte gris foncé */
+    -fx-text-fill: #333333;
 }
 
-/* Style pour les titres (labels spécifiques) */
+/* Style pour les titres */
 .title-label {
     -fx-font-size: 16px;
     -fx-font-weight: bold;
-    -fx-text-fill: #2c3e50; /* Bleu foncé */
+    -fx-text-fill: #2c3e50;
 }
 
-/* Style pour les boutons */
+/* Style pour les boutons (ancien style) */
 .button {
-    -fx-background-color: #3498db; /* Bleu */
-    -fx-text-fill: white;
+    -fx-background-color: #ffff;
+    -fx-text-fill: Blue;
     -fx-font-size: 14px;
     -fx-padding: 8px 16px;
     -fx-background-radius: 5px;
@@ -29,38 +29,24 @@
 }
 
 .button:hover {
-    -fx-background-color: #2980b9; /* Bleu plus foncé au survol */
+    -fx-background-color: #2980b9;
 }
 
-/* Style pour les tables */
-.table-view {
-    -fx-background-color: white;
-    -fx-border-color: #dcdcdc;
+/* Style pour les boutons transparents */
+.button-transparent {
+    -fx-background-color: transparent; /* Arrière-plan transparent */
+    -fx-text-fill: white; /* Texte blanc pour la lisibilité */
+    -fx-font-size: 14px;
+    -fx-padding: 8px 16px;
+    -fx-background-radius: 5px;
+    -fx-border-radius: 5px;
+    -fx-border-color: white; /* Bordure blanche pour la visibilité */
     -fx-border-width: 1px;
+    -fx-cursor: hand;
 }
 
-.table-view .column-header {
-    -fx-background-color: #ecf0f1; /* Gris clair pour les en-têtes */
-    -fx-font-weight: bold;
-}
-
-.table-view .table-cell {
-    -fx-alignment: center;
-    -fx-font-size: 13px;
-    -fx-text-fill: #333333;
-}
-
-.table-row-cell:odd {
-    -fx-background-color: #f9f9f9; /* Lignes impaires légèrement grisées */
-}
-
-.table-row-cell:even {
-    -fx-background-color: white; /* Lignes paires blanches */
-}
-
-.table-row-cell:selected {
-    -fx-background-color: #3498db; /* Bleu pour les lignes sélectionnées */
-    -fx-text-fill: white;
+.button-transparent:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.2); /* Légère opacité au survol */
 }
 
 /* Style pour les champs de texte */
@@ -74,11 +60,22 @@
 }
 
 .text-field:focused {
-    -fx-border-color: #3498db; /* Bordure bleue lorsqu'un champ est sélectionné */
+    -fx-border-color: #3498db;
 }
 
 /* Style pour les conteneurs (VBox, HBox) */
 .vbox, .hbox {
     -fx-spacing: 10px;
     -fx-alignment: center;
+    -fx-background-color: rgba(255, 255, 255, 0.8);
+    -fx-background-radius: 10px;
+    -fx-padding: 20px;
+}
+
+/* Style pour un VBox transparent */
+.vbox-transparent {
+    -fx-spacing: 10px;
+    -fx-alignment: center;
+    -fx-background-color: transparent; /* Arrière-plan transparent */
+    -fx-padding: 20px;
 }

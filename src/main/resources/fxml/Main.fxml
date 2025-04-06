@@ -5,24 +5,23 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="552.0" prefWidth="849.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tests.MainController">
+<AnchorPane prefHeight="552.0" prefWidth="849.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tests.Main.MainController">
     <stylesheets>
-        <URL value="@../css/Styles.css" />
+        <URL value="@../Styles.css" />
     </stylesheets>
     <children>
-        <!-- ImageView en arrière-plan, ancrée aux bords, sans préserver les proportions -->
-        <ImageView fx:id="backgroundImageView" AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+        <!-- ImageView en arrière-plan, ancrée aux bords -->
+        <ImageView fx:id="backgroundImageView" fitHeight="552.0" fitWidth="849.0">
             <image>
                 <Image url="@../image/main.jpg" />
             </image>
         </ImageView>
-        <!-- VBox centré dynamiquement -->
-        <VBox alignment="CENTER" spacing="10.0" styleClass="vbox" AnchorPane.topAnchor="20.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
-            <children>
-                <Button fx:id="goToDossierButton" text="Voir les Dossiers Médicaux" onAction="#goToDossierList" />
-            </children>
-        </VBox>
+        <Button fx:id="forumButton" layoutX="244.0" layoutY="35.0" onAction="#goToForum" styleClass="button" text="Forum" />
+        <Button fx:id="produitButton" layoutX="317.0" layoutY="35.0" onAction="#goToProduit" styleClass="button" text="Produit" />
+        <Button fx:id="evenementButton" layoutX="394.0" layoutY="35.0" onAction="#goToEvenement" styleClass="button" text="Événement" />
+        <Button fx:id="suiviMedicalButton" layoutX="497.0" layoutY="35.0" onAction="#goToDossierList" styleClass="button" text="Suivi Médical" />
+        <Button fx:id="consultationButton" layoutX="612.0" layoutY="35.0" onAction="#goToConsultation" styleClass="button" text="Consultation" />
+        <Button fx:id="connexionButton" layoutX="758.0" layoutY="35.0" onAction="#goToConnexion" styleClass="button" text="Connexion" />
     </children>
 </AnchorPane>

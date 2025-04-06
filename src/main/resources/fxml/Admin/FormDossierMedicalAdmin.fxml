@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import java.net.URL?>
+
+<AnchorPane prefHeight="500.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tests.FormDossierMedicalController">
+    <stylesheets>
+        <URL value="@../../Styles.css" />
+    </stylesheets>
+    <children>
+        <VBox spacing="15.0" alignment="CENTER" AnchorPane.topAnchor="20.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
+            <children>
+                <Label text="Ajouter un Dossier Médical" styleClass="title-label" />
+                <TextField fx:id="utilisateurIdField" promptText="Utilisateur ID" />
+                <DatePicker fx:id="datePicker" promptText="Date" />
+                <TextField fx:id="fichierField" promptText="Fichier" />
+                <TextField fx:id="uniteField" promptText="Unité" />
+                <TextField fx:id="mesureField" promptText="Mesure" />
+                <HBox spacing="10.0" alignment="CENTER">
+                    <children>
+                        <Button text="Enregistrer" onAction="#saveDossier" styleClass="button" />
+                        <Button text="Annuler" onAction="#cancel" styleClass="button" />
+                    </children>
+                </HBox>
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>
