@@ -4,16 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="55a3e1c6-e460-47be-a547-a8ab5d612b9d" name="Changes" comment="machine learning et mail cbon">
-      <change afterPath="$PROJECT_DIR$/src/main/java/exceptions/ValidationException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/services/ServiceDossierMedical.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/services/ServiceDossierMedical.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/services/ServiceUtilisateur.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/services/ServiceUtilisateur.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tests/Doctor/DossierMedicalListDoctorController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tests/Doctor/DossierMedicalListDoctorController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tests/Doctor/PredictionListDoctorController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tests/Doctor/PredictionListDoctorController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/Styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Styles.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/fxml/Admin/FormDossierMedicalAdmin.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/fxml/Admin/FormDossierMedicalAdmin.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/fxml/Doctor/DossierMedicalListDoctor.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/fxml/Doctor/DossierMedicalListDoctor.fxml" afterDir="false" />
+    <list default="true" id="55a3e1c6-e460-47be-a547-a8ab5d612b9d" name="Changes" comment="pagination recherche dynamique filtrage cbonn">
+      <change beforePath="$PROJECT_DIR$/src/main/java/tests/Admin/DossierMedicalFormController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tests/Admin/DossierMedicalFormController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -182,7 +174,7 @@
       <updated>1742468143005</updated>
       <workItem from="1742468143946" duration="5223000" />
       <workItem from="1742898708282" duration="57452000" />
-      <workItem from="1743805057954" duration="38095000" />
+      <workItem from="1743805057954" duration="38242000" />
     </task>
     <task id="LOCAL-00001" summary="crud cbon">
       <option name="closed" value="true" />
@@ -224,7 +216,15 @@
       <option name="project" value="LOCAL" />
       <updated>1743958143746</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="pagination recherche dynamique filtrage cbonn">
+      <option name="closed" value="true" />
+      <created>1744056097299</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1744056097299</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -266,7 +266,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="crud cbon" />
     <MESSAGE value="machine learning et mail cbon" />
-    <option name="LAST_COMMIT_MESSAGE" value="machine learning et mail cbon" />
+    <MESSAGE value="pagination recherche dynamique filtrage cbonn" />
+    <option name="LAST_COMMIT_MESSAGE" value="pagination recherche dynamique filtrage cbonn" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

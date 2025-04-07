@@ -71,7 +71,7 @@ public class DossierMedicalFormController {
                 serviceDossier.modifier(dossier);
             }
 
-            stage = (Stage) utilisateurIdField.getScene().getWindow();
+            stage = (Stage)utilisateurIdField.getScene().getWindow();
             stage.close();
         } catch (SQLException e) {
             showAlert("Erreur", "Échec de l'enregistrement : " + e.getMessage());
