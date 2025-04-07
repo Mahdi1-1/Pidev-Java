@@ -33,6 +33,7 @@ public class PredictionListDoctorController {
     @FXML private Button modifierButton;
     @FXML private Button supprimerButton;
 
+
     private ObservableList<Prediction> predictionList;
     private Integer dossierId;
 

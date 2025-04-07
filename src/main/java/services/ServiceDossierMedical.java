@@ -2,6 +2,7 @@ package services;
 
 import entities.DossierMedical;
 import entities.Utilisateur;
+import exceptions.ValidationException;
 import utils.MyDatabase;
 
 import java.sql.*;
@@ -15,8 +16,8 @@ public class ServiceDossierMedical implements IService<DossierMedical> {
 
     public ServiceDossierMedical() throws SQLException {
         connection = MyDatabase.getInstance().getConnection();
+        System.out.println("ServiceDossierMedical instancié");
     }
-
     @Override
     public void ajouter(DossierMedical dossierMedical) throws SQLException {
         String query = "INSERT INTO dossier_medical (utilisateur_id, date, fichier, unite, mesure) VALUES (?, ?, ?, ?, ?)";
@@ -71,6 +72,47 @@ public class ServiceDossierMedical implements IService<DossierMedical> {
             }
         }
         return dossiers;
+    }
+    // Méthode de validation pour DossierMedical
+    private void validateDossierMedical(DossierMedical dossierMedical) throws ValidationException {
+        if (dossierMedical.getUtilisateurId() <= 0) {
+            throw new ValidationException("L'ID de l'utilisateur doit être un entier positif.");
+        }
+
+        if (dossierMedical.getDate() == null) {
+            throw new ValidationException("La date ne peut pas être vide.");
+        }
+        if (dossierMedical.getDate().isAfter(LocalDate.now())) {
+            throw new ValidationException("La date ne peut pas être dans le futur.");
+        }
+
+        if (dossierMedical.getFichier() == null || dossierMedical.getFichier().trim().isEmpty()) {
+            throw new ValidationException("Le fichier ne peut pas être vide.");
+        }
+
+        if (dossierMedical.getUnite() == null || dossierMedical.getUnite().trim().isEmpty()) {
+            throw new ValidationException("L'unité ne peut pas être vide.");
+        }
+        // Liste d'unités valides (exemple)
+        List<String> validUnites = List.of("kg", "cm", "bpm", "mmol/L");
+        if (!validUnites.contains(dossierMedical.getUnite())) {
+            throw new ValidationException("L'unité doit être l'une des suivantes : " + validUnites);
+        }
+
+        if (dossierMedical.getMesure() <= 0) {
+            throw new ValidationException("La mesure doit être un nombre positif.");
+        }
+
+        // Vérifier si l'utilisateur existe
+        try {
+            ServiceUtilisateur serviceUtilisateur = new ServiceUtilisateur();
+            Utilisateur utilisateur = serviceUtilisateur.getById(dossierMedical.getUtilisateurId());
+            if (utilisateur == null) {
+                throw new ValidationException("L'utilisateur avec l'ID " + dossierMedical.getUtilisateurId() + " n'existe pas.");
+            }
+        } catch (SQLException e) {
+            throw new ValidationException("Erreur lors de la vérification de l'utilisateur : " + e.getMessage());
+        }
     }
 
     public DossierMedical getById(int id) throws SQLException {
@@ -171,5 +213,112 @@ public class ServiceDossierMedical implements IService<DossierMedical> {
             throw new IllegalArgumentException("La date de naissance ne peut pas être dans le futur : " + dateNaissance);
         }
         return Period.between(dateNaissance, LocalDate.now()).getYears();
+    }
+
+    // Méthode pour filtrer et paginer les dossiers
+    public List<DossierMedical> filterDossiers(String unite, LocalDate date, String searchText, int page, int pageSize) throws SQLException {
+        List<DossierMedical> dossiers = new ArrayList<>();
+        StringBuilder query = new StringBuilder("SELECT * FROM dossier_medical WHERE 1=1");
+
+        // Ajouter les conditions de filtrage
+        List<Object> params = new ArrayList<>();
+        if (unite != null && !unite.isEmpty()) {
+            query.append(" AND unite = ?");
+            params.add(unite);
+        }
+        if (date != null) {
+            query.append(" AND date = ?");
+            params.add(Date.valueOf(date));
+        }
+        if (searchText != null && !searchText.isEmpty()) {
+            // Recherche dans tous les champs : id, utilisateur_id, date, fichier, unite, mesure
+            query.append(" AND (CAST(id AS CHAR) LIKE ? OR CAST(utilisateur_id AS CHAR) LIKE ? OR CAST(date AS CHAR) LIKE ? OR fichier LIKE ? OR unite LIKE ? OR CAST(mesure AS CHAR) LIKE ?)");
+            String searchPattern = "%" + searchText + "%";
+            params.add(searchPattern); // pour id
+            params.add(searchPattern); // pour utilisateur_id
+            params.add(searchPattern); // pour date
+            params.add(searchPattern); // pour fichier
+            params.add(searchPattern); // pour unite
+            params.add(searchPattern); // pour mesure
+        }
+
+        // Ajouter la pagination
+        query.append(" LIMIT ? OFFSET ?");
+        params.add(pageSize);
+        params.add((page - 1) * pageSize);
+
+        try (PreparedStatement stmt = connection.prepareStatement(query.toString())) {
+            // Remplir les paramètres
+            for (int i = 0; i < params.size(); i++) {
+                stmt.setObject(i + 1, params.get(i));
+            }
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    DossierMedical dossier = new DossierMedical();
+                    dossier.setId(rs.getInt("id"));
+                    dossier.setUtilisateurId(rs.getInt("utilisateur_id"));
+                    dossier.setDate(rs.getDate("date").toLocalDate());
+                    dossier.setFichier(rs.getString("fichier"));
+                    dossier.setUnite(rs.getString("unite"));
+                    dossier.setMesure(rs.getDouble("mesure"));
+                    dossiers.add(dossier);
+                }
+            }
+        }
+        return dossiers;
+    }
+
+    // Méthode pour compter le nombre total de dossiers (pour la pagination)
+    public int countDossiers(String unite, LocalDate date, String searchText) throws SQLException {
+        StringBuilder query = new StringBuilder("SELECT COUNT(*) FROM dossier_medical WHERE 1=1");
+        List<Object> params = new ArrayList<>();
+
+        // Ajouter les conditions de filtrage
+        if (unite != null && !unite.isEmpty()) {
+            query.append(" AND unite = ?");
+            params.add(unite);
+        }
+        if (date != null) {
+            query.append(" AND date = ?");
+            params.add(Date.valueOf(date));
+        }
+        if (searchText != null && !searchText.isEmpty()) {
+            // Recherche dans tous les champs : id, utilisateur_id, date, fichier, unite, mesure
+            query.append(" AND (CAST(id AS CHAR) LIKE ? OR CAST(utilisateur_id AS CHAR) LIKE ? OR CAST(date AS CHAR) LIKE ? OR fichier LIKE ? OR unite LIKE ? OR CAST(mesure AS CHAR) LIKE ?)");
+            String searchPattern = "%" + searchText + "%";
+            params.add(searchPattern); // pour id
+            params.add(searchPattern); // pour utilisateur_id
+            params.add(searchPattern); // pour date
+            params.add(searchPattern); // pour fichier
+            params.add(searchPattern); // pour unite
+            params.add(searchPattern); // pour mesure
+        }
+
+        try (PreparedStatement stmt = connection.prepareStatement(query.toString())) {
+            // Remplir les paramètres
+            for (int i = 0; i < params.size(); i++) {
+                stmt.setObject(i + 1, params.get(i));
+            }
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1);
+                }
+            }
+        }
+        return 0;
+    }
+    // Méthode pour récupérer les unités distinctes (pour remplir le ChoiceBox)
+    public List<String> getDistinctUnites() throws SQLException {
+        List<String> unites = new ArrayList<>();
+        String query = "SELECT DISTINCT unite FROM dossier_medical WHERE unite IS NOT NULL";
+        try (Statement stmt = connection.createStatement();
+             ResultSet rs = stmt.executeQuery(query)) {
+            while (rs.next()) {
+                unites.add(rs.getString("unite"));
+            }
+        }
+        return unites;
     }
 }

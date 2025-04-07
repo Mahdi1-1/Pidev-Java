@@ -90,4 +90,28 @@ public class ServiceUtilisateur implements IService<Utilisateur> {
         }
         return utilisateurs;
     }
+
+    // Ajout de la méthode getById
+    public Utilisateur getById(int id) throws SQLException {
+        String query = "SELECT * FROM utilisateur WHERE id = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setInt(1, id);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    Utilisateur utilisateur = new Utilisateur();
+                    utilisateur.setId(rs.getInt("id"));
+                    utilisateur.setNom(rs.getString("nom"));
+                    utilisateur.setPrenom(rs.getString("prenom"));
+                    utilisateur.setEmail(rs.getString("email"));
+                    utilisateur.setRoles(rs.getString("roles"));
+                    utilisateur.setTelephone(rs.getInt("telephone"));
+                    utilisateur.setAdresse(rs.getString("adresse"));
+                    utilisateur.setDateNaissance(rs.getDate("date_naissance") != null ? rs.getDate("date_naissance").toLocalDate() : null);
+                    utilisateur.setSexe(rs.getString("sexe"));
+                    return utilisateur;
+                }
+            }
+        }
+        return null;
+    }
 }
