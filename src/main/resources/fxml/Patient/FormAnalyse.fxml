@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import java.net.URL?>
+
+<AnchorPane prefHeight="300.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tests.AnalyseFormController">
+    <stylesheets>
+        <URL value="@../../Styles.css" />
+    </stylesheets>
+    <children>
+        <VBox spacing="10.0" alignment="CENTER" layoutX="20.0" layoutY="20.0" prefWidth="360.0" styleClass="vbox">
+            <children>
+                <Label text="Formulaire Analyse" styleClass="title-label" />
+                <TextField fx:id="dossierIdField" promptText="Dossier ID" />
+                <TextField fx:id="typeField" promptText="Type" />
+                <TextField fx:id="dateAnalyseField" promptText="Date Analyse (YYYY-MM-DD)" />
+                <TextField fx:id="donneesAnalyseField" promptText="Données Analyse" />
+                <TextField fx:id="diagnosticField" promptText="Diagnostic" />
+                <HBox spacing="10.0" alignment="CENTER" styleClass="hbox">
+                    <children>
+                        <Button fx:id="saveAnalyseButton" text="Enregistrer" onAction="#saveAnalyse" />
+                        <Button fx:id="cancelAnalyseButton" text="Annuler" onAction="#cancelForm" />
+                    </children>
+                </HBox>
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>
