@@ -114,4 +114,26 @@ public class ServiceUtilisateur implements IService<Utilisateur> {
         }
         return null;
     }
+    // Fetch all users who do not have a dossier medical record
+    public List<Utilisateur> getUsersWithoutDossierMedical() throws SQLException {
+        List<Utilisateur> users = new ArrayList<>();
+        String query = """
+            SELECT u.*
+            FROM utilisateur u
+            LEFT JOIN dossier_medical dm ON u.id = dm.utilisateur_id
+            WHERE dm.id IS NULL
+        """;
+
+        try (PreparedStatement stmt = connection.prepareStatement(query);
+             ResultSet rs = stmt.executeQuery()) {
+            while (rs.next()) {
+                Utilisateur user = new Utilisateur();
+                user.setId(rs.getInt("id"));
+                user.setEmail(rs.getString("email"));
+                // Set other fields if needed (e.g., nom, prenom)
+                users.add(user);
+            }
+        }
+        return users;
+    }
 }

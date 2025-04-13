@@ -5,26 +5,17 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
-import java.net.URL;
+import org.kordamp.bootstrapfx.BootstrapFX;
 
 public class MainDoctor extends Application {
+
     @Override
     public void start(Stage primaryStage) throws Exception {
-        URL location = getClass().getResource("/fxml/Doctor/DossierMedicalListDoctor.fxml");
-        if (location == null) {
-            throw new RuntimeException("Impossible de trouver /fxml/Doctor/DossierMedicalListDoctor.fxml dans les ressources");
-        }
-        Parent root = FXMLLoader.load(location);
-
-        // Créer une scène avec un fond transparent
-        Scene scene = new Scene(root, 849, 552);
-        scene.setFill(null); // Rendre la scène transparente
-
-        // Configurer la fenêtre
-        primaryStage.setTitle("Gestion Médicale - Docteur");
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Doctor/DossierMedicalListDoctor.fxml"));
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+        scene.getStylesheets().add(getClass().getResource("/MedicalStyle.css").toExternalForm());        primaryStage.setTitle("Dossier Médical - Docteur");
         primaryStage.setScene(scene);
-        primaryStage.setResizable(true);
         primaryStage.show();
     }
 

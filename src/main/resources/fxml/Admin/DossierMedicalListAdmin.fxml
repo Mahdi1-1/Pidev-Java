@@ -3,9 +3,9 @@
 <?import javafx.scene.layout.*?>
 <?import java.net.URL?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tests.Admin.DossierMedicalListAdminController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/24" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.Admin.DossierMedicalListAdminController">
     <stylesheets>
-        <URL value="@../../Styles.css" />
+        <URL value="@../../MedicalStyle.css" />
     </stylesheets>
     <children>
         <VBox spacing="10.0" AnchorPane.topAnchor="20.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">

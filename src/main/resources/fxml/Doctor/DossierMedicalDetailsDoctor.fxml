@@ -1,33 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+
+<?import javafx.scene.layout.HBox?>
 <?import java.net.URL?>
-
-<AnchorPane prefHeight="400.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tests.Doctor.DossierMedicalDetailsDoctorController">
+<VBox xmlns="http://javafx.com/javafx/24" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.Doctor.DossierMedicalDetailsDoctorController" styleClass="container">
     <stylesheets>
-        <URL value="@../../Styles.css" />
+        <URL value="@../../MedicalStyle.css" />
     </stylesheets>
-    <children>
-        <VBox spacing="15.0" alignment="CENTER" AnchorPane.topAnchor="20.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
-            <children>
-                <Label text="Détails du Dossier Médical" styleClass="title-label" />
-                <Label fx:id="utilisateurIdLabel" text="Utilisateur ID: " />
-                <Label fx:id="dateLabel" text="Date: " />
-                <Label fx:id="fichierLabel" text="Fichier: " />
-                <Label fx:id="uniteLabel" text="Unité: " />
-                <Label fx:id="mesureLabel" text="Mesure: " />
+    <!-- En-tête -->
+    <HBox styleClass="header">
+        <Label text="Détails du Dossier Médical" styleClass="header-title"/>
+    </HBox>
 
-                <!-- Section pour les prédictions -->
-                <Label fx:id="diabeteLabel" text="Risque de Diabète: " />
+    <!-- Contenu -->
+    <VBox styleClass="card">
+        <Label fx:id="idLabel" styleClass="label"/>
+        <Label fx:id="utilisateurIdLabel" styleClass="label"/>
+        <Label fx:id="dateLabel" styleClass="label"/>
+        <Label fx:id="fichierLabel" styleClass="label"/>
+        <Label fx:id="uniteLabel" styleClass="label"/>
+        <Label fx:id="mesureLabel" styleClass="label"/>
+        <!-- Section pour les prédictions -->
+        <Label fx:id="diabeteLabel" text="Risque de Diabète: " />
+    </VBox>
 
-                <HBox spacing="10.0" alignment="CENTER">
-                    <children>
-                        <Button text="Voir les Prédictions" onAction="#showPredictionList" styleClass="button" />
-                        <Button text="Voir les Analyses" onAction="#showAnalyseList" styleClass="button" />
-                        <Button text="Fermer" onAction="#closeDetails" styleClass="button" />
-                    </children>
-                </HBox>
-            </children>
-        </VBox>
-    </children>
-</AnchorPane>
+    <HBox spacing="10.0" alignment="CENTER">
+        <children>
+            <Button text="Voir les Prédictions" onAction="#showPredictionList" styleClass="button" />
+            <Button text="Voir les Analyses" onAction="#showAnalyseList" styleClass="button" />
+            <Button text="Fermer" onAction="#closeDetails" styleClass="button" />
+        </children>
+    </HBox>
+</VBox>

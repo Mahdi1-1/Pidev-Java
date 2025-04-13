@@ -1,48 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tests.Doctor.DossierMedicalListDoctorController" styleClass="vbox">
-    <padding>
-        <Insets top="10" right="10" bottom="10" left="10"/>
-    </padding>
+<VBox fx:id="rootVBox" xmlns="http://javafx.com/javafx/24" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.Doctor.DossierMedicalListDoctorController" styleClass="container">
+    <stylesheets>
+        <URL value="@../../MedicalStyle.css" />
+    </stylesheets>
+    <!-- En-tête -->
+    <HBox styleClass="header">
+        <Label text="Dossiers Médicaux - Docteur" styleClass="header-title"/>
+    </HBox>
 
     <!-- Section de filtrage et recherche -->
-    <HBox spacing="10" alignment="CENTER_LEFT" styleClass="hbox">
-        <!-- Filtre par unité -->
+    <HBox fx:id="filterHBox" spacing="10" alignment="CENTER_LEFT" styleClass="card">
         <Label text="Unité :" styleClass="label"/>
         <ChoiceBox fx:id="uniteFilter" prefWidth="150" styleClass="choice-box"/>
 
-        <!-- Filtre par date -->
         <Label text="Date :" styleClass="label"/>
         <DatePicker fx:id="dateFilter" prefWidth="150" styleClass="date-picker"/>
 
-        <!-- Barre de recherche -->
         <Label text="Rechercher :" styleClass="label"/>
         <TextField fx:id="searchField" promptText="Rechercher par fichier ou unité..." prefWidth="200" styleClass="text-field"/>
 
-        <!-- Bouton pour appliquer les filtres -->
-        <Button text="Filtrer" onAction="#applyFilters" styleClass="button"/>
-        <!-- Bouton pour réinitialiser les filtres -->
-        <Button fx:id="resetButton" text="Réinitialiser" onAction="#resetFilters" styleClass="button"/>
+        <Button fx:id="filterButton" text="Filtrer" onAction="#applyFilters" styleClass="button"/>
+        <Button fx:id="resetButton" text="Réinitialiser" onAction="#resetFilters" styleClass="button button-reset"/>
     </HBox>
 
-    <!-- TableView pour afficher les dossiers -->
-    <TableView fx:id="dossierTable" prefHeight="400" styleClass="table-view">
-        <columns>
-            <TableColumn fx:id="idColumn" text="ID" prefWidth="50"/>
-            <TableColumn fx:id="utilisateurIdColumn" text="Utilisateur ID" prefWidth="100"/>
-            <TableColumn fx:id="dateColumn" text="Date" prefWidth="100"/>
-            <TableColumn fx:id="fichierColumn" text="Fichier" prefWidth="150"/>
-            <TableColumn fx:id="uniteColumn" text="Unité" prefWidth="100"/>
-            <TableColumn fx:id="mesureColumn" text="Mesure" prefWidth="100"/>
-        </columns>
-    </TableView>
+    <!-- ScrollPane contenant le GridPane pour afficher les cartes -->
+    <ScrollPane fitToWidth="true" prefHeight="400">
+        <content>
+            <GridPane fx:id="dossierGrid" hgap="10" vgap="10" styleClass="grid-pane"/>
+        </content>
+    </ScrollPane>
 
     <!-- Section de pagination -->
-    <HBox spacing="10" alignment="CENTER" styleClass="hbox">
+    <HBox fx:id="paginationHBox" spacing="10" alignment="CENTER" styleClass="padding-medium">
         <Button fx:id="prevPageButton" text="Précédent" onAction="#previousPage" disable="true" styleClass="button"/>
         <Label fx:id="pageLabel" text="Page 1" styleClass="label"/>
         <Button fx:id="nextPageButton" text="Suivant" onAction="#nextPage" styleClass="button"/>

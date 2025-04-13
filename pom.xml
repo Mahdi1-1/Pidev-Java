@@ -28,7 +28,6 @@
             <artifactId>json</artifactId>
             <version>20240303</version>
         </dependency>
-
         <!-- JavaFX Dependencies -->
         <dependency>
             <groupId>org.openjfx</groupId>

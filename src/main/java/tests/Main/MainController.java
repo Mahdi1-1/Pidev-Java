@@ -10,7 +10,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
-import tests.Patient.DossierMedicalDetailsPatientController;
+import Controller.Patient.DossierMedicalDetailsPatientController;
 
 import java.io.IOException;
 import java.sql.SQLException;

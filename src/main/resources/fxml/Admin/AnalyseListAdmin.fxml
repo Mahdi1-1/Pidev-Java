@@ -3,31 +3,24 @@
 <?import javafx.scene.layout.*?>
 <?import java.net.URL?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tests.AnalyseListController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/24" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.AnalyseListController">
     <stylesheets>
-        <URL value="@../../Styles.css" />
+        <URL value="@../../MedicalStyle.css" />
     </stylesheets>
     <children>
-        <VBox spacing="10.0" AnchorPane.topAnchor="20.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
+        <VBox spacing="10.0" AnchorPane.topAnchor="20.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" styleClass="container">
             <children>
-                <Label text="Liste des Analyses" styleClass="title-label" />
-                <TableView fx:id="tableAnalyses" VBox.vgrow="ALWAYS">
-                    <columns>
-                        <TableColumn fx:id="colDossierId" prefWidth="100.0" text="Dossier ID" />
-                        <TableColumn fx:id="colType" prefWidth="100.0" text="Type" />
-                        <TableColumn fx:id="colDateAnalyse" prefWidth="100.0" text="Date Analyse" />
-                        <TableColumn fx:id="colDonneesAnalyse" prefWidth="100.0" text="Données Analyse" />
-                        <TableColumn fx:id="colDiagnostic" prefWidth="100.0" text="Diagnostic" />
-                        <TableColumn fx:id="colDetails" prefWidth="60.0" text="Détails" />
-                    </columns>
-                </TableView>
-                <HBox spacing="10.0" alignment="CENTER">
-                    <children>
-                        <Button text="Ajouter" onAction="#addAnalyse" />
-                        <Button text="Modifier" onAction="#editAnalyse" />
-                        <Button text="Supprimer" onAction="#deleteAnalyse" />
-                    </children>
+                <!-- En-tête -->
+                <HBox styleClass="header">
+                    <Label text="Liste des Analyses" styleClass="header-title"/>
                 </HBox>
+
+                <!-- ScrollPane contenant le GridPane pour afficher les cartes -->
+                <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS">
+                    <content>
+                        <GridPane fx:id="analyseGrid" hgap="10" vgap="10" styleClass="grid-pane"/>
+                    </content>
+                </ScrollPane>
             </children>
         </VBox>
     </children>
