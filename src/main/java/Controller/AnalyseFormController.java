@@ -2,7 +2,7 @@ package Controller;
 
 import entities.Analyse;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert; // Added import for Alert
+import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import services.ServiceAnalyse;
@@ -30,14 +30,24 @@ public class AnalyseFormController {
 
     @FXML
     public void initialize() {
+        // Rien à faire ici pour le moment
+        // La logique de pré-remplissage sera déplacée dans setAnalyse
+    }
+
+    public void setAnalyse(Analyse analyse) {
+        this.analyse = analyse;
+        // Pré-remplir les champs si on modifie une analyse existante
         if (analyse != null) {
-            // Pré-remplir les champs si on modifie une analyse existante
             dossierIdField.setText(String.valueOf(analyse.getDossierId()));
             typeField.setText(analyse.getType());
             dateAnalyseField.setText(analyse.getDateAnalyse().toString());
             donneesAnalyseField.setText(analyse.getDonneesAnalyse());
             diagnosticField.setText(analyse.getDiagnostic());
         }
+    }
+
+    public void setListController(AnalyseListController listController) {
+        this.listController = listController;
     }
 
     @FXML
@@ -86,7 +96,7 @@ public class AnalyseFormController {
             stage.close();
 
             if (listController != null) {
-                listController.loadAnalyses(); // Now accessible because loadAnalyses is public
+                listController.loadAnalyses();
             }
         } catch (NumberFormatException e) {
             showAlert("Erreur", "L'ID du dossier doit être un nombre valide.");
@@ -101,13 +111,5 @@ public class AnalyseFormController {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
-    }
-
-    public void setAnalyse(Analyse analyse) {
-        this.analyse = analyse;
-    }
-
-    public void setListController(AnalyseListController listController) {
-        this.listController = listController;
     }
 }

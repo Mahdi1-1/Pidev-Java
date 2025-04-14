@@ -4,14 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="55a3e1c6-e460-47be-a547-a8ab5d612b9d" name="Changes" comment="ajouter les controuleurs oublier hier">
+    <list default="true" id="55a3e1c6-e460-47be-a547-a8ab5d612b9d" name="Changes" comment="correction patient et formulaire de modifications">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/Admin/DossierMedicalFormController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/Admin/DossierMedicalFormController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/Doctor/DossierMedicalDetailsDoctorController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/Doctor/DossierMedicalDetailsDoctorController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/Patient/DossierMedicalDetailsPatientController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/Patient/DossierMedicalDetailsPatientController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/Patient/PredictionListPatientController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/Patient/PredictionListPatientController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tests/Main/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tests/Main/MainController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/fxml/Patient/DossierMedicalDetails.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/fxml/Patient/DossierMedicalDetails.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/AnalyseFormController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/AnalyseFormController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -182,7 +177,7 @@
       <workItem from="1742468143946" duration="5223000" />
       <workItem from="1742898708282" duration="57452000" />
       <workItem from="1743805057954" duration="39747000" />
-      <workItem from="1744107751991" duration="46707000" />
+      <workItem from="1744107751991" duration="47743000" />
     </task>
     <task id="LOCAL-00001" summary="crud cbon">
       <option name="closed" value="true" />
@@ -272,7 +267,15 @@
       <option name="project" value="LOCAL" />
       <updated>1744643132246</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="correction patient et formulaire de modifications">
+      <option name="closed" value="true" />
+      <created>1744647099011</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1744647099011</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -318,7 +321,8 @@
     <MESSAGE value="mise a jour sdk jfx de 17 vers 24" />
     <MESSAGE value="mise a jour structure et styles css et correction de l'admin" />
     <MESSAGE value="ajouter les controuleurs oublier hier" />
-    <option name="LAST_COMMIT_MESSAGE" value="ajouter les controuleurs oublier hier" />
+    <MESSAGE value="correction patient et formulaire de modifications" />
+    <option name="LAST_COMMIT_MESSAGE" value="correction patient et formulaire de modifications" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
