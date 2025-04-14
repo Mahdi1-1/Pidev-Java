@@ -23,9 +23,6 @@ public class PredictionListPatientController {
     @FXML private Label titleLabel;
     @FXML private Label dossierIdLabel;
     @FXML private GridPane predictionGrid;
-    @FXML private Button ajouterButton;
-    @FXML private Button modifierButton;
-    @FXML private Button supprimerButton;
 
     private ObservableList<Prediction> predictionList;
     private Integer dossierId;
@@ -34,12 +31,6 @@ public class PredictionListPatientController {
     private final ServicePrediction servicePrediction = new ServicePrediction();
 
     public PredictionListPatientController() throws SQLException {
-    }
-
-    @FXML
-    public void initialize() {
-        modifierButton.setDisable(true);
-        supprimerButton.setDisable(true);
     }
 
     public void setDossierId(Integer dossierId) {
@@ -62,8 +53,6 @@ public class PredictionListPatientController {
     private void populateGrid(ObservableList<Prediction> predictions) {
         predictionGrid.getChildren().clear();
         selectedPrediction = null;
-        modifierButton.setDisable(true);
-        supprimerButton.setDisable(true);
 
         int row = 0;
         int col = 0;
@@ -101,8 +90,6 @@ public class PredictionListPatientController {
                 selectedPrediction = prediction;
                 predictionGrid.getChildren().forEach(node -> node.setStyle("-fx-border-color: transparent;"));
                 card.setStyle("-fx-border-color: #1E90FF; -fx-border-width: 2; -fx-border-radius: 8;");
-                modifierButton.setDisable(false);
-                supprimerButton.setDisable(false);
             });
 
             predictionGrid.add(card, col, row);

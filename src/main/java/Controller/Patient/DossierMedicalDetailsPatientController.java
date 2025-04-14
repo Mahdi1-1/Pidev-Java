@@ -2,6 +2,7 @@ package Controller.Patient;
 
 import entities.DossierMedical;
 import entities.Prediction;
+import services.ServiceDossierMedical;
 import services.ServicePrediction;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -20,26 +21,25 @@ public class DossierMedicalDetailsPatientController {
     @FXML private Label fichierLabel;
     @FXML private Label uniteLabel;
     @FXML private Label mesureLabel;
-
-    @FXML private Label hypertensionLabel;
-    @FXML private Label heartDiseaseLabel;
-    @FXML private Label smokingHistoryLabel;
-    @FXML private Label bmiLabel;
-    @FXML private Label hbA1cLevelLabel;
-    @FXML private Label bloodGlucoseLevelLabel;
     @FXML private Label diabeteLabel;
 
     private Stage stage;
     private DossierMedical dossier;
+    private ServiceDossierMedical serviceDossierMedical;
+
+    public DossierMedicalDetailsPatientController() {
+        try {
+            serviceDossierMedical = new ServiceDossierMedical();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     public void setDossier(DossierMedical dossier) {
         this.dossier = dossier;
 
-        // Vérification des labels
         if (utilisateurIdLabel == null || dateLabel == null || fichierLabel == null ||
-                uniteLabel == null || mesureLabel == null || hypertensionLabel == null ||
-                heartDiseaseLabel == null || smokingHistoryLabel == null || bmiLabel == null ||
-                hbA1cLevelLabel == null || bloodGlucoseLevelLabel == null || diabeteLabel == null) {
+                uniteLabel == null || mesureLabel == null || diabeteLabel == null) {
             showAlert("Erreur FXML", "Un ou plusieurs labels n'ont pas été correctement injectés depuis le FXML.");
             return;
         }
@@ -65,9 +65,51 @@ public class DossierMedicalDetailsPatientController {
     }
 
     @FXML
+    private void modifyDossier() {
+        try {
+            String fxmlPath = "/fxml/Admin/FormDossierMedicalAdmin.fxml";
+            if (getClass().getResource(fxmlPath) == null) {
+                throw new IOException("Impossible de trouver le fichier FXML : " + fxmlPath);
+            }
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+            Parent root = loader.load();
+
+            Controller.Admin.DossierMedicalFormController controller = loader.getController();
+            controller.setDossier(dossier);
+
+            Stage modifyStage = new Stage();
+            modifyStage.setTitle("Modifier le Dossier Médical");
+            modifyStage.setScene(new Scene(root));
+            modifyStage.setResizable(true);
+            modifyStage.showAndWait();
+
+            try {
+                DossierMedical updatedDossier = serviceDossierMedical.getById(dossier.getId());
+                if (updatedDossier != null) {
+                    setDossier(updatedDossier);
+                } else {
+                    showAlert("Erreur", "Le dossier médical n'a pas pu être trouvé après modification.");
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+                showAlert("Erreur", "Erreur lors du rechargement du dossier : " + e.getMessage());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert("Erreur", "Impossible de charger le formulaire de modification : " + e.getMessage());
+        }
+    }
+
+    @FXML
     private void showPredictionList() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Patient/PredictionListPatient.fxml"));
+            String fxmlPath = "/fxml/Patient/PredictionListPatient.fxml";
+            if (getClass().getResource(fxmlPath) == null) {
+                throw new IOException("Impossible de trouver le fichier FXML : " + fxmlPath);
+            }
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
             Parent root = loader.load();
 
             PredictionListPatientController controller = loader.getController();
@@ -79,7 +121,6 @@ public class DossierMedicalDetailsPatientController {
             stage.setResizable(true);
             stage.showAndWait();
 
-            // Rafraîchir les prédictions affichées après la gestion
             setDossier(dossier);
         } catch (IOException e) {
             e.printStackTrace();
@@ -90,8 +131,14 @@ public class DossierMedicalDetailsPatientController {
     @FXML
     private void showAnalyseList() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Patient/AnalyseListPatient.fxml"));
+            String fxmlPath = "/fxml/Patient/AnalyseListPatient.fxml";
+            if (getClass().getResource(fxmlPath) == null) {
+                throw new IOException("Impossible de trouver le fichier FXML : " + fxmlPath);
+            }
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
             Parent root = loader.load();
+
             AnalyseListController controller = loader.getController();
             controller.filterByDossierId(dossier.getId());
 
@@ -117,6 +164,9 @@ public class DossierMedicalDetailsPatientController {
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(message);
+        if (getClass().getResource("/MedicalStyle.css") != null) {
+            alert.getDialogPane().getStylesheets().add(getClass().getResource("/MedicalStyle.css").toExternalForm());
+        }
         alert.showAndWait();
     }
 }

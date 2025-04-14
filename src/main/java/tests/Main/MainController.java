@@ -35,14 +35,15 @@ public class MainController {
     private void goToDossierList() {
         try {
             // Vérifier si un utilisateur_id a été fourni
-            if (utilisateurId == null || utilisateurId.isEmpty()) {
+            /*if (utilisateurId == null || utilisateurId.isEmpty()) {
                 showAlert("Erreur", "Aucun utilisateur connecté. Veuillez vous connecter.");
                 return;
-            }
+            }*/
 
             int userId;
             try {
-                userId = Integer.parseInt(utilisateurId);
+                //userId = Integer.parseInt(utilisateurId);
+                userId =2;
             } catch (NumberFormatException e) {
                 showAlert("Erreur", "L'ID de l'utilisateur doit être un nombre entier : " + utilisateurId);
                 return;

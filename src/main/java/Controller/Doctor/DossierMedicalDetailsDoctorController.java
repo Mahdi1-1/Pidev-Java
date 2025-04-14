@@ -2,6 +2,7 @@ package Controller.Doctor;
 
 import entities.DossierMedical;
 import entities.Prediction;
+import services.ServiceDossierMedical;
 import services.ServicePrediction;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -21,16 +22,14 @@ public class DossierMedicalDetailsDoctorController {
     @FXML private Label uniteLabel;
     @FXML private Label mesureLabel;
 
-    @FXML private Label hypertensionLabel;
-    @FXML private Label heartDiseaseLabel;
-    @FXML private Label smokingHistoryLabel;
-    @FXML private Label bmiLabel;
-    @FXML private Label hbA1cLevelLabel;
-    @FXML private Label bloodGlucoseLevelLabel;
     @FXML private Label diabeteLabel;
 
     private Stage stage;
     private DossierMedical dossier;
+    private ServiceDossierMedical serviceDossierMedical = new ServiceDossierMedical();
+
+    public DossierMedicalDetailsDoctorController() throws SQLException {
+    }
 
     public void setDossier(DossierMedical dossier) {
         this.dossier = dossier;
@@ -59,6 +58,45 @@ public class DossierMedicalDetailsDoctorController {
         } catch (SQLException e) {
             e.printStackTrace();
             showAlert("Erreur", "Erreur lors de la récupération de la prédiction : " + e.getMessage());
+        }
+    }
+
+
+    @FXML
+    private void modifyDossier() {
+        try {
+            // Mise à jour du chemin du FXML
+            String fxmlPath = "/fxml/Admin/FormDossierMedicalAdmin.fxml";
+            if (getClass().getResource(fxmlPath) == null) {
+                throw new IOException("Impossible de trouver le fichier FXML : " + fxmlPath);
+            }
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+            Parent root = loader.load();
+
+            Controller.Admin.DossierMedicalFormController controller = loader.getController();
+            controller.setDossier(dossier);
+
+            Stage modifyStage = new Stage();
+            modifyStage.setTitle("Modifier le Dossier Médical");
+            modifyStage.setScene(new Scene(root));
+            modifyStage.setResizable(true);
+            modifyStage.showAndWait();
+
+            try {
+                DossierMedical updatedDossier = serviceDossierMedical.getById(dossier.getId());
+                if (updatedDossier != null) {
+                    setDossier(updatedDossier);
+                } else {
+                    showAlert("Erreur", "Le dossier médical n'a pas pu être trouvé après modification.");
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+                showAlert("Erreur", "Erreur lors du rechargement du dossier : " + e.getMessage());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert("Erreur", "Impossible de charger le formulaire de modification : " + e.getMessage());
         }
     }
 

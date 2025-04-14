@@ -32,7 +32,7 @@ public class DossierMedicalFormController {
     private DossierMedicalListAdminController listController;
     private ServiceDossierMedical serviceDossier;
     private ServiceUtilisateur serviceUtilisateur;
-    private Map<String, Integer> emailToUserIdMap; // Map to store email-to-ID mapping
+    private Map<String, Integer> emailToUserIdMap;
 
     public DossierMedicalFormController() {
         try {
@@ -46,12 +46,21 @@ public class DossierMedicalFormController {
 
     @FXML
     public void initialize() {
-        // Populate the ChoiceBox with users who don't have a dossier medical
         try {
-            List<Utilisateur> users = serviceUtilisateur.getUsersWithoutDossierMedical();
+            List<Utilisateur> users = serviceUtilisateur.afficher();
             for (Utilisateur user : users) {
                 utilisateurChoiceBox.getItems().add(user.getEmail());
                 emailToUserIdMap.put(user.getEmail(), user.getId());
+            }
+
+            if (dossier == null) {
+                utilisateurChoiceBox.getItems().clear();
+                emailToUserIdMap.clear();
+                List<Utilisateur> usersWithoutDossier = serviceUtilisateur.getUsersWithoutDossierMedical();
+                for (Utilisateur user : usersWithoutDossier) {
+                    utilisateurChoiceBox.getItems().add(user.getEmail());
+                    emailToUserIdMap.put(user.getEmail(), user.getId());
+                }
             }
         } catch (SQLException e) {
             showAlert(Alert.AlertType.ERROR, "Erreur", "Erreur lors du chargement des utilisateurs : " + e.getMessage());
@@ -62,23 +71,22 @@ public class DossierMedicalFormController {
         this.dossier = dossier;
         if (dossier != null) {
             try {
-                // When editing, fetch the user associated with this dossier
                 Utilisateur user = serviceUtilisateur.getById(dossier.getUtilisateurId());
                 if (user != null) {
-                    // Add the user's email to the ChoiceBox if it's not already there
                     if (!emailToUserIdMap.containsKey(user.getEmail())) {
                         utilisateurChoiceBox.getItems().add(user.getEmail());
                         emailToUserIdMap.put(user.getEmail(), user.getId());
                     }
                     utilisateurChoiceBox.setValue(user.getEmail());
                 }
+                datePicker.setValue(dossier.getDate());
+                fichierField.setText(dossier.getFichier());
+                uniteField.setText(dossier.getUnite());
+                mesureField.setText(String.valueOf(dossier.getMesure()));
+                saveButton.setText("Mettre à jour");
             } catch (SQLException e) {
                 showAlert(Alert.AlertType.ERROR, "Erreur", "Erreur lors du chargement de l'utilisateur : " + e.getMessage());
             }
-            datePicker.setValue(dossier.getDate());
-            fichierField.setText(dossier.getFichier());
-            uniteField.setText(dossier.getUnite());
-            mesureField.setText(String.valueOf(dossier.getMesure()));
         }
     }
 
@@ -106,23 +114,49 @@ public class DossierMedicalFormController {
     @FXML
     private void saveDossier() {
         try {
-            // Validate input
-            if (utilisateurChoiceBox.getValue() == null ||
-                    datePicker.getValue() == null ||
-                    fichierField.getText().trim().isEmpty() ||
-                    uniteField.getText().trim().isEmpty() ||
-                    mesureField.getText().trim().isEmpty()) {
-                showAlert(Alert.AlertType.ERROR, "Erreur", "Tous les champs doivent être remplis.");
+            String selectedEmail = utilisateurChoiceBox.getValue();
+            if (selectedEmail == null || selectedEmail.trim().isEmpty()) {
+                showAlert(Alert.AlertType.ERROR, "Erreur", "Veuillez sélectionner un utilisateur.");
                 return;
             }
 
-            // Get the user ID from the selected email
-            String selectedEmail = utilisateurChoiceBox.getValue();
-            int utilisateurId = emailToUserIdMap.get(selectedEmail);
             LocalDate date = datePicker.getValue();
+            if (date == null) {
+                showAlert(Alert.AlertType.ERROR, "Erreur", "Veuillez sélectionner une date.");
+                return;
+            }
+
             String fichier = fichierField.getText().trim();
+            if (fichier.isEmpty()) {
+                showAlert(Alert.AlertType.ERROR, "Erreur", "Veuillez sélectionner un fichier.");
+                return;
+            }
+
             String unite = uniteField.getText().trim();
-            double mesure = Double.parseDouble(mesureField.getText().trim());
+            if (unite.isEmpty()) {
+                showAlert(Alert.AlertType.ERROR, "Erreur", "Veuillez entrer une unité.");
+                return;
+            }
+
+            String mesureText = mesureField.getText().trim();
+            if (mesureText.isEmpty()) {
+                showAlert(Alert.AlertType.ERROR, "Erreur", "Veuillez entrer une mesure.");
+                return;
+            }
+
+            double mesure;
+            try {
+                mesure = Double.parseDouble(mesureText);
+                if (mesure < 0) {
+                    showAlert(Alert.AlertType.ERROR, "Erreur", "La mesure doit être un nombre positif.");
+                    return;
+                }
+            } catch (NumberFormatException e) {
+                showAlert(Alert.AlertType.ERROR, "Erreur", "Veuillez entrer une valeur numérique valide pour la mesure.");
+                return;
+            }
+
+            int utilisateurId = emailToUserIdMap.get(selectedEmail);
 
             if (dossier == null) {
                 dossier = new DossierMedical();
@@ -143,19 +177,15 @@ public class DossierMedicalFormController {
                 showAlert(Alert.AlertType.INFORMATION, "Succès", "Dossier médical modifié avec succès !");
             }
 
-            // Refresh the list in DossierMedicalListAdminController
             if (listController != null) {
                 listController.refreshDossiers();
             }
 
-            // Close the window
             stage = (Stage) fichierField.getScene().getWindow();
             stage.close();
 
         } catch (SQLException e) {
             showAlert(Alert.AlertType.ERROR, "Erreur", "Échec de l'enregistrement : " + e.getMessage());
-        } catch (NumberFormatException e) {
-            showAlert(Alert.AlertType.ERROR, "Erreur", "Veuillez entrer des valeurs valides pour la mesure.");
         }
     }
 
@@ -170,7 +200,9 @@ public class DossierMedicalFormController {
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(message);
-        alert.getDialogPane().getStylesheets().add(getClass().getResource("/MedicalStyle.css").toExternalForm());
+        if (getClass().getResource("/MedicalStyle.css") != null) {
+            alert.getDialogPane().getStylesheets().add(getClass().getResource("/MedicalStyle.css").toExternalForm());
+        }
         alert.showAndWait();
     }
 }

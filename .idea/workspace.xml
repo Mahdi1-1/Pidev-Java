@@ -4,7 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="55a3e1c6-e460-47be-a547-a8ab5d612b9d" name="Changes" comment="mise a jour structure et styles css et correction de l'admin" />
+    <list default="true" id="55a3e1c6-e460-47be-a547-a8ab5d612b9d" name="Changes" comment="ajouter les controuleurs oublier hier">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/Admin/DossierMedicalFormController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/Admin/DossierMedicalFormController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/Doctor/DossierMedicalDetailsDoctorController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/Doctor/DossierMedicalDetailsDoctorController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/Patient/DossierMedicalDetailsPatientController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/Patient/DossierMedicalDetailsPatientController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/Patient/PredictionListPatientController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/Patient/PredictionListPatientController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tests/Main/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tests/Main/MainController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/fxml/Patient/DossierMedicalDetails.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/fxml/Patient/DossierMedicalDetails.fxml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -65,7 +73,7 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/21693/Documents/tbibi",
+    "last_opened_file_path": "C:/Users/21693/IdeaProjects/pidev2/src/main/resources/fxml/Patient",
     "list.type.of.created.stylesheet": "CSS",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -82,6 +90,7 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\21693\IdeaProjects\pidev2\src\main\resources\fxml\Patient" />
       <recent name="C:\Users\21693\IdeaProjects\pidev2\src\main\resources\fxml\Doctor" />
       <recent name="C:\Users\21693\IdeaProjects\pidev2\src\main\resources\fxml\Admin" />
       <recent name="C:\Users\21693\IdeaProjects\pidev2\src\main\resources\image" />
@@ -94,7 +103,7 @@
       <recent name="C:\Users\21693\IdeaProjects\pidev2\src\main\resources" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.MainAdmin">
+  <component name="RunManager" selected="Application.MainPatient">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="tests.Main.Main" />
       <module name="pidev2" />
@@ -128,7 +137,7 @@
     <configuration name="MainPatient" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="tests.Main.MainPatient" />
       <module name="pidev2" />
-      <option name="VM_PARAMETERS" value="--module-path &quot;C:\Users\21693\Downloads\openjfx-17.0.14_windows-x64_bin-sdk\javafx-sdk-17.0.14\lib&quot; --add-modules javafx.controls,javafx.fxml" />
+      <option name="VM_PARAMETERS" value="--module-path &quot;C:\Users\21693\Downloads\openjfx-24_windows-x64_bin-sdk\javafx-sdk-24\lib&quot; --add-modules javafx.controls,javafx.fxml" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -173,7 +182,7 @@
       <workItem from="1742468143946" duration="5223000" />
       <workItem from="1742898708282" duration="57452000" />
       <workItem from="1743805057954" duration="39747000" />
-      <workItem from="1744107751991" duration="42930000" />
+      <workItem from="1744107751991" duration="46707000" />
     </task>
     <task id="LOCAL-00001" summary="crud cbon">
       <option name="closed" value="true" />
@@ -247,7 +256,23 @@
       <option name="project" value="LOCAL" />
       <updated>1744577249483</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="mise a jour structure et styles css et correction de l'admin">
+      <option name="closed" value="true" />
+      <created>1744577300943</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1744577300943</updated>
+    </task>
+    <task id="LOCAL-00011" summary="ajouter les controuleurs oublier hier">
+      <option name="closed" value="true" />
+      <created>1744643132246</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1744643132246</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -292,7 +317,8 @@
     <MESSAGE value="pagination recherche dynamique filtrage cbonn" />
     <MESSAGE value="mise a jour sdk jfx de 17 vers 24" />
     <MESSAGE value="mise a jour structure et styles css et correction de l'admin" />
-    <option name="LAST_COMMIT_MESSAGE" value="mise a jour structure et styles css et correction de l'admin" />
+    <MESSAGE value="ajouter les controuleurs oublier hier" />
+    <option name="LAST_COMMIT_MESSAGE" value="ajouter les controuleurs oublier hier" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -30,6 +30,7 @@
 
     <HBox spacing="10.0" alignment="CENTER">
         <children>
+            <Button text="Modifier" onAction="#modifyDossier" styleClass="button" />
             <Button text="Voir les Prédictions" onAction="#showPredictionList" styleClass="button" />
             <Button text="Voir les Analyses" onAction="#showAnalyseList" styleClass="button" />
             <Button text="Fermer" onAction="#closeDetails" styleClass="button" />
