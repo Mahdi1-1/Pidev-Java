@@ -11,9 +11,9 @@
         <VBox spacing="15.0" alignment="CENTER" AnchorPane.topAnchor="20.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
             <children>
                 <Label text="Détails du Dossier Médical" styleClass="title-label" />
-                <Label fx:id="utilisateurIdLabel" text="Utilisateur ID: " />
+                <Label fx:id="utilisateurEmailLabel" text="Email: " />
                 <Label fx:id="dateLabel" text="Date: " />
-                <Label fx:id="fichierLabel" text="Fichier: " />
+                <Button text="Aperçu" onAction="#previewFile" styleClass="button-large" /> <!-- Bouton ajouté -->
                 <Label fx:id="uniteLabel" text="Unité: " />
                 <Label fx:id="mesureLabel" text="Mesure: " />
 

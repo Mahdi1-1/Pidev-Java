@@ -97,6 +97,8 @@ public class DossierMedicalListAdminController {
         } catch (IOException e) {
             e.printStackTrace();
             showAlert("Erreur", "Impossible de charger les détails du dossier : " + e.getMessage());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
     public void refreshDossiers() {

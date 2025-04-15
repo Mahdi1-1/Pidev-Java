@@ -12,13 +12,14 @@ import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import Controller.AnalyseListController;
 
+import java.awt.*;
+import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 
 public class DossierMedicalDetailsDoctorController {
     @FXML private Label utilisateurIdLabel;
     @FXML private Label dateLabel;
-    @FXML private Label fichierLabel;
     @FXML private Label uniteLabel;
     @FXML private Label mesureLabel;
 
@@ -31,11 +32,44 @@ public class DossierMedicalDetailsDoctorController {
     public DossierMedicalDetailsDoctorController() throws SQLException {
     }
 
+    @FXML
+    private void previewFile() {
+        if (dossier == null || dossier.getFichier() == null || dossier.getFichier().isEmpty()) {
+            showAlert("Erreur", "Aucun fichier associé à ce dossier médical.");
+            return;
+        }
+
+        try {
+            // Récupérer le chemin du fichier
+            String filePath = dossier.getFichier();
+            File file = new File(filePath);
+
+            // Vérifier si le fichier existe
+            if (!file.exists()) {
+                showAlert("Erreur", "Le fichier spécifié n'existe pas : " + filePath);
+                return;
+            }
+
+            // Vérifier si Desktop est supporté
+            if (!Desktop.isDesktopSupported()) {
+                showAlert("Erreur", "L'ouverture de fichiers n'est pas supportée sur ce système.");
+                return;
+            }
+
+            // Ouvrir le fichier avec l'application par défaut
+            Desktop desktop = Desktop.getDesktop();
+            desktop.open(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert("Erreur", "Impossible d'ouvrir le fichier : " + e.getMessage());
+        }
+    }
+
     public void setDossier(DossierMedical dossier) {
         this.dossier = dossier;
 
         // Vérification des labels
-        if (utilisateurIdLabel == null || dateLabel == null || fichierLabel == null ||
+        if (utilisateurIdLabel == null || dateLabel == null ||
                 uniteLabel == null || mesureLabel == null || diabeteLabel == null) {
             showAlert("Erreur FXML", "Un ou plusieurs labels n'ont pas été correctement injectés depuis le FXML.");
             return;
@@ -43,7 +77,6 @@ public class DossierMedicalDetailsDoctorController {
 
         utilisateurIdLabel.setText("Utilisateur ID: " + dossier.getUtilisateurId());
         dateLabel.setText("Date: " + dossier.getDate().toString());
-        fichierLabel.setText("Fichier: " + dossier.getFichier());
         uniteLabel.setText("Unité: " + dossier.getUnite());
         mesureLabel.setText("Mesure: " + dossier.getMesure());
 

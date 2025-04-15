@@ -2,6 +2,7 @@ package Controller.Patient;
 
 import entities.DossierMedical;
 import entities.Prediction;
+import entities.Utilisateur;
 import services.ServiceDossierMedical;
 import services.ServicePrediction;
 import javafx.fxml.FXML;
@@ -11,14 +12,16 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import Controller.AnalyseListController;
+import java.awt.Desktop;
+import java.io.File;
 
 import java.io.IOException;
 import java.sql.SQLException;
 
 public class DossierMedicalDetailsPatientController {
-    @FXML private Label utilisateurIdLabel;
+    @FXML private Label idLabel; // Ajouté pour correspondre au FXML
+    @FXML private Label utilisateurEmailLabel;
     @FXML private Label dateLabel;
-    @FXML private Label fichierLabel;
     @FXML private Label uniteLabel;
     @FXML private Label mesureLabel;
     @FXML private Label diabeteLabel;
@@ -35,18 +38,54 @@ public class DossierMedicalDetailsPatientController {
         }
     }
 
-    public void setDossier(DossierMedical dossier) {
+
+    @FXML
+    private void previewFile() {
+        if (dossier == null || dossier.getFichier() == null || dossier.getFichier().isEmpty()) {
+            showAlert("Erreur", "Aucun fichier associé à ce dossier médical.");
+            return;
+        }
+
+        try {
+            // Récupérer le chemin du fichier
+            String filePath = dossier.getFichier();
+            File file = new File(filePath);
+
+            // Vérifier si le fichier existe
+            if (!file.exists()) {
+                showAlert("Erreur", "Le fichier spécifié n'existe pas : " + filePath);
+                return;
+            }
+
+            // Vérifier si Desktop est supporté
+            if (!Desktop.isDesktopSupported()) {
+                showAlert("Erreur", "L'ouverture de fichiers n'est pas supportée sur ce système.");
+                return;
+            }
+
+            // Ouvrir le fichier avec l'application par défaut
+            Desktop desktop = Desktop.getDesktop();
+            desktop.open(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert("Erreur", "Impossible d'ouvrir le fichier : " + e.getMessage());
+        }
+    }
+    public void setDossier(DossierMedical dossier) throws SQLException {
         this.dossier = dossier;
 
-        if (utilisateurIdLabel == null || dateLabel == null || fichierLabel == null ||
+        // Vérification des labels
+        if (idLabel == null || utilisateurEmailLabel == null || dateLabel == null  ||
                 uniteLabel == null || mesureLabel == null || diabeteLabel == null) {
             showAlert("Erreur FXML", "Un ou plusieurs labels n'ont pas été correctement injectés depuis le FXML.");
             return;
         }
 
-        utilisateurIdLabel.setText("Utilisateur ID: " + dossier.getUtilisateurId());
-        dateLabel.setText("Date: " + dossier.getDate().toString());
-        fichierLabel.setText("Fichier: " + dossier.getFichier());
+        // Remplissage des labels avec les données du dossier
+        idLabel.setText(" "+String.valueOf(dossier.getId()));
+        // Récupérer l'utilisateur via son ID
+        Utilisateur utilisateur = serviceDossierMedical.getUtilisateurByDossierId(dossier.getUtilisateurId());
+        utilisateurEmailLabel.setText("Email: " + utilisateur.getEmail());        dateLabel.setText("Date: " + dossier.getDate().toString());
         uniteLabel.setText("Unité: " + dossier.getUnite());
         mesureLabel.setText("Mesure: " + dossier.getMesure());
 
@@ -80,7 +119,7 @@ public class DossierMedicalDetailsPatientController {
 
             Stage modifyStage = new Stage();
             modifyStage.setTitle("Modifier le Dossier Médical");
-            modifyStage.setScene(new Scene(root));
+            modifyStage.setScene(new Scene(root, 800, 600)); // Taille augmentée pour un grand format
             modifyStage.setResizable(true);
             modifyStage.showAndWait();
 
@@ -117,7 +156,7 @@ public class DossierMedicalDetailsPatientController {
 
             Stage stage = new Stage();
             stage.setTitle("Liste des Prédictions");
-            stage.setScene(new Scene(root, 600, 400));
+            stage.setScene(new Scene(root, 800, 600)); // Taille augmentée pour un grand format
             stage.setResizable(true);
             stage.showAndWait();
 
@@ -125,6 +164,8 @@ public class DossierMedicalDetailsPatientController {
         } catch (IOException e) {
             e.printStackTrace();
             showAlert("Erreur", "Impossible de charger la liste des prédictions : " + e.getMessage());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -144,7 +185,7 @@ public class DossierMedicalDetailsPatientController {
 
             Stage analyseStage = new Stage();
             analyseStage.setTitle("Liste des Analyses pour le Dossier " + dossier.getId());
-            analyseStage.setScene(new Scene(root, 600, 400));
+            analyseStage.setScene(new Scene(root, 800, 600)); // Taille augmentée pour un grand format
             analyseStage.setResizable(true);
             analyseStage.show();
         } catch (IOException e) {
@@ -155,7 +196,7 @@ public class DossierMedicalDetailsPatientController {
 
     @FXML
     private void closeDetails() {
-        stage = (Stage) utilisateurIdLabel.getScene().getWindow();
+        stage = (Stage) utilisateurEmailLabel.getScene().getWindow();
         stage.close();
     }
 

@@ -21,7 +21,7 @@
         <Label fx:id="idLabel" styleClass="label"/>
         <Label fx:id="utilisateurIdLabel" styleClass="label"/>
         <Label fx:id="dateLabel" styleClass="label"/>
-        <Label fx:id="fichierLabel" styleClass="label"/>
+        <Button text="Aperçu" onAction="#previewFile" styleClass="button-large" /> <!-- Bouton ajouté -->
         <Label fx:id="uniteLabel" styleClass="label"/>
         <Label fx:id="mesureLabel" styleClass="label"/>
         <!-- Section pour les prédictions -->

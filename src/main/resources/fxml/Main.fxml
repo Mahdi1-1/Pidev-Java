@@ -17,11 +17,11 @@
                 <Image url="@../image/main.jpg" />
             </image>
         </ImageView>
-        <Button fx:id="forumButton" layoutX="244.0" layoutY="35.0" onAction="#goToForum" styleClass="button" text="Forum" />
-        <Button fx:id="produitButton" layoutX="317.0" layoutY="35.0" onAction="#goToProduit" styleClass="button" text="Produit" />
-        <Button fx:id="evenementButton" layoutX="394.0" layoutY="35.0" onAction="#goToEvenement" styleClass="button" text="Événement" />
-        <Button fx:id="suiviMedicalButton" layoutX="497.0" layoutY="35.0" onAction="#goToDossierList" styleClass="button" text="Suivi Médical" />
-        <Button fx:id="consultationButton" layoutX="612.0" layoutY="35.0" onAction="#goToConsultation" styleClass="button" text="Consultation" />
-        <Button fx:id="connexionButton" layoutX="758.0" layoutY="35.0" onAction="#goToConnexion" styleClass="button" text="Connexion" />
+        <Button fx:id="forumButton" layoutX="244.0" layoutY="35.0" onAction="#goToForum" styleClass="button_transparent" text="Forum" />
+        <Button fx:id="produitButton" layoutX="317.0" layoutY="35.0" onAction="#goToProduit" styleClass="button_transparent" text="Produit" />
+        <Button fx:id="evenementButton" layoutX="394.0" layoutY="35.0" onAction="#goToEvenement" styleClass="button_transparent" text="Événement" />
+        <Button fx:id="suiviMedicalButton" layoutX="497.0" layoutY="35.0" onAction="#goToDossierList" styleClass="button_transparent" text="Suivi Médical" />
+        <Button fx:id="consultationButton" layoutX="612.0" layoutY="35.0" onAction="#goToConsultation" styleClass="button_transparent" text="Consultation" />
+        <Button fx:id="connexionButton" layoutX="758.0" layoutY="35.0" onAction="#goToConnexion" styleClass="button_transparent" text="Connexion" />
     </children>
 </AnchorPane>

@@ -4,36 +4,40 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.VBox?>
-
 <?import javafx.scene.layout.HBox?>
 <?import java.net.URL?>
-<VBox xmlns="http://javafx.com/javafx/24" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.Patient.DossierMedicalDetailsPatientController" styleClass="container">
+
+<VBox xmlns="http://javafx.com/javafx/24" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.Patient.DossierMedicalDetailsPatientController" styleClass="custom-container" spacing="20">
     <stylesheets>
         <URL value="@../../MedicalStyle.css" />
     </stylesheets>
     <!-- En-tête -->
-    <HBox styleClass="header">
-        <Label text="Détails du Dossier Médical" styleClass="header-title"/>
+    <HBox styleClass="header" alignment="CENTER" spacing="10">
+        <Label text="Détails du Dossier Médical :" styleClass="header-title"/>
+        <Label fx:id="idLabel" styleClass="header-title"/>
     </HBox>
 
     <!-- Contenu -->
-    <VBox styleClass="card">
-        <Label fx:id="idLabel" styleClass="label"/>
-        <Label fx:id="utilisateurIdLabel" styleClass="label"/>
-        <Label fx:id="dateLabel" styleClass="label"/>
-        <Label fx:id="fichierLabel" styleClass="label"/>
-        <Label fx:id="uniteLabel" styleClass="label"/>
-        <Label fx:id="mesureLabel" styleClass="label"/>
+    <VBox styleClass="custom-card" spacing="15">
+        <Label fx:id="utilisateurEmailLabel" styleClass="custom-label"/>
+        <Label fx:id="dateLabel" styleClass="custom-label"/>
+        <Button text="Aperçu" onAction="#previewFile" styleClass="custom-button-large" />
+        <Label fx:id="uniteLabel" styleClass="custom-label"/>
+        <Label fx:id="mesureLabel" styleClass="custom-label"/>
         <!-- Section pour les prédictions -->
-        <Label fx:id="diabeteLabel" text="Risque de Diabète: " />
+        <Label fx:id="diabeteLabel" styleClass="custom-label" />
+        <padding>
+            <Insets top="20" bottom="20" left="20" right="20"/>
+        </padding>
     </VBox>
 
-    <HBox spacing="10.0" alignment="CENTER">
-        <children>
-            <Button text="Modifier" onAction="#modifyDossier" styleClass="button" />
-            <Button text="Voir les Prédictions" onAction="#showPredictionList" styleClass="button" />
-            <Button text="Voir les Analyses" onAction="#showAnalyseList" styleClass="button" />
-            <Button text="Fermer" onAction="#closeDetails" styleClass="button" />
-        </children>
+    <HBox styleClass="custom-button-container" spacing="15" alignment="CENTER">
+        <Button text="Modifier" onAction="#modifyDossier" styleClass="custom-button" />
+        <Button text="Voir les Prédictions" onAction="#showPredictionList" styleClass="custom-button" />
+        <Button text="Voir les Analyses" onAction="#showAnalyseList" styleClass="custom-button" />
+        <Button text="Fermer" onAction="#closeDetails" styleClass="custom-button" />
+        <padding>
+            <Insets top="10" bottom="20"/>
+        </padding>
     </HBox>
 </VBox>

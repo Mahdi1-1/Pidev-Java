@@ -434,4 +434,77 @@
     -fx-font-size: 18px; /* Increased from 16px */
     -fx-font-weight: bold;
     -fx-text-fill: #1E90FF;
+}/* Style pour les boutons */
+.button_transparent {
+    -fx-background-color: transparent; /* Fond transparent */
+    -fx-text-fill: blue; /* Couleur du texte (blanc pour contraster avec l'image de fond) */
+    -fx-font-size: 14px; /* Taille de la police */
+    -fx-border-color: transparent; /* Supprime les bordures */
+    -fx-background-radius: 5; /* Supprime les coins arrondis */
+    -fx-padding: 10 20; /* Espacement interne pour un meilleur rendu */
+}
+/* Style pour le séparateur du SplitPane */
+#splitPane .split-pane-divider {
+    -fx-background-color: blue;
+    -fx-pref-width: 6px; /* Épaisseur de la ligne */
+}
+/* Style de la racine */
+.custom-container {
+    -fx-background-color: #f4f7fa; /* Fond clair pour un look médical */
+    -fx-alignment: center;
+}
+
+/* Style de la carte */
+.custom-card {
+    -fx-background-color: #ffffff; /* Fond blanc pour la carte */
+    -fx-background-radius: 15;
+    -fx-border-radius: 15;
+    -fx-border-color: #d3d3d3; /* Bordure grise légère */
+    -fx-border-width: 1;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 3); /* Ombre légère */
+    -fx-max-width: 400; /* Largeur maximale pour une meilleure présentation */
+}
+
+/* Style des labels */
+.custom-label {
+    -fx-font-size: 18px; /* Taille de police agrandie pour les labels */
+    -fx-font-family: "Arial";
+    -fx-text-fill: #333333; /* Couleur sombre pour le texte */
+    -fx-wrap-text: true; /* Permettre le retour à la ligne si le texte est trop long */
+}
+
+/* Style des boutons */
+.custom-button {
+    -fx-background-color: #3498db; /* Bleu pour les boutons */
+    -fx-text-fill: #ffffff; /* Texte blanc */
+    -fx-font-size: 16px; /* Taille de police pour les boutons */
+    -fx-font-weight: bold;
+    -fx-background-radius: 5;
+    -fx-border-radius: 5;
+    -fx-padding: 10 20; /* Padding pour rendre les boutons plus grands */
+}
+
+.custom-button:hover {
+    -fx-background-color: #2980b9; /* Bleu plus foncé au survol */
+    -fx-cursor: hand;
+}
+
+.custom-button-large {
+    -fx-background-color: #1abc9c; /* Vert pour le bouton "Aperçu" */
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 5;
+    -fx-border-radius: 5;
+    -fx-padding: 10 30; /* Padding plus large pour ce bouton */
+}
+
+.custom-button-large:hover {
+    -fx-background-color: #16a085; /* Vert plus foncé au survol */
+    -fx-cursor: hand;
+}
+
+/* Style du conteneur des boutons */
+.custom-button-container {
+    -fx-alignment: center;
 }

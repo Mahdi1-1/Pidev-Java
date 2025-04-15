@@ -4,9 +4,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="55a3e1c6-e460-47be-a547-a8ab5d612b9d" name="Changes" comment="correction patient et formulaire de modifications">
+    <list default="true" id="55a3e1c6-e460-47be-a547-a8ab5d612b9d" name="Changes" comment="correction formulaire analyse">
+      <change afterPath="$PROJECT_DIR$/src/main/java/tests/Main/MainAdminController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/tests/Main/MainDoctorController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/AnalyseFormController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/AnalyseFormController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/Admin/DossierMedicalDetailsAdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/Admin/DossierMedicalDetailsAdminController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/Admin/DossierMedicalListAdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/Admin/DossierMedicalListAdminController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/Doctor/DossierMedicalDetailsDoctorController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/Doctor/DossierMedicalDetailsDoctorController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/Patient/DossierMedicalDetailsPatientController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/Patient/DossierMedicalDetailsPatientController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tests/Main/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tests/Main/MainController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/MedicalStyle.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/MedicalStyle.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/fxml/Admin/DossierMedicalDetailsAdmin.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/fxml/Admin/DossierMedicalDetailsAdmin.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/fxml/Doctor/DossierMedicalDetailsDoctor.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/fxml/Doctor/DossierMedicalDetailsDoctor.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/fxml/Main.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/fxml/Main.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/fxml/Patient/DossierMedicalDetails.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/fxml/Patient/DossierMedicalDetails.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,6 +54,9 @@
     &quot;accountId&quot;: &quot;c7e13da9-92b6-4811-b773-cb8f3918fb2c&quot;
   }
 }</component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 6
 }</component>
@@ -98,11 +113,11 @@
       <recent name="C:\Users\21693\IdeaProjects\pidev2\src\main\resources" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.MainPatient">
+  <component name="RunManager" selected="Application.Main">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="tests.Main.Main" />
       <module name="pidev2" />
-      <option name="VM_PARAMETERS" value="--module-path &quot;C:\Users\21693\Downloads\openjfx-17.0.14_windows-x64_bin-sdk\javafx-sdk-17.0.14\lib&quot; --add-modules javafx.controls,javafx.fxml" />
+      <option name="VM_PARAMETERS" value="--module-path &quot;C:\Users\21693\Downloads\openjfx-24_windows-x64_bin-sdk\javafx-sdk-24\lib&quot; --add-modules javafx.controls,javafx.fxml" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="tests.Main.*" />
@@ -177,7 +192,7 @@
       <workItem from="1742468143946" duration="5223000" />
       <workItem from="1742898708282" duration="57452000" />
       <workItem from="1743805057954" duration="39747000" />
-      <workItem from="1744107751991" duration="47743000" />
+      <workItem from="1744107751991" duration="57744000" />
     </task>
     <task id="LOCAL-00001" summary="crud cbon">
       <option name="closed" value="true" />
@@ -275,7 +290,15 @@
       <option name="project" value="LOCAL" />
       <updated>1744647099011</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="correction formulaire analyse">
+      <option name="closed" value="true" />
+      <created>1744659845925</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1744659845925</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -322,7 +345,8 @@
     <MESSAGE value="mise a jour structure et styles css et correction de l'admin" />
     <MESSAGE value="ajouter les controuleurs oublier hier" />
     <MESSAGE value="correction patient et formulaire de modifications" />
-    <option name="LAST_COMMIT_MESSAGE" value="correction patient et formulaire de modifications" />
+    <MESSAGE value="correction formulaire analyse" />
+    <option name="LAST_COMMIT_MESSAGE" value="correction formulaire analyse" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
