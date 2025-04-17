@@ -41,6 +41,11 @@ public class ListQuestionController {
 
     @FXML
     public void initialize() {
+        // Appliquer le style CSS de base
+        String basicStyle = "-fx-padding: 5 10; -fx-font-weight: bold; -fx-background-radius: 4;";
+        addButton.setStyle(basicStyle + "-fx-background-color: #2d5985; -fx-text-fill: white;");
+        searchField.setStyle("-fx-background-radius: 15; -fx-padding: 5 10;");
+
         // Configure columns
         titleColumn.setCellValueFactory(new PropertyValueFactory<>("titre"));
         specialiteColumn.setCellValueFactory(new PropertyValueFactory<>("specialite"));
@@ -63,6 +68,9 @@ public class ListQuestionController {
         // Initialize filtered list
         filteredQuestionsList.addAll(questionsList);
         questionsTable.setItems(filteredQuestionsList);
+
+        // Style de base pour le tableau
+        questionsTable.setStyle("-fx-background-color: white; -fx-table-cell-border-color: transparent;");
 
         // Load data
         try {
@@ -141,12 +149,20 @@ public class ListQuestionController {
             private final Button editButton = new Button("Modifier");
             private final Button deleteButton = new Button("Supprimer");
             private final Button responsesButton = new Button("Réponses");
-            private final HBox hBox = new HBox(10, editButton, deleteButton, responsesButton);
+            private final HBox hBox = new HBox(5, editButton, deleteButton, responsesButton);
 
             {
-                editButton.setStyle("-fx-background-color: #f39c12; -fx-text-fill: white;");
-                deleteButton.setStyle("-fx-background-color: #e74c3c; -fx-text-fill: white;");
-                responsesButton.setStyle("-fx-background-color: #2ecc71; -fx-text-fill: white;");
+                // Style de base pour tous les boutons
+                String buttonStyle = "-fx-padding: 3 8; -fx-font-size: 12; -fx-font-weight: bold; -fx-background-radius: 4;";
+
+                editButton.setStyle(buttonStyle + "-fx-background-color: #2d5985; -fx-text-fill: white;");
+                deleteButton.setStyle(buttonStyle + "-fx-background-color: #2d5985; -fx-text-fill: white;");
+                responsesButton.setStyle(buttonStyle + "-fx-background-color: #2d5985; -fx-text-fill: white;");
+
+                // Effet hover simple
+                setupHoverEffect(editButton, "#3a6b9c");
+                setupHoverEffect(deleteButton, "#e53935");
+                setupHoverEffect(responsesButton, "#3a6b9c");
 
                 editButton.setOnAction(event -> {
                     Question question = getTableView().getItems().get(getIndex());
@@ -162,6 +178,12 @@ public class ListQuestionController {
                     Question question = getTableView().getItems().get(getIndex());
                     handleShowResponses(question);
                 });
+            }
+
+            private void setupHoverEffect(Button button, String hoverColor) {
+                String originalStyle = button.getStyle();
+                button.setOnMouseEntered(e -> button.setStyle(originalStyle + "-fx-background-color: " + hoverColor + ";"));
+                button.setOnMouseExited(e -> button.setStyle(originalStyle));
             }
 
             @Override

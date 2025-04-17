@@ -11,8 +11,8 @@ import java.net.URL;
 public class MainDoctor extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
-            URL location = getClass().getResource("/fxml/Doctor/ListQuestionDocteur.fxml");
-      //  URL location = getClass().getResource("/fxml/Patient/EditQuestion.fxml");
+            //URL location = getClass().getResource("/fxml/Doctor/ListQuestionDocteur.fxml");
+      URL location = getClass().getResource("/fxml/Admin/ListQuestion.fxml");
         if (location == null) {
             throw new RuntimeException("Impossible de trouver /fxml/Doctor/DossierMedicalListDoctor.fxml dans les ressources");
         }

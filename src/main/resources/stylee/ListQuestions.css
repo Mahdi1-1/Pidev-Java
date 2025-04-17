@@ -1,0 +1,142 @@
+/* Couleurs principales */
+.root {
+    -fx-primary: #2d5985;
+    -fx-secondary: #3a6b9c;
+    -fx-accent: #2e7d32;
+    -fx-danger: #c62828;
+    -fx-light: #f8f9fa;
+    -fx-dark: #343a40;
+}
+
+/* Tableau */
+.table-view {
+    -fx-base: #ffffff;
+    -fx-control-inner-background: #ffffff;
+    -fx-background-color: #ffffff;
+    -fx-table-cell-border-color: transparent;
+    -fx-table-header-border-color: transparent;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0);
+}
+
+.table-row-cell:odd {
+    -fx-background-color: #f2f2f2;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: -fx-primary;
+    -fx-text-background-color: white;
+}
+
+/* En-têtes de colonne */
+.table-view .column-header-background {
+    -fx-background-color: -fx-primary;
+}
+
+.table-view .column-header, .table-view .filler {
+    -fx-background-color: transparent;
+    -fx-size: 35;
+    -fx-border-width: 0 0 1 0;
+    -fx-border-color: transparent transparent derive(-fx-primary, 20%) transparent;
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+/* Boutons */
+.action-button {
+    -fx-background-color: -fx-primary;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 5 10;
+    -fx-background-radius: 4;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 5, 0, 0, 1);
+}
+
+.action-button:hover {
+    -fx-background-color: -fx-secondary;
+}
+
+.delete-button {
+    -fx-background-color: -fx-danger;
+}
+
+.delete-button:hover {
+    -fx-background-color: #e53935;
+}
+
+.add-button {
+    -fx-background-color: -fx-accent;
+}
+
+.add-button:hover {
+    -fx-background-color: #388e3c;
+}
+
+/* Champ de recherche */
+.search-field {
+    -fx-prompt-text-fill: #757575;
+    -fx-background-radius: 15;
+    -fx-border-radius: 15;
+    -fx-border-color: #ced4da;
+    -fx-border-width: 1;
+    -fx-padding: 5 10;
+}
+
+.search-field:focused {
+    -fx-border-color: -fx-primary;
+}
+
+/* Placeholder */
+.empty-table-label {
+    -fx-font-size: 14;
+    -fx-text-fill: #666;
+}
+
+.progress-indicator {
+    -fx-progress-color: -fx-primary;
+}
+/* Ajoutez ces règles à la fin de votre fichier CSS */
+
+/* Style pour le titre */
+.title-label {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -fx-primary;
+}
+
+/* Style général pour le VBox */
+VBox {
+    -fx-spacing: 15;
+    -fx-padding: 20;
+}
+
+/* Style pour le tableau */
+.styled-table {
+    -fx-background-color: white;
+    -fx-border-color: #dfe6e9;
+    -fx-border-radius: 5;
+}
+
+/* Style des colonnes */
+.table-view .column-header {
+    -fx-background-color: -fx-primary;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+/* Style des cellules */
+.table-row-cell {
+    -fx-border-color: #f1f3f5;
+    -fx-table-cell-border-color: transparent;
+}
+
+.table-row-cell:odd {
+    -fx-background-color: #f8f9fa;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: #d4e6f1;
+}

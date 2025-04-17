@@ -10,18 +10,19 @@
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="tests.Doctor.ManageResponsesController"
             prefHeight="500.0" prefWidth="700.0"
-            style="-fx-background-color: #f5f5f5;">
+            styleClass="main-pane"
+     stylesheets="/stylee/RepondreQuestion.css">
 
     <VBox spacing="20" alignment="TOP_CENTER" AnchorPane.topAnchor="20" AnchorPane.leftAnchor="20" AnchorPane.rightAnchor="20">
         <!-- Titre -->
-        <Label fx:id="titleLabel" text="Gérer les réponses" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;">
+        <Label fx:id="titleLabel" text="Gérer les réponses" styleClass="title-label">
             <font>
                 <Font name="System Bold" size="24.0" />
             </font>
         </Label>
 
         <!-- TableView pour afficher les réponses -->
-        <TableView fx:id="responsesTable" prefHeight="300" prefWidth="660">
+        <TableView fx:id="responsesTable" prefHeight="300" prefWidth="660" styleClass="responses-table">
             <columns>
                 <!-- Colonne Contenu -->
                 <TableColumn fx:id="contentColumn" text="Contenu" prefWidth="300">
@@ -47,19 +48,19 @@
         </TableView>
 
         <!-- Boutons -->
-        <HBox spacing="10" alignment="CENTER">
+        <HBox spacing="15" alignment="CENTER">
             <Button text="Ajouter une réponse"
-                    style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-font-weight: bold;"
+                    styleClass="add-button"
                     onAction="#handleAddResponse">
                 <padding>
-                    <Insets top="8" right="16" bottom="8" left="16" />
+                    <Insets top="10" right="20" bottom="10" left="20" />
                 </padding>
             </Button>
             <Button text="Fermer"
-                    style="-fx-background-color: #95a5a6; -fx-text-fill: white; -fx-font-weight: bold;"
+                    styleClass="close-button"
                     onAction="#handleClose">
                 <padding>
-                    <Insets top="8" right="16" bottom="8" left="16" />
+                    <Insets top="10" right="20" bottom="10" left="20" />
                 </padding>
             </Button>
         </HBox>

@@ -141,8 +141,8 @@ public class ListQuestionAdmin {
             private final HBox hBox = new HBox(10, deleteButton, responsesButton);
 
             {
-                deleteButton.setStyle("-fx-background-color: #e74c3c; -fx-text-fill: white;");
-                responsesButton.setStyle("-fx-background-color: #2ecc71; -fx-text-fill: white;");
+                deleteButton.setStyle("-fx-background-color: #2d5985; -fx-text-fill: white;");
+                responsesButton.setStyle("-fx-background-color: #2d5985; -fx-text-fill: white;");
 
                 deleteButton.setOnAction(event -> {
                     Question question = getTableView().getItems().get(getIndex());

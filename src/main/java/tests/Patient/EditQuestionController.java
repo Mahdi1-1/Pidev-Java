@@ -3,68 +3,91 @@ package tests.Patient;
 import entities.Question;
 import enums.Specialite;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
-import javafx.event.ActionEvent;
-import javafx.scene.control.Alert;
+import javafx.scene.control.*;
 import services.QuestionService;
+import javafx.util.StringConverter;
+
 import java.sql.SQLException;
-import java.util.regex.Pattern;
 
 public class EditQuestionController {
-
-    // Constantes pour les contrôles de saisie
-    private static final int TITLE_MIN_LENGTH = 10;
-    private static final int TITLE_MAX_LENGTH = 100;
-    private static final int CONTENT_MIN_LENGTH = 20;
-    private static final int CONTENT_MAX_LENGTH = 1000;
-    private static final Pattern TITLE_PATTERN = Pattern.compile("^[\\w\\séèàçùêîôûäëïöüâãõñ'-]+$");
+    // Constantes pour les limites de saisie
+    private static final int MAX_TITLE_LENGTH = 100;
+    private static final int MIN_TITLE_LENGTH = 10;
+    private static final int MAX_CONTENT_LENGTH = 2000;
+    private static final int MIN_CONTENT_LENGTH = 20;
 
     @FXML private TextField titleField;
     @FXML private ComboBox<Specialite> specialiteCombo;
     @FXML private TextArea contentArea;
     @FXML private CheckBox visibleCheck;
-    @FXML private Button cancelButton;
-    @FXML private Button saveButton;
+    @FXML private Label titleCharCount;
+    @FXML private Label contentCharCount;
 
     private QuestionService questionService = new QuestionService();
     private Question currentQuestion;
 
-    @FXML
-    public void initialize() {
-        specialiteCombo.getItems().setAll(Specialite.values());
-
-        // Styles initiaux
-        cancelButton.setStyle("-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10;");
-        saveButton.setStyle("-fx-background-color: #27ae60; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10;");
-
-        // Contrôles de saisie dynamiques
-        setupInputValidation();
-    }
-
-    private void setupInputValidation() {
-        // Validation du titre
-        titleField.textProperty().addListener((obs, oldVal, newVal) -> {
-            if (newVal.length() > TITLE_MAX_LENGTH) {
-                titleField.setText(oldVal);
-            }
-        });
-
-        // Validation du contenu
-        contentArea.textProperty().addListener((obs, oldVal, newVal) -> {
-            if (newVal.length() > CONTENT_MAX_LENGTH) {
-                contentArea.setText(oldVal);
-            }
-        });
-    }
-
     public void setQuestion(Question question) {
         this.currentQuestion = question;
         populateFields();
+    }
+
+    @FXML
+    public void initialize() {
+        setupSpecialiteCombo();
+        setupInputValidation();
+        setupAutoCorrection();
+    }
+
+    private void setupSpecialiteCombo() {
+        specialiteCombo.getItems().setAll(Specialite.values());
+        specialiteCombo.setConverter(new StringConverter<Specialite>() {
+            @Override
+            public String toString(Specialite specialite) {
+                return specialite != null ? specialite.getValue() : "";
+            }
+
+            @Override
+            public Specialite fromString(String string) {
+                return specialiteCombo.getItems().stream()
+                        .filter(spec -> spec.getValue().equals(string))
+                        .findFirst()
+                        .orElse(null);
+            }
+        });
+    }
+
+    private void setupInputValidation() {
+        // Validation en temps réel pour le titre
+        titleField.textProperty().addListener((obs, oldVal, newVal) -> {
+            if (newVal.length() > MAX_TITLE_LENGTH) {
+                titleField.setText(oldVal);
+            }
+            updateCharCount(titleCharCount, newVal.length(), MAX_TITLE_LENGTH);
+            validateCapitalization(titleField, newVal);
+        });
+
+        // Validation en temps réel pour le contenu
+        contentArea.textProperty().addListener((obs, oldVal, newVal) -> {
+            if (newVal.length() > MAX_CONTENT_LENGTH) {
+                contentArea.setText(oldVal);
+            }
+            updateCharCount(contentCharCount, newVal.length(), MAX_CONTENT_LENGTH);
+            validateCapitalization(contentArea, newVal);
+        });
+
+        // Initialiser les compteurs
+        updateCharCount(titleCharCount, 0, MAX_TITLE_LENGTH);
+        updateCharCount(contentCharCount, 0, MAX_CONTENT_LENGTH);
+    }
+
+    private void setupAutoCorrection() {
+        titleField.focusedProperty().addListener((obs, oldVal, newVal) -> {
+            if (!newVal) capitalizeFirstLetter(titleField);
+        });
+
+        contentArea.focusedProperty().addListener((obs, oldVal, newVal) -> {
+            if (!newVal) capitalizeFirstLetter(contentArea);
+        });
     }
 
     private void populateFields() {
@@ -73,12 +96,16 @@ public class EditQuestionController {
             contentArea.setText(currentQuestion.getContenu());
             specialiteCombo.getSelectionModel().select(currentQuestion.getSpecialite());
             visibleCheck.setSelected(currentQuestion.isVisible());
+
+            // Mettre à jour les compteurs
+            updateCharCount(titleCharCount, currentQuestion.getTitre().length(), MAX_TITLE_LENGTH);
+            updateCharCount(contentCharCount, currentQuestion.getContenu().length(), MAX_CONTENT_LENGTH);
         }
     }
 
     @FXML
     private void handleSave() {
-        if (!validateInputs()) {
+        if (!validateFields()) {
             return;
         }
 
@@ -87,56 +114,60 @@ public class EditQuestionController {
             questionService.modifier(currentQuestion);
             closeWindow();
         } catch (SQLException e) {
-            showAlert("Erreur", "Erreur lors de la modification", e.getMessage(), Alert.AlertType.ERROR);
+            showAlert("Erreur", "Erreur lors de la modification",
+                    "Une erreur est survenue: " + e.getMessage(),
+                    Alert.AlertType.ERROR);
         }
     }
 
-    private boolean validateInputs() {
-        String title = titleField.getText().trim();
-        String content = contentArea.getText().trim();
-        Specialite specialite = specialiteCombo.getValue();
-
+    private boolean validateFields() {
         // Validation du titre
+        String title = titleField.getText().trim();
         if (title.isEmpty()) {
-            showAlert("Erreur", "Champ manquant", "Le titre ne peut pas être vide", Alert.AlertType.ERROR);
+            showAlert("Erreur", "Titre manquant", "Le titre est obligatoire", Alert.AlertType.ERROR);
             titleField.requestFocus();
             return false;
         }
-
-        if (title.length() < TITLE_MIN_LENGTH) {
+        if (title.length() < MIN_TITLE_LENGTH) {
             showAlert("Erreur", "Titre trop court",
-                    "Le titre doit contenir au moins " + TITLE_MIN_LENGTH + " caractères",
+                    "Le titre doit contenir au moins " + MIN_TITLE_LENGTH + " caractères",
                     Alert.AlertType.ERROR);
             titleField.requestFocus();
             return false;
         }
-
-        if (!TITLE_PATTERN.matcher(title).matches()) {
-            showAlert("Erreur", "Caractères invalides",
-                    "Le titre contient des caractères non autorisés",
+        if (!Character.isUpperCase(title.charAt(0))) {
+            showAlert("Erreur", "Format incorrect",
+                    "Le titre doit commencer par une majuscule",
                     Alert.AlertType.ERROR);
             titleField.requestFocus();
             return false;
         }
 
         // Validation du contenu
+        String content = contentArea.getText().trim();
         if (content.isEmpty()) {
-            showAlert("Erreur", "Champ manquant", "Le contenu ne peut pas être vide", Alert.AlertType.ERROR);
+            showAlert("Erreur", "Contenu manquant", "Veuillez décrire votre question", Alert.AlertType.ERROR);
             contentArea.requestFocus();
             return false;
         }
-
-        if (content.length() < CONTENT_MIN_LENGTH) {
-            showAlert("Erreur", "Contenu trop court",
-                    "Le contenu doit contenir au moins " + CONTENT_MIN_LENGTH + " caractères",
+        if (content.length() < MIN_CONTENT_LENGTH) {
+            showAlert("Erreur", "Description trop courte",
+                    "La description doit contenir au moins " + MIN_CONTENT_LENGTH + " caractères",
+                    Alert.AlertType.ERROR);
+            contentArea.requestFocus();
+            return false;
+        }
+        if (!Character.isUpperCase(content.charAt(0))) {
+            showAlert("Erreur", "Format incorrect",
+                    "La description doit commencer par une majuscule",
                     Alert.AlertType.ERROR);
             contentArea.requestFocus();
             return false;
         }
 
         // Validation de la spécialité
-        if (specialite == null) {
-            showAlert("Erreur", "Champ manquant", "Veuillez sélectionner une spécialité", Alert.AlertType.ERROR);
+        if (specialiteCombo.getValue() == null) {
+            showAlert("Erreur", "Spécialité manquante", "Veuillez sélectionner une spécialité", Alert.AlertType.ERROR);
             specialiteCombo.requestFocus();
             return false;
         }
@@ -151,34 +182,41 @@ public class EditQuestionController {
         currentQuestion.setVisible(visibleCheck.isSelected());
     }
 
+    private void updateCharCount(Label counterLabel, int currentLength, int maxLength) {
+        if (counterLabel != null) {
+            counterLabel.setText(String.format("%d/%d", currentLength, maxLength));
+            if (currentLength > maxLength * 0.9) {
+                counterLabel.setStyle("-fx-text-fill: red;");
+            } else {
+                counterLabel.setStyle("-fx-text-fill: gray;");
+            }
+        }
+    }
+
+    private void validateCapitalization(TextInputControl field, String text) {
+        if (!text.isEmpty() && !Character.isUpperCase(text.charAt(0))) {
+            field.setStyle("-fx-border-color: red;");
+        } else {
+            field.setStyle("");
+        }
+    }
+
+    private void capitalizeFirstLetter(TextInputControl field) {
+        String text = field.getText();
+        if (!text.isEmpty() && Character.isLowerCase(text.charAt(0))) {
+            String corrected = text.substring(0, 1).toUpperCase() + text.substring(1);
+            field.setText(corrected);
+            field.setStyle("");
+        }
+    }
+
     @FXML
-    private void handleCancel(ActionEvent event) {
+    private void handleCancel() {
         closeWindow();
     }
 
     private void closeWindow() {
         titleField.getScene().getWindow().hide();
-    }
-
-    // Méthodes pour les effets de survol
-    @FXML
-    private void onCancelHover(MouseEvent event) {
-        cancelButton.setStyle("-fx-background-color: #c0392b; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10;");
-    }
-
-    @FXML
-    private void onCancelExit(MouseEvent event) {
-        cancelButton.setStyle("-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10;");
-    }
-
-    @FXML
-    private void onSaveHover(MouseEvent event) {
-        saveButton.setStyle("-fx-background-color: #219150; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10;");
-    }
-
-    @FXML
-    private void onSaveExit(MouseEvent event) {
-        saveButton.setStyle("-fx-background-color: #27ae60; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10;");
     }
 
     private void showAlert(String title, String header, String content, Alert.AlertType type) {
