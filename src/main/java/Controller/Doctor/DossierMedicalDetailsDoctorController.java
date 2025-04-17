@@ -2,34 +2,88 @@ package Controller.Doctor;
 
 import entities.DossierMedical;
 import entities.Prediction;
-import services.ServiceDossierMedical;
-import services.ServicePrediction;
+import entities.Utilisateur;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import Controller.AnalyseListController;
+import services.ServiceDossierMedical;
+import services.ServicePrediction;
+import services.ServiceUtilisateur;
 
-import java.awt.*;
+import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.SQLException;
 
 public class DossierMedicalDetailsDoctorController {
+
     @FXML private Label utilisateurIdLabel;
     @FXML private Label dateLabel;
     @FXML private Label uniteLabel;
     @FXML private Label mesureLabel;
-
     @FXML private Label diabeteLabel;
 
     private Stage stage;
     private DossierMedical dossier;
     private ServiceDossierMedical serviceDossierMedical = new ServiceDossierMedical();
+    private ServiceUtilisateur serviceUtilisateur = new ServiceUtilisateur();
 
     public DossierMedicalDetailsDoctorController() throws SQLException {
+    }
+
+    @FXML
+    private void previewFilePatient() throws SQLException {
+        Utilisateur user = serviceUtilisateur.getById(dossier.getUtilisateurId());
+        if (dossier == null || user.getEmail() == null) {
+            showAlert("Erreur", "Aucune information sur le patient associée à ce dossier médical.");
+            return;
+        }
+
+        try {
+            String email = user.getEmail();
+            String fileName = "Fichier Patient de " + email + ".txt";
+            fileName = fileName.replaceAll("[^a-zA-Z0-9.@ ]", "_");
+
+            String filePath = "src/main/resources/fichier/" + fileName;
+            File file = new File(filePath);
+
+            if (!file.exists()) {
+                showAlert("Erreur", "Le fichier des mesures du patient n'existe pas : " + filePath);
+                return;
+            }
+
+            String content = new String(Files.readAllBytes(Paths.get(filePath)));
+
+            Stage previewStage = new Stage();
+            previewStage.setTitle("Mesures du Patient - " + email);
+
+            VBox vbox = new VBox(10);
+            vbox.setPadding(new javafx.geometry.Insets(10));
+
+            TextArea textArea = new TextArea(content);
+            textArea.setEditable(false);
+            textArea.setWrapText(true);
+            textArea.setPrefHeight(300);
+            textArea.setPrefWidth(400);
+
+            Button closeButton = new Button("Fermer");
+            closeButton.setOnAction(e -> previewStage.close());
+
+            vbox.getChildren().addAll(new Label("Mesures du Patient :"), textArea, closeButton);
+
+            Scene scene = new Scene(vbox);
+            previewStage.setScene(scene);
+            previewStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert("Erreur", "Impossible de lire le fichier des mesures : " + e.getMessage());
+        }
     }
 
     @FXML
@@ -40,23 +94,19 @@ public class DossierMedicalDetailsDoctorController {
         }
 
         try {
-            // Récupérer le chemin du fichier
             String filePath = dossier.getFichier();
             File file = new File(filePath);
 
-            // Vérifier si le fichier existe
             if (!file.exists()) {
                 showAlert("Erreur", "Le fichier spécifié n'existe pas : " + filePath);
                 return;
             }
 
-            // Vérifier si Desktop est supporté
             if (!Desktop.isDesktopSupported()) {
                 showAlert("Erreur", "L'ouverture de fichiers n'est pas supportée sur ce système.");
                 return;
             }
 
-            // Ouvrir le fichier avec l'application par défaut
             Desktop desktop = Desktop.getDesktop();
             desktop.open(file);
         } catch (IOException e) {
@@ -68,7 +118,6 @@ public class DossierMedicalDetailsDoctorController {
     public void setDossier(DossierMedical dossier) {
         this.dossier = dossier;
 
-        // Vérification des labels
         if (utilisateurIdLabel == null || dateLabel == null ||
                 uniteLabel == null || mesureLabel == null || diabeteLabel == null) {
             showAlert("Erreur FXML", "Un ou plusieurs labels n'ont pas été correctement injectés depuis le FXML.");
@@ -94,11 +143,9 @@ public class DossierMedicalDetailsDoctorController {
         }
     }
 
-
     @FXML
     private void modifyDossier() {
         try {
-            // Mise à jour du chemin du FXML
             String fxmlPath = "/fxml/Admin/FormDossierMedicalAdmin.fxml";
             if (getClass().getResource(fxmlPath) == null) {
                 throw new IOException("Impossible de trouver le fichier FXML : " + fxmlPath);
@@ -148,7 +195,6 @@ public class DossierMedicalDetailsDoctorController {
             stage.setResizable(true);
             stage.showAndWait();
 
-            // Rafraîchir les prédictions affichées après la gestion
             setDossier(dossier);
         } catch (IOException e) {
             e.printStackTrace();
@@ -161,7 +207,7 @@ public class DossierMedicalDetailsDoctorController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Doctor/AnalyseListDoctor.fxml"));
             Parent root = loader.load();
-            AnalyseListController controller = loader.getController();
+            Controller.AnalyseListController controller = loader.getController();
             controller.filterByDossierId(dossier.getId());
 
             Stage analyseStage = new Stage();
@@ -182,7 +228,7 @@ public class DossierMedicalDetailsDoctorController {
     }
 
     private void showAlert(String title, String message) {
-        javafx.scene.control.Alert alert = new javafx.scene.control.Alert(javafx.scene.control.Alert.AlertType.ERROR);
+        Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(message);

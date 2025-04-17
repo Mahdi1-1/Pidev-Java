@@ -5,20 +5,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="55a3e1c6-e460-47be-a547-a8ab5d612b9d" name="Changes" comment="correction formulaire analyse">
-      <change afterPath="$PROJECT_DIR$/src/main/java/tests/Main/MainAdminController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/tests/Main/MainDoctorController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/utils/UtilisateurStatique.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/Admin/DossierMedicalDetailsAdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/Admin/DossierMedicalDetailsAdminController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/Admin/DossierMedicalListAdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/Admin/DossierMedicalListAdminController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/Admin/DossierMedicalFormController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/Admin/DossierMedicalFormController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/AnalyseDetailsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/AnalyseDetailsController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/AnalyseFormController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/AnalyseFormController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/AnalyseListController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/AnalyseListController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Controller/Doctor/DossierMedicalDetailsDoctorController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/Doctor/DossierMedicalDetailsDoctorController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/Patient/DossierMedicalDetailsPatientController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/Patient/DossierMedicalDetailsPatientController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/Doctor/DossierMedicalListDoctorController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/Doctor/DossierMedicalListDoctorController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/services/ServiceAnalyse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/services/ServiceAnalyse.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/tests/Main/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tests/Main/MainController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/MedicalStyle.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/MedicalStyle.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/fxml/Admin/DossierMedicalDetailsAdmin.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/fxml/Admin/DossierMedicalDetailsAdmin.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/fxml/Admin/FormDossierMedicalAdmin.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/fxml/Admin/FormDossierMedicalAdmin.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/fxml/Doctor/DossierMedicalDetailsDoctor.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/fxml/Doctor/DossierMedicalDetailsDoctor.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/fxml/Doctor/DossierMedicalListDoctor.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/fxml/Doctor/DossierMedicalListDoctor.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/fxml/Main.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/fxml/Main.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/fxml/Patient/DossierMedicalDetails.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/fxml/Patient/DossierMedicalDetails.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/fxml/Patient/AnalyseDetails.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/fxml/Patient/AnalyseDetails.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/fxml/Patient/FormAnalyse.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/fxml/Patient/FormAnalyse.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,38 +68,38 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.EmailApp.executor": "Run",
-    "Application.MAinDoctor.executor": "Run",
-    "Application.Main.executor": "Run",
-    "Application.MainAdmin.executor": "Run",
-    "Application.MainDoctor.executor": "Run",
-    "Application.MainPatient.executor": "Run",
-    "Application.Prediction.executor": "Run",
-    "Application.Unnamed.executor": "Run",
-    "Application.mail.executor": "Run",
-    "Application.test.executor": "Run",
-    "Application.tests.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/21693/IdeaProjects/pidev2/src/main/resources/fxml/Patient",
-    "list.type.of.created.stylesheet": "CSS",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "onboarding.tips.debug.path": "C:/Users/21693/IdeaProjects/pidev2/src/main/java/org/example/Main.java",
-    "project.structure.last.edited": "SDKs",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2226311",
-    "settings.editor.selected.configurable": "preferences.JavaFX",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.EmailApp.executor&quot;: &quot;Run&quot;,
+    &quot;Application.MAinDoctor.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;Application.MainAdmin.executor&quot;: &quot;Run&quot;,
+    &quot;Application.MainDoctor.executor&quot;: &quot;Run&quot;,
+    &quot;Application.MainPatient.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Prediction.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Unnamed.executor&quot;: &quot;Run&quot;,
+    &quot;Application.mail.executor&quot;: &quot;Run&quot;,
+    &quot;Application.test.executor&quot;: &quot;Run&quot;,
+    &quot;Application.tests.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/21693/IdeaProjects/pidev2/src/main/resources/fxml/Patient&quot;,
+    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;onboarding.tips.debug.path&quot;: &quot;C:/Users/21693/IdeaProjects/pidev2/src/main/java/org/example/Main.java&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;SDKs&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2226311&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.JavaFX&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\21693\IdeaProjects\pidev2\src\main\resources\fxml\Patient" />
@@ -193,6 +195,7 @@
       <workItem from="1742898708282" duration="57452000" />
       <workItem from="1743805057954" duration="39747000" />
       <workItem from="1744107751991" duration="57744000" />
+      <workItem from="1744912761335" duration="7356000" />
     </task>
     <task id="LOCAL-00001" summary="crud cbon">
       <option name="closed" value="true" />

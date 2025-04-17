@@ -18,10 +18,13 @@
                 <!-- Formulaire dans une carte -->
                 <VBox styleClass="card" spacing="10.0">
                     <children>
-                        <TextField fx:id="dossierIdField" promptText="Dossier ID" styleClass="text-field"/>
-                        <TextField fx:id="typeField" promptText="Type" styleClass="text-field"/>
-                        <TextField fx:id="dateAnalyseField" promptText="Date Analyse (YYYY-MM-DD)" styleClass="text-field"/>
-                        <TextField fx:id="donneesAnalyseField" promptText="Données Analyse" styleClass="text-field"/>
+                        <ChoiceBox fx:id="typeChoiceBox" styleClass="text-field" prefWidth="276.0"/>
+                        <DatePicker fx:id="dateAnalyseField" promptText="Date Analyse (YYYY-MM-DD)" styleClass="text-field" prefHeight="50.0" prefWidth="276.0" />
+                        <Label styleClass="label" text="Donnees Analyse :" />
+                        <HBox spacing="5.0">
+                            <TextField fx:id="donneesAnalyseField" styleClass="text-field" editable="false" />
+                            <Button onAction="#handleSelectFile" styleClass="button" text="Sélectionner" />
+                        </HBox>
                         <TextField fx:id="diagnosticField" promptText="Diagnostic" styleClass="text-field"/>
                         <HBox spacing="10.0" alignment="CENTER" styleClass="padding-medium">
                             <children>

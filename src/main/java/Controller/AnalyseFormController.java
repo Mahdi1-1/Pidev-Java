@@ -1,48 +1,80 @@
 package Controller;
 
 import entities.Analyse;
+import entities.DossierMedical;
+import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import services.ServiceAnalyse;
+import services.ServiceDossierMedical;
+import utils.UtilisateurStatique;
 
+import java.io.File;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
+import java.util.Arrays;
 
 public class AnalyseFormController {
 
-    @FXML private TextField dossierIdField;
-    @FXML private TextField typeField;
-    @FXML private TextField dateAnalyseField;
+    @FXML private ChoiceBox<String> typeChoiceBox; // Remplacé TextField par ChoiceBox
+    @FXML private DatePicker dateAnalyseField; // Déjà un DatePicker
     @FXML private TextField donneesAnalyseField;
     @FXML private TextField diagnosticField;
 
     private Analyse analyse;
     private AnalyseListController listController;
     private ServiceAnalyse serviceAnalyse;
+    private ServiceDossierMedical serviceDossierMedical;
+    private Integer dossierId;
 
     public AnalyseFormController() throws SQLException {
         this.serviceAnalyse = new ServiceAnalyse();
+        this.serviceDossierMedical = new ServiceDossierMedical();
     }
 
     @FXML
     public void initialize() {
-        // Rien à faire ici pour le moment
-        // La logique de pré-remplissage sera déplacée dans setAnalyse
+        // Initialiser la ChoiceBox avec une liste de types d'analyses
+        typeChoiceBox.setItems(FXCollections.observableArrayList(
+                "Analyse de sang",
+                "Analyse d'urine",
+                "Radiographie",
+                "Échographie",
+                "Test de glycémie"
+        ));
+        typeChoiceBox.setValue("Analyse de sang"); // Valeur par défaut
+
+        // Récupérer automatiquement le dossierId à partir de l'utilisateur statique
+        try {
+            int utilisateurId = UtilisateurStatique.getUtilisateurId();
+            if (utilisateurId == -1) {
+                showAlert("Erreur", "Aucun utilisateur connecté défini.");
+                return;
+            }
+            DossierMedical dossier = serviceDossierMedical.getByUtilisateurId(utilisateurId);
+            if (dossier != null) {
+                dossierId = dossier.getId();
+            } else {
+                showAlert("Erreur", "Aucun dossier médical trouvé pour l'utilisateur connecté.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            showAlert("Erreur", "Erreur lors de la récupération du dossier médical : " + e.getMessage());
+        }
     }
+
 
     public void setAnalyse(Analyse analyse) {
         this.analyse = analyse;
-        // Pré-remplir les champs si on modifie une analyse existante
         if (analyse != null) {
-            dossierIdField.setText(String.valueOf(analyse.getDossierId()));
-            typeField.setText(analyse.getType());
-            dateAnalyseField.setText(analyse.getDateAnalyse().toString());
+            typeChoiceBox.setValue(analyse.getType());
+            dateAnalyseField.setValue(analyse.getDateAnalyse());
             donneesAnalyseField.setText(analyse.getDonneesAnalyse());
             diagnosticField.setText(analyse.getDiagnostic());
+            dossierId = analyse.getDossierId();
         }
     }
 
@@ -51,27 +83,38 @@ public class AnalyseFormController {
     }
 
     @FXML
+    private void handleSelectFile(ActionEvent event) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Sélectionner un fichier");
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Tous les fichiers", "*.*"),
+                new FileChooser.ExtensionFilter("Images", "*.png", "*.jpg", "*.jpeg"),
+                new FileChooser.ExtensionFilter("PDF", "*.pdf"),
+                new FileChooser.ExtensionFilter("Documents", "*.txt", "*.doc", "*.docx")
+        );
+
+        File selectedFile = fileChooser.showOpenDialog(donneesAnalyseField.getScene().getWindow());
+        if (selectedFile != null) {
+            donneesAnalyseField.setText(selectedFile.getAbsolutePath());
+        }
+    }
+    @FXML
     private void saveAnalyse() {
         try {
             // Valider les champs
-            int dossierId = Integer.parseInt(dossierIdField.getText().trim());
-            String type = typeField.getText().trim();
-            String dateStr = dateAnalyseField.getText().trim();
+            String type = typeChoiceBox.getValue(); // Récupérer la valeur sélectionnée
+            LocalDate dateAnalyse = dateAnalyseField.getValue(); // Récupérer directement la date
             String donnees = donneesAnalyseField.getText().trim();
             String diagnostic = diagnosticField.getText().trim();
 
-            if (type.isEmpty() || dateStr.isEmpty() || donnees.isEmpty() || diagnostic.isEmpty()) {
+            if (type == null || dateAnalyse == null || donnees.isEmpty() || diagnostic.isEmpty()) {
                 showAlert("Erreur", "Tous les champs doivent être remplis.");
                 return;
             }
 
-            // Valider et parser la date
-            LocalDate dateAnalyse;
-            try {
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-                dateAnalyse = LocalDate.parse(dateStr, formatter);
-            } catch (DateTimeParseException e) {
-                showAlert("Erreur", "La date doit être au format YYYY-MM-DD.");
+            // Vérifier que dossierId a été récupéré
+            if (dossierId == null) {
+                showAlert("Erreur", "Impossible de déterminer le dossier médical associé.");
                 return;
             }
 
@@ -92,14 +135,12 @@ public class AnalyseFormController {
             }
 
             // Fermer la fenêtre et rafraîchir la liste
-            Stage stage = (Stage) dossierIdField.getScene().getWindow();
+            Stage stage = (Stage) typeChoiceBox.getScene().getWindow();
             stage.close();
 
             if (listController != null) {
                 listController.loadAnalyses();
             }
-        } catch (NumberFormatException e) {
-            showAlert("Erreur", "L'ID du dossier doit être un nombre valide.");
         } catch (SQLException e) {
             showAlert("Erreur", "Erreur lors de l'enregistrement : " + e.getMessage());
         }

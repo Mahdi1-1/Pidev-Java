@@ -189,12 +189,6 @@ public class DossierMedicalListDoctorController implements Initializable {
     }
 
     @FXML
-    private void applyFilters() {
-        currentPage = 1;
-        loadDossiers();
-    }
-
-    @FXML
     private void resetFilters() {
         uniteFilter.setValue("");
         dateFilter.setValue(null);

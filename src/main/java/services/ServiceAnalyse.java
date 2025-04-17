@@ -16,7 +16,7 @@ public class ServiceAnalyse implements IService<Analyse> {
 
     @Override
     public void ajouter(Analyse analyse) throws SQLException {
-        String query = "INSERT INTO analyse (dossier_id, type, date_analyse, donnees_analyse, diagnostic) VALUES (?, ?, ?, ?, ?)";
+        String query = "INSERT INTO analyse (dossier_id, type, dateanalyse, donnees_analyse, diagnostic) VALUES (?, ?, ?, ?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setInt(1, analyse.getDossierId());
             stmt.setString(2, analyse.getType());
@@ -29,7 +29,7 @@ public class ServiceAnalyse implements IService<Analyse> {
 
     @Override
     public void modifier(Analyse analyse) throws SQLException {
-        String query = "UPDATE analyse SET dossier_id = ?, type = ?, date_analyse = ?, donnees_analyse = ?, diagnostic = ? WHERE id = ?";
+        String query = "UPDATE analyse SET dossier_id = ?, type = ?, dateanalyse = ?, donnees_analyse = ?, diagnostic = ? WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setInt(1, analyse.getDossierId());
             stmt.setString(2, analyse.getType());

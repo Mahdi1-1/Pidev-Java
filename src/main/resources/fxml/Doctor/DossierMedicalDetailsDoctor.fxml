@@ -24,6 +24,8 @@
         <Button text="Aperçu" onAction="#previewFile" styleClass="button-large" /> <!-- Bouton ajouté -->
         <Label fx:id="uniteLabel" styleClass="label"/>
         <Label fx:id="mesureLabel" styleClass="label"/>
+        <Button text="Aperçu" onAction="#previewFilePatient" styleClass="button-large" /> <!-- Bouton ajouté -->
+
         <!-- Section pour les prédictions -->
         <Label fx:id="diabeteLabel" text="Risque de Diabète: " />
     </VBox>

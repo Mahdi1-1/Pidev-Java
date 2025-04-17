@@ -73,9 +73,6 @@ public class AnalyseListController implements Initializable {
             Label titleLabel = new Label("Analyse #" + analyse.getId());
             titleLabel.getStyleClass().add("title");
 
-            Label dossierIdLabel = new Label("Dossier ID: " + analyse.getDossierId());
-            dossierIdLabel.getStyleClass().add("label");
-
             Label typeLabel = new Label("Type: " + analyse.getType());
             typeLabel.getStyleClass().add("label");
 
@@ -92,7 +89,7 @@ public class AnalyseListController implements Initializable {
             detailsButton.getStyleClass().add("details-button");
             detailsButton.setOnAction(event -> showDetails(analyse));
 
-            card.getChildren().addAll(titleLabel, dossierIdLabel, typeLabel, dateLabel, donneesLabel, diagnosticLabel, detailsButton);
+            card.getChildren().addAll(titleLabel,typeLabel, dateLabel, donneesLabel, diagnosticLabel, detailsButton);
 
             // Ajouter un gestionnaire de clic pour sélectionner la carte
             card.setOnMouseClicked(event -> {
@@ -173,7 +170,7 @@ public class AnalyseListController implements Initializable {
                 fxmlPath = "/fxml/Admin/AnalyseDetailsAdmin.fxml";
             }
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Patient/AnalyseDetails.fxml"));
             Parent root = loader.load();
             AnalyseDetailsController controller = loader.getController();
             controller.setAnalyse(analyse);

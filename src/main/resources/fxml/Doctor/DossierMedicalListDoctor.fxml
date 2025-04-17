@@ -32,7 +32,6 @@
         <Label text="Rechercher :" styleClass="label"/>
         <TextField fx:id="searchField" promptText="Rechercher par fichier ou unité..." prefWidth="200" styleClass="text-field"/>
 
-        <Button fx:id="filterButton" text="Filtrer" onAction="#applyFilters" styleClass="button"/>
         <Button fx:id="resetButton" text="Réinitialiser" onAction="#resetFilters" styleClass="button button-reset"/>
     </HBox>
 

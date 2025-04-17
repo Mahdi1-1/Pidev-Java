@@ -11,6 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import Controller.Patient.DossierMedicalDetailsPatientController;
+import utils.UtilisateurStatique;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -39,11 +40,11 @@ public class MainController {
                 showAlert("Erreur", "Aucun utilisateur connecté. Veuillez vous connecter.");
                 return;
             }*/
-
+            UtilisateurStatique.setUtilisateurId(6);
             int userId;
             try {
                 //userId = Integer.parseInt(utilisateurId);
-                userId =2;
+                userId = UtilisateurStatique.getUtilisateurId();
             } catch (NumberFormatException e) {
                 showAlert("Erreur", "L'ID de l'utilisateur doit être un nombre entier : " + utilisateurId);
                 return;
@@ -73,7 +74,7 @@ public class MainController {
 
             Stage stage = new Stage();
             stage.setTitle("Détails du Dossier Médical (Patient)");
-            stage.setScene(new Scene(root, 600, 600)); // Taille augmentée pour un grand format
+            stage.setScene(new Scene(root, 800, 600)); // Taille augmentée pour un grand format
             stage.setResizable(true);
             stage.show();
 

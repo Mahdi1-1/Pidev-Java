@@ -35,7 +35,7 @@
             </HBox>
 
             <Label styleClass="label" text="Unité :" />
-            <TextField fx:id="uniteField" styleClass="text-field" />
+            <ChoiceBox fx:id="uniteChoiceBox" styleClass="choice-box" />
 
             <Label styleClass="label" text="Mesure :" />
             <TextField fx:id="mesureField" styleClass="text-field" />

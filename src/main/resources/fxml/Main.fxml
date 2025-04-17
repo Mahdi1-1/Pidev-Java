@@ -6,7 +6,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="552.0" prefWidth="849.0" xmlns="http://javafx.com/javafx/24" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tests.Main.MainController">
+<AnchorPane prefHeight="552.0" prefWidth="849.0" xmlns="http://javafx.com/javafx/24" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tests.Main.MainAdminController">
     <stylesheets>
         <URL value="@../MedicalStyle.css" />
     </stylesheets>

@@ -1,0 +1,3 @@
+Date: 2025-04-17, Unité: mg/dL, Mesure: 50.0
+Date: 2025-04-17, Unité: mg/dL, Mesure: 50.01
+Date: 2025-04-17, Heure: 21:25:27, Unité: mg/dL, Mesure: 50.015

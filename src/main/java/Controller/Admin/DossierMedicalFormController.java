@@ -2,6 +2,7 @@ package Controller.Admin;
 
 import entities.DossierMedical;
 import entities.Utilisateur;
+import javafx.collections.FXCollections;
 import services.ServiceDossierMedical;
 import services.ServiceUtilisateur;
 import javafx.event.ActionEvent;
@@ -10,9 +11,14 @@ import javafx.scene.control.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,7 +28,7 @@ public class DossierMedicalFormController {
     @FXML private ChoiceBox<String> utilisateurChoiceBox;
     @FXML private DatePicker datePicker;
     @FXML private TextField fichierField;
-    @FXML private TextField uniteField;
+    @FXML private ChoiceBox<String> uniteChoiceBox; // Remplacé TextField par ChoiceBox
     @FXML private TextField mesureField;
     @FXML private Button saveButton;
     @FXML private Button cancelButton;
@@ -65,6 +71,10 @@ public class DossierMedicalFormController {
         } catch (SQLException e) {
             showAlert(Alert.AlertType.ERROR, "Erreur", "Erreur lors du chargement des utilisateurs : " + e.getMessage());
         }
+        // Initialiser la ChoiceBox des unités
+        uniteChoiceBox.setItems(FXCollections.observableArrayList(
+                "mg/dL", "mmol/L", "g/L", "U/L", "mL"
+        ));
     }
 
     public void setDossier(DossierMedical dossier) {
@@ -81,7 +91,7 @@ public class DossierMedicalFormController {
                 }
                 datePicker.setValue(dossier.getDate());
                 fichierField.setText(dossier.getFichier());
-                uniteField.setText(dossier.getUnite());
+                uniteChoiceBox.setValue(dossier.getUnite());
                 mesureField.setText(String.valueOf(dossier.getMesure()));
                 saveButton.setText("Mettre à jour");
             } catch (SQLException e) {
@@ -132,7 +142,7 @@ public class DossierMedicalFormController {
                 return;
             }
 
-            String unite = uniteField.getText().trim();
+            String unite = uniteChoiceBox.getValue(); // Utiliser la ChoiceBox
             if (unite.isEmpty()) {
                 showAlert(Alert.AlertType.ERROR, "Erreur", "Veuillez entrer une unité.");
                 return;
@@ -175,6 +185,8 @@ public class DossierMedicalFormController {
                 dossier.setMesure(mesure);
                 serviceDossier.modifier(dossier);
                 showAlert(Alert.AlertType.INFORMATION, "Succès", "Dossier médical modifié avec succès !");
+                // Sauvegarder l'unité et la mesure dans le fichier MesurePatient.txt
+                saveToMesurePatientFile(selectedEmail, unite, String.valueOf(mesure));
             }
 
             if (listController != null) {
@@ -195,6 +207,37 @@ public class DossierMedicalFormController {
         stage.close();
     }
 
+    private void saveToMesurePatientFile(String email, String unite, String mesure) {
+        try {
+            String fileName = "Fichier Patient de " + email + ".txt";
+            fileName = fileName.replaceAll("[^a-zA-Z0-9.@ ]", "_");
+
+            File directory = new File("src/main/resources/fichier");
+            if (!directory.exists()) {
+                directory.mkdirs();
+            }
+            File file = new File(directory, fileName);
+
+            // Utiliser la date et l'heure actuelles
+            LocalDateTime currentDateTime = LocalDateTime.now();
+            DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+            String formattedDate = currentDateTime.format(dateFormatter);
+            String formattedTime = currentDateTime.format(timeFormatter);
+
+            // Créer la ligne à écrire avec l'heure
+            String line = String.format("Date: %s, Heure: %s, Unité: %s, Mesure: %s%n",
+                    formattedDate, formattedTime, unite, mesure);
+
+            try (FileWriter fw = new FileWriter(file, true);
+                 BufferedWriter bw = new BufferedWriter(fw)) {
+                bw.write(line);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            showAlert("Erreur", "Erreur lors de l'écriture dans le fichier patient : " + e.getMessage());
+        }
+    }
     private void showAlert(Alert.AlertType alertType, String title, String message) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);
@@ -203,6 +246,13 @@ public class DossierMedicalFormController {
         if (getClass().getResource("/MedicalStyle.css") != null) {
             alert.getDialogPane().getStylesheets().add(getClass().getResource("/MedicalStyle.css").toExternalForm());
         }
+        alert.showAndWait();
+    }
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
         alert.showAndWait();
     }
 }

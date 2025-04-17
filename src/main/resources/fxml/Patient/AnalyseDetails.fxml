@@ -3,7 +3,7 @@
 <?import javafx.scene.layout.*?>
 <?import java.net.URL?>
 
-<AnchorPane prefHeight="300.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/24" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.AnalyseDetailsController">
+<AnchorPane prefHeight="400.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/24" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.AnalyseDetailsController">
     <stylesheets>
         <URL value="@../../MedicalStyle.css" />
     </stylesheets>
@@ -21,7 +21,8 @@
                         <Label fx:id="dossierIdLabel" styleClass="label"/>
                         <Label fx:id="typeLabel" styleClass="label"/>
                         <Label fx:id="dateAnalyseLabel" styleClass="label"/>
-                        <Label fx:id="donneesAnalyseLabel" styleClass="label" wrapText="true"/>
+                        <Label fx:id="donneesAnalyseLabel" styleClass="label" wrapText="true"/> <!-- Ajouté -->
+                        <Button text="Aperçu" onAction="#previewFile" styleClass="button-large" /> <!-- Bouton ajouté -->
                         <Label fx:id="diagnosticLabel" styleClass="label" wrapText="true"/>
                         <HBox spacing="10.0" alignment="CENTER" styleClass="padding-medium">
                             <children>
