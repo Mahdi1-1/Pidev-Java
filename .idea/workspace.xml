@@ -5,7 +5,34 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="55a3e1c6-e460-47be-a547-a8ab5d612b9d" name="Changes" comment="pagination recherche dynamique filtrage cbonn">
-      <change beforePath="$PROJECT_DIR$/src/main/java/tests/Admin/DossierMedicalFormController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tests/Admin/DossierMedicalFormController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/entities/Question.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/entities/Reponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/entities/Vote.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/enums/TypeVote.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/services/QuestionService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/services/ReponseService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/tests/Admin/ListQuestionAdmin.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/tests/Admin/ListResponsesAdminController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/tests/Doctor/AddResponseController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/tests/Doctor/ListQuestionDocteur.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/tests/Doctor/ManageResponsesController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/tests/Patient/AddQuestionController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/tests/Patient/EditQuestionController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/tests/Patient/ListQuestionController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/tests/Patient/ListResponsesController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/fxml/Admin/ListQuestion.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/fxml/Admin/ListResponsesAdmin.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/fxml/Doctor/AddResponse.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/fxml/Doctor/ListQuestionDocteur.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/fxml/Doctor/ManageResponses .fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/fxml/Patient/AddQuestion.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/fxml/Patient/EditQuestion.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/fxml/Patient/ListQuestion.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/fxml/Patient/ListResponses.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tests/Main/MainDoctor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tests/Main/MainDoctor.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,14 +65,16 @@
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/Mahdi1-1/Pidev-Java.git&quot;,
-    &quot;accountId&quot;: &quot;c7e13da9-92b6-4811-b773-cb8f3918fb2c&quot;
+    &quot;accountId&quot;: &quot;8a34b403-4d4a-49dd-bd78-e47a4e8adb3d&quot;
   }
 }</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 6
 }</component>
   <component name="ProjectId" id="2uZttsfM7gLbWzaa6usbTJkrSqe" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -63,11 +92,17 @@
     "Application.mail.executor": "Run",
     "Application.test.executor": "Run",
     "Application.tests.executor": "Run",
+    "Maven.pidev2 [org.apache.maven.plugins:maven-clean-plugin:3.2.0:clean].executor": "Run",
+    "Maven.pidev2 [org.apache.maven.plugins:maven-install-plugin:3.1.2:install].executor": "Run",
+    "Maven.pidev2 [org.openjfx:javafx-maven-plugin:0.0.8:jlink].executor": "Run",
+    "Maven.pidev2 [org.openjfx:javafx-maven-plugin:0.0.8:run].executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/21693/IdeaProjects/pidev2/src/main/resources/fxml/Doctor",
+    "last_opened_file_path": "C:/Users/lenovo/Desktop/sousou/mahdi/Pidev-Java/src/main/resources/images",
     "list.type.of.created.stylesheet": "CSS",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -75,15 +110,17 @@
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "onboarding.tips.debug.path": "C:/Users/21693/IdeaProjects/pidev2/src/main/java/org/example/Main.java",
-    "project.structure.last.edited": "SDKs",
+    "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2226311",
-    "settings.editor.selected.configurable": "reference.settings.project.maven.repository.indices",
+    "settings.editor.selected.configurable": "preferences.JavaFX",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\lenovo\Desktop\sousou\mahdi\Pidev-Java\src\main\resources\images" />
+      <recent name="C:\Users\user\Desktop\mahdi\Pidev-Java\src\main\java\entities" />
       <recent name="C:\Users\21693\IdeaProjects\pidev2\src\main\resources\fxml\Doctor" />
       <recent name="C:\Users\21693\IdeaProjects\pidev2\src\main\resources\fxml\Admin" />
       <recent name="C:\Users\21693\IdeaProjects\pidev2\src\main\resources\image" />
@@ -144,10 +181,10 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="Application.MainPatient" />
-      <item itemvalue="Application.Prediction" />
       <item itemvalue="Application.MainAdmin" />
       <item itemvalue="Application.MainDoctor" />
+      <item itemvalue="Application.MainPatient" />
+      <item itemvalue="Application.Prediction" />
       <item itemvalue="Application.Main" />
     </list>
     <recent_temporary>
@@ -155,14 +192,6 @@
         <item itemvalue="Application.Main" />
       </list>
     </recent_temporary>
-  </component>
-  <component name="SharedIndexes">
-    <attachedChunks>
-      <set>
-        <option value="bundled-jdk-9823dce3aa75-b114ca120d71-intellij.indexing.shared.core-IU-242.21829.142" />
-        <option value="bundled-js-predefined-d6986cc7102b-7c0b70fcd90d-JavaScript-IU-242.21829.142" />
-      </set>
-    </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -175,6 +204,7 @@
       <workItem from="1742468143946" duration="5223000" />
       <workItem from="1742898708282" duration="57452000" />
       <workItem from="1743805057954" duration="38242000" />
+      <workItem from="1744798715639" duration="10681000" />
     </task>
     <task id="LOCAL-00001" summary="crud cbon">
       <option name="closed" value="true" />
