@@ -65,6 +65,7 @@ public class ServiceOrdonnance implements IService<Ordonnance> {
         try (Statement stmt = connection.createStatement();
              ResultSet rs = stmt.executeQuery(query)) {
             while (rs.next()) {
+                System.out.println(rs);
                 ordonnances.add(extractOrdonnanceFromResultSet(rs));
             }
         }
@@ -96,6 +97,7 @@ public class ServiceOrdonnance implements IService<Ordonnance> {
             stmt.setInt(1, consultationId);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
+
                     return extractOrdonnanceFromResultSet(rs);
                 }
             }
@@ -116,16 +118,19 @@ public class ServiceOrdonnance implements IService<Ordonnance> {
 
         // Set patient
         Utilisateur patient = new Utilisateur();
-        patient.setId(rs.getInt("patient_id"));
-        patient.setNom(rs.getString("patient_nom"));
-        patient.setPrenom(rs.getString("patient_prenom"));
+        ServiceUtilisateur su = new ServiceUtilisateur();
+
+        patient  = su.getById(rs.getInt("patient_id"));
+       // patient.setNom(rs.getString("patient_nom"));
+        patient.setNom("dummy");
+        patient.setPrenom("last name");
+
+        //patient.setPrenom(rs.getString("patient_prenom"));
         consultation.setPatient(patient);
 
         // Set medecin
         Utilisateur medecin = new Utilisateur();
-        medecin.setId(rs.getInt("medecin_id"));
-        medecin.setNom(rs.getString("medecin_nom"));
-        medecin.setPrenom(rs.getString("medecin_prenom"));
+        medecin = su.getById(rs.getInt("medecin_id"));
         consultation.setMedecin(medecin);
 
         ordonnance.setConsultation(consultation);

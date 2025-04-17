@@ -8,141 +8,177 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class ServiceUtilisateur implements IService<Utilisateur> {
     private Connection connection;
 
-    public ServiceUtilisateur() {
+    public ServiceUtilisateur() throws SQLException {
         connection = MyDatabase.getInstance().getConnection();
-        if (connection == null) {
-            System.err.println("La connexion à la base de données est null dans ServiceUtilisateur");
-        }
+        System.out.println("ServiceUtilisateur instancié");
+
+        System.out.println("test");
+        System.out.println(this.afficher());
+
+
     }
 
     @Override
     public void ajouter(Utilisateur utilisateur) throws SQLException {
-        String req = "INSERT INTO utilisateur (nom, prenom, email, roles, password, telephone, adresse, date_naissance, sexe) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        PreparedStatement ps = connection.prepareStatement(req, Statement.RETURN_GENERATED_KEYS);
-        ps.setString(1, utilisateur.getNom());
-        ps.setString(2, utilisateur.getPrenom());
-        ps.setString(3, utilisateur.getEmail());
-        ps.setString(4, utilisateur.getRoles()); // JSON ou texte selon votre besoin
-        ps.setString(5, utilisateur.getPassword());
-        ps.setInt(6, utilisateur.getTelephone());
-        ps.setString(7, utilisateur.getAdresse());
-        ps.setDate(8, Date.valueOf(utilisateur.getDateNaissance()));
-        ps.setString(9, utilisateur.getSexe());
-        ps.executeUpdate();
+        String query = "INSERT INTO utilisateur (nom, prenom, email, roles, password, telephone, adresse, date_naissance, sexe, taille, poids, image, status, diplome, specialite) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        try (PreparedStatement stmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+            stmt.setString(1, utilisateur.getNom());
+            stmt.setString(2, utilisateur.getPrenom());
+            stmt.setString(3, utilisateur.getEmail());
+            stmt.setString(4, utilisateur.getRoles());
+            stmt.setString(5, utilisateur.getPassword());
+            stmt.setInt(6, utilisateur.getTelephone());
+            stmt.setString(7, utilisateur.getAdresse());
+            stmt.setObject(8, utilisateur.getDateNaissance());
+            stmt.setString(9, utilisateur.getSexe());
+            stmt.setObject(10, utilisateur.getTaille());
+            stmt.setObject(11, utilisateur.getPoids());
+            stmt.setString(12, utilisateur.getImage());
+            stmt.setObject(13, utilisateur.getStatus());
+            stmt.setString(14, utilisateur.getDiplome());
+            stmt.setString(15, utilisateur.getSpecialite());
 
-        ResultSet rs = ps.getGeneratedKeys();
-        if (rs.next()) {
-            utilisateur.setId(rs.getInt(1));
+            stmt.executeUpdate();
+            
+            try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    utilisateur.setId(generatedKeys.getInt(1));
+                }
+            }
         }
-        System.out.println("Utilisateur ajouté avec ID : " + utilisateur.getId());
     }
 
     @Override
     public void modifier(Utilisateur utilisateur) throws SQLException {
-        String req = "UPDATE utilisateur SET nom=?, prenom=?, email=?, roles=?, password=?, telephone=?, adresse=?, date_naissance=?, sexe=? WHERE id=?";
-        PreparedStatement ps = connection.prepareStatement(req);
-        ps.setString(1, utilisateur.getNom());
-        ps.setString(2, utilisateur.getPrenom());
-        ps.setString(3, utilisateur.getEmail());
-        ps.setString(4, utilisateur.getRoles());
-        ps.setString(5, utilisateur.getPassword());
-        ps.setInt(6, utilisateur.getTelephone());
-        ps.setString(7, utilisateur.getAdresse());
-        ps.setDate(8, Date.valueOf(utilisateur.getDateNaissance()));
-        ps.setString(9, utilisateur.getSexe());
-        ps.setInt(10, utilisateur.getId());
-        ps.executeUpdate();
-        System.out.println("Utilisateur modifié");
+        String query = "UPDATE utilisateur SET nom = ?, prenom = ?, email = ?, roles = ?, password = ?, telephone = ?, adresse = ?, date_naissance = ?, sexe = ?, taille = ?, poids = ?, image = ?, status = ?, diplome = ?, specialite = ?, face_encoding = ? WHERE id = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setString(1, utilisateur.getNom());
+            stmt.setString(2, utilisateur.getPrenom());
+            stmt.setString(3, utilisateur.getEmail());
+            stmt.setString(4, utilisateur.getRoles());
+            stmt.setString(5, utilisateur.getPassword());
+            stmt.setInt(6, utilisateur.getTelephone());
+            stmt.setString(7, utilisateur.getAdresse());
+            stmt.setObject(8, utilisateur.getDateNaissance());
+            stmt.setString(9, utilisateur.getSexe());
+            stmt.setObject(10, utilisateur.getTaille());
+            stmt.setObject(11, utilisateur.getPoids());
+            stmt.setString(12, utilisateur.getImage());
+            stmt.setObject(13, utilisateur.getStatus());
+            stmt.setString(14, utilisateur.getDiplome());
+            stmt.setString(15, utilisateur.getSpecialite());
+            stmt.setString(16, utilisateur.getFaceEncoding());
+            stmt.setInt(17, utilisateur.getId());
+            
+            stmt.executeUpdate();
+        }
     }
 
     @Override
     public void supprimer(int id) throws SQLException {
-        String req = "DELETE FROM utilisateur WHERE id=?";
-        PreparedStatement ps = connection.prepareStatement(req);
-        ps.setInt(1, id);
-        ps.executeUpdate();
-        System.out.println("Utilisateur supprimé");
+        String query = "DELETE FROM utilisateur WHERE id = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setInt(1, id);
+            stmt.executeUpdate();
+        }
     }
 
     @Override
     public List<Utilisateur> afficher() throws SQLException {
         List<Utilisateur> utilisateurs = new ArrayList<>();
-        String req = "SELECT * FROM utilisateur";
-        Statement stmt = connection.createStatement();
-        ResultSet rs = stmt.executeQuery(req);
-        while (rs.next()) {
-            Utilisateur utilisateur = new Utilisateur();
-            utilisateur.setId(rs.getInt("id"));
-            utilisateur.setNom(rs.getString("nom"));
-            utilisateur.setPrenom(rs.getString("prenom"));
-            utilisateur.setEmail(rs.getString("email"));
-            utilisateur.setRoles(rs.getString("roles"));
-            utilisateur.setPassword(rs.getString("password"));
-            utilisateur.setTelephone(rs.getInt("telephone"));
-            utilisateur.setAdresse(rs.getString("adresse"));
-            utilisateur.setDateNaissance(rs.getDate("date_naissance").toLocalDate());
-            utilisateur.setSexe(rs.getString("sexe"));
-            utilisateurs.add(utilisateur);
+        String query = "SELECT * FROM utilisateur";
+        try (Statement stmt = connection.createStatement();
+             ResultSet rs = stmt.executeQuery(query)) {
+            while (rs.next()) {
+                utilisateurs.add(extractUtilisateurFromResultSet(rs));
+            }
         }
+        System.out.println(utilisateurs);
         return utilisateurs;
     }
-
-    // Ajout de la méthode getById
+    
     public Utilisateur getById(int id) throws SQLException {
         String query = "SELECT * FROM utilisateur WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setInt(1, id);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    Utilisateur utilisateur = new Utilisateur();
-                    utilisateur.setId(rs.getInt("id"));
-                    utilisateur.setNom(rs.getString("nom"));
-                    utilisateur.setPrenom(rs.getString("prenom"));
-                    utilisateur.setEmail(rs.getString("email"));
-                    utilisateur.setRoles(rs.getString("roles"));
-                    utilisateur.setTelephone(rs.getInt("telephone"));
-                    utilisateur.setAdresse(rs.getString("adresse"));
-                    utilisateur.setDateNaissance(rs.getDate("date_naissance") != null ? rs.getDate("date_naissance").toLocalDate() : null);
-                    utilisateur.setSexe(rs.getString("sexe"));
-                    return utilisateur;
+                    return extractUtilisateurFromResultSet(rs);
                 }
             }
         }
         return null;
     }
     
-    /**
-     * Récupère les utilisateurs par leur rôle
-     * @param role Le rôle recherché (ex: "MEDECIN", "PATIENT")
-     * @return Liste des utilisateurs ayant le rôle spécifié
-     * @throws SQLException En cas d'erreur SQL
-     */
-    public List<Utilisateur> getByRole(String role) throws SQLException {
-        List<Utilisateur> utilisateurs = new ArrayList<>();
-        String query = "SELECT * FROM utilisateur WHERE roles LIKE ?";
+    public Utilisateur getByEmail(String email) throws SQLException {
+        String query = "SELECT * FROM utilisateur WHERE email = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setString(1, "%" + role + "%");
+            stmt.setString(1, email);
             try (ResultSet rs = stmt.executeQuery()) {
-                while (rs.next()) {
-                    Utilisateur utilisateur = new Utilisateur();
-                    utilisateur.setId(rs.getInt("id"));
-                    utilisateur.setNom(rs.getString("nom"));
-                    utilisateur.setPrenom(rs.getString("prenom"));
-                    utilisateur.setEmail(rs.getString("email"));
-                    utilisateur.setRoles(rs.getString("roles"));
-                    utilisateur.setPassword(rs.getString("password"));
-                    utilisateur.setTelephone(rs.getInt("telephone"));
-                    utilisateur.setAdresse(rs.getString("adresse"));
-                    utilisateur.setDateNaissance(rs.getDate("date_naissance") != null ? rs.getDate("date_naissance").toLocalDate() : null);
-                    utilisateur.setSexe(rs.getString("sexe"));
-                    utilisateurs.add(utilisateur);
+                if (rs.next()) {
+                    return extractUtilisateurFromResultSet(rs);
                 }
             }
         }
-        return utilisateurs;
+        return null;
+    }
+    
+    // Méthode pour récupérer la liste des médecins (utilisateurs avec rôle ROLE_MEDECIN)
+    public List<Utilisateur> getMedecinsList() throws SQLException {
+        List<Utilisateur> medecins = new ArrayList<>();
+        String query = "SELECT * FROM utilisateur WHERE roles LIKE ?";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setString(1, "%ROLE_MEDECIN%");
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    medecins.add(extractUtilisateurFromResultSet(rs));
+                }
+            }
+        }
+        return medecins;
+    }
+
+    private Utilisateur extractUtilisateurFromResultSet(ResultSet rs) throws SQLException {
+        Utilisateur utilisateur = new Utilisateur();
+        utilisateur.setId(rs.getInt("id"));
+        utilisateur.setNom(rs.getString("nom"));
+        utilisateur.setPrenom(rs.getString("prenom"));
+        utilisateur.setEmail(rs.getString("email"));
+        utilisateur.setRoles(rs.getString("roles"));
+        utilisateur.setPassword(rs.getString("password"));
+        utilisateur.setTelephone(rs.getInt("telephone"));
+        utilisateur.setAdresse(rs.getString("adresse"));
+        
+        Object dateObj = rs.getObject("date_naissance");
+        if (dateObj != null) {
+            utilisateur.setDateNaissance(rs.getDate("date_naissance").toLocalDate());
+        }
+        
+        utilisateur.setSexe(rs.getString("sexe"));
+        
+        Double taille = rs.getObject("taille") != null ? rs.getDouble("taille") : null;
+        utilisateur.setTaille(taille);
+        
+        Integer poids = rs.getObject("poids") != null ? rs.getInt("poids") : null;
+        utilisateur.setPoids(poids);
+        
+        utilisateur.setImage(rs.getString("image"));
+        
+        Integer status = rs.getObject("status") != null ? rs.getInt("status") : null;
+        utilisateur.setStatus(status);
+        
+        utilisateur.setDiplome(rs.getString("diplome"));
+        utilisateur.setSpecialite(rs.getString("specialite"));
+
+        return utilisateur;
+    }
+    
+    // Getter pour la connexion (utilisé par certains services)
+    public Connection getConnection() {
+        return connection;
     }
 }

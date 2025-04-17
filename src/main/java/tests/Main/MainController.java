@@ -10,7 +10,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
-import tests.Patient.DossierMedicalDetailsPatientController;
+//import tests.Patient.DossierMedicalDetailsPatientController;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -67,8 +67,8 @@ public class MainController {
             Parent root = loader.load();
 
             // Passer le dossier au contrôleur
-            DossierMedicalDetailsPatientController controller = loader.getController();
-            controller.setDossier(dossier);
+      //      DossierMedicalDetailsPatientController controller = loader.getController();
+            //    controller.setDossier(dossier);
 
             Stage stage = new Stage();
             stage.setTitle("Détails du Dossier Médical (Patient)");

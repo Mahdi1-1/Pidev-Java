@@ -11,9 +11,9 @@ import java.net.URL;
 public class MainAdmin extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
-        URL location = getClass().getResource("/fxml/Admin/DossierMedicalListAdmin.fxml");
+        URL location = getClass().getResource("/fxml/Admin/ConsultationListAdmin.fxml");
         if (location == null) {
-            throw new RuntimeException("Impossible de trouver /fxml/Admin/DossierMedicalListAdmin.fxml dans les ressources");
+            throw new RuntimeException("Impossible de trouver /fxml/Admin/ConsultationListAdmin.fxml dans les ressources");
         }
         Parent root = FXMLLoader.load(location);
 

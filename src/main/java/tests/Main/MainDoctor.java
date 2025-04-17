@@ -5,7 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import tests.Doctor.DossierMedicalListDoctorController;
+//import tests.Doctor.DossierMedicalListDoctorController;
 
 import java.net.URL;
 
@@ -25,7 +25,7 @@ public class MainDoctor extends Application {
         Parent root = loader.load();
         
         // Accéder au contrôleur et définir l'ID utilisateur
-        DossierMedicalListDoctorController controller = loader.getController();
+  //      DossierMedicalListDoctorController controller = loader.getController();
         // TODO: Ajouter une méthode setDoctorId dans DossierMedicalListDoctorController
         // controller.setDoctorId(DOCTOR_ID);
 
