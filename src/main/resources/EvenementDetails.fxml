@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.FlowPane?>
+
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.control.Button?>
+
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox alignment="CENTER" spacing="10" style="-fx-background-color: #ffffff; -fx-padding: 15; -fx-border-color: #ddd; -fx-border-radius: 5; -fx-background-radius: 5;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.Evenement.EvenementDetails">
+    <!-- Event Image -->
+    <ImageView fx:id="imageView" fitWidth="300" fitHeight="200" preserveRatio="true" />
+
+    <!-- Title -->
+    <Label fx:id="titreLabel" style="-fx-font-size: 18px; -fx-font-weight: bold;" />
+
+    <!-- Description -->
+    <Label fx:id="descriptionLabel" style="-fx-font-size: 14px;" wrapText="true" />
+
+    <!-- Date Start -->
+    <Label fx:id="dateDebutLabel" style="-fx-font-size: 14px;" />
+
+    <!-- Date End -->
+    <Label fx:id="dateFinLabel" style="-fx-font-size: 14px;" />
+
+    <!-- Location -->
+    <Label fx:id="lieuLabel" style="-fx-font-size: 14px;" />
+
+    <!-- Status -->
+    <Label fx:id="statutLabel" style="-fx-font-size: 14px;" />
+
+    <!-- Category Container -->
+    <FlowPane fx:id="categorieContainer" />
+
+    <!-- Buttons -->
+    <HBox spacing="10" alignment="CENTER">
+        <Button fx:id="backButton" text="Retour" onAction="#onBackClick" style="-fx-background-color: #FF9800; -fx-text-fill: white; -fx-background-radius: 5;" />
+        <Button fx:id="uploadImageButton" text="Uploader Image" onAction="#handleUploadImage" style="-fx-background-color: #2196F3; -fx-text-fill: white; -fx-background-radius: 5;" />
+    </HBox>La
+</VBox>
+

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.shape.Rectangle?>
+
+<?import javafx.scene.text.Text?>
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="Controllers.Evenement.EvenementCard"
+            prefWidth="320"
+            maxWidth="320"
+            onMouseEntered="#handleMouseEnter"
+            onMouseExited="#handleMouseExit"
+            style="-fx-background-color: linear-gradient(to bottom, #2c3e50, #4ca1af); -fx-background-radius: 15;">
+
+    <StackPane>
+        <ImageView fx:id="eventImage"
+                   fitWidth="320"
+                   fitHeight="180"
+                   preserveRatio="true">
+            <clip>
+                <Rectangle width="320" height="180" arcWidth="15" arcHeight="15"/>
+            </clip>
+        </ImageView>
+        <VBox style="-fx-background-color: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.75) 100%);"
+              alignment="BOTTOM_LEFT" padding="15">
+            <Label fx:id="titreLabel"
+                   style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: white;"/>
+            <Label text="Hello World" />
+        </VBox>
+    </StackPane>
+
+    <VBox spacing="10" style="-fx-padding: 15;">
+        <Label fx:id="descriptionLabel"
+               style="-fx-font-size: 14px; -fx-text-fill: #f0f0f0;"/>
+
+        <VBox spacing="8" style="-fx-background-color: rgba(255,255,255,0.07); -fx-background-radius: 10; -fx-padding: 10;">
+            <HBox spacing="10">
+                <Label text="📍"/>
+                <Label fx:id="lieuLabel" style="-fx-text-fill: #ecf0f1;"/>
+            </HBox>
+
+            <HBox spacing="10">
+                <Label text="📅"/>
+                <Label fx:id="dateDebutLabel" style="-fx-text-fill: #ecf0f1;"/>
+            </HBox>
+            <HBox spacing="10">
+                <Label text="⏰"/>
+                <Label fx:id="dateFinLabel" style="-fx-text-fill: #ecf0f1;"/>
+            </HBox>
+            <HBox spacing="10">
+                <Label text="🏷️"/>
+                <Label fx:id="categorieLabel" style="-fx-text-fill: #f1c40f;"/>
+            </HBox>
+            <HBox spacing="10">
+                <Label text="📊"/>
+                <Label fx:id="statutLabel" style="-fx-text-fill: #bdc3c7;"/>
+            </HBox>
+        </VBox>
+
+        <HBox spacing="10" alignment="CENTER">
+            <Button fx:id="voirDetailsButton" text="Voir Détails"
+                    onAction="#handleVoirDetails"
+                    style="-fx-background-color: #1abc9c; -fx-text-fill: white;"/>
+            <Button fx:id="participerButton" text="Participer"
+                    onAction="#handleParticiper"
+                    style="-fx-background-color: #e84393; -fx-text-fill: white;"/>
+        </HBox>
+    </VBox>
+</AnchorPane>

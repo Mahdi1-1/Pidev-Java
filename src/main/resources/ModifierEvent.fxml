@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="Controllers.Evenement.ModifierEvenement"
+      spacing="15">
+    <padding>
+        <Insets top="10" right="15" bottom="10" left="15"/>
+    </padding>
+
+    <Label text="Modifier l'Événement" style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
+
+    <GridPane vgap="10" hgap="10">
+        <Label text="Titre:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+        <TextField fx:id="titreField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+        <Label text="Description:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+        <TextArea fx:id="descriptionField" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+        <Label text="Date de début:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+        <DatePicker fx:id="dateDebutPicker" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+        <Label text="Date de fin:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+        <DatePicker fx:id="dateFinPicker" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+        <Label text="Lieu:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+        <TextField fx:id="lieuField" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+
+        <Label text="Statut:" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+        <TextField fx:id="statutField" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+
+        <Label text="Image:" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
+        <TextField fx:id="imageField" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
+
+        <Label text="Catégorie:" GridPane.rowIndex="7" GridPane.columnIndex="0"/>
+        <ComboBox fx:id="categorieComboBox" GridPane.rowIndex="7" GridPane.columnIndex="1"/>
+    </GridPane>
+
+    <Button text="Annuler" onAction="#annulerModification"
+            style="-fx-background-color: #f44336; -fx-text-fill: white;"/>
+    <Button text="Enregistrer" onAction="#sauvegarderModifications"
+            style="-fx-background-color: #4CAF50; -fx-text-fill: white;"/>
+
+</VBox>

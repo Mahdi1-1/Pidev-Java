@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="Controllers.Categorie.AfficherCategorieEv"
+      spacing="10">
+
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <Label text="Liste des Catégories d'Événements" style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
+
+    <Button text="Ajouter une Catégorie"
+            onAction="#handleAdd"
+            style="-fx-background-color: #5e93ad; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 10 20;"/>
+
+    <ScrollPane fx:id="scrollPane" fitToWidth="true" prefHeight="550.0">
+        <content>
+            <FlowPane fx:id="cardsContainer"
+                      hgap="20" vgap="20"
+                      style="-fx-background-color: transparent;" />
+        </content>
+    </ScrollPane>
+
+</VBox>

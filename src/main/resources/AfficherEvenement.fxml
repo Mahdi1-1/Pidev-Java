@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox spacing="20" alignment="CENTER" style="-fx-background-color: white; -fx-padding: 20;">
+    <Label text="Événement" style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
+    
+    <GridPane hgap="10" vgap="10">
+        <Label text="Titre:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+        <Label fx:id="titreLabel" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+        
+        <Label text="Description:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+        <Label fx:id="descriptionLabel" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+        
+        <Label text="Date:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+        <Label fx:id="dateLabel" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+        
+        <Label text="Lieu:" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+        <Label fx:id="lieuLabel" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+    </GridPane>
+    
+    <HBox spacing="10" alignment="CENTER">
+        <Button fx:id="voirDetailsButton" text="Voir Détails"
+                onAction="#handleVoirDetails"
+                style="-fx-background-color: #1abc9c; -fx-text-fill: white;"/>
+        <Button fx:id="participerButton" text="Participer"
+                onAction="#handleParticiper"
+                style="-fx-background-color: #e84393; -fx-text-fill: white;"/>
+    </HBox>
+    
+    <Button text="Retour" onAction="#handleRetour" 
+            style="-fx-background-color: #3498db; -fx-text-fill: white;"/>
+</VBox> 

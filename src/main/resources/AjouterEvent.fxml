@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="Controllers.Evenement.AjouterEvenement"
+      spacing="20"
+      style="-fx-background-color: #f5f5f5;">
+
+    <padding>
+        <Insets top="30" right="30" bottom="30" left="30"/>
+    </padding>
+
+    <!-- Titre de la fenêtre -->
+    <Label text="Ajouter un Événement"
+           style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
+
+    <!-- Formulaire de saisie -->
+    <GridPane vgap="15" hgap="15" style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 10;">
+        <Label text="Titre de l'événement :" 
+               style="-fx-font-size: 14px; -fx-text-fill: #2c3e50; -fx-font-weight: bold;"
+               GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+        <TextField fx:id="titreField" 
+                  promptText="Entrez le titre" 
+                  style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #bdc3c7;"
+                  GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+        <Label text="Description :" 
+               style="-fx-font-size: 14px; -fx-text-fill: #2c3e50; -fx-font-weight: bold;"
+               GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+        <TextArea fx:id="descriptionField" 
+                 promptText="Entrez la description" 
+                 style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #bdc3c7;"
+                 GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+        <Label text="Date de début :" 
+               style="-fx-font-size: 14px; -fx-text-fill: #2c3e50; -fx-font-weight: bold;"
+               GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+        <DatePicker fx:id="dateDebutPicker" 
+                   style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #bdc3c7;"
+                   GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+        <Label text="Date de fin :" 
+               style="-fx-font-size: 14px; -fx-text-fill: #2c3e50; -fx-font-weight: bold;"
+               GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+        <DatePicker fx:id="dateFinPicker" 
+                   style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #bdc3c7;"
+                   GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+        <Label text="Lieu :" 
+               style="-fx-font-size: 14px; -fx-text-fill: #2c3e50; -fx-font-weight: bold;"
+               GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+        <TextField fx:id="lieuField" 
+                  promptText="Entrez le lieu" 
+                  style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #bdc3c7;"
+                  GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+
+        <Label text="Statut :" 
+               style="-fx-font-size: 14px; -fx-text-fill: #2c3e50; -fx-font-weight: bold;"
+               GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+        <ComboBox fx:id="statutComboBox" 
+                 promptText="Sélectionnez le statut" 
+                 style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #bdc3c7;"
+                 GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+
+        <!-- Sélection d'une image -->
+        <Label text="Image :" 
+               style="-fx-font-size: 14px; -fx-text-fill: #2c3e50; -fx-font-weight: bold;"
+               GridPane.rowIndex="6" GridPane.columnIndex="0"/>
+        <Label fx:id="imagePathLabel" 
+               text="Aucune image choisie" 
+               style="-fx-text-fill: #7f8c8d;"
+               GridPane.rowIndex="6" GridPane.columnIndex="1"/>
+        <Button text="Choisir une image" 
+                onAction="#chooseImage" 
+                style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-background-radius: 5;"
+                GridPane.rowIndex="6" GridPane.columnIndex="2"/>
+
+        <!-- Sélection de la catégorie -->
+        <Label text="Catégorie :" 
+               style="-fx-font-size: 14px; -fx-text-fill: #2c3e50; -fx-font-weight: bold;"
+               GridPane.rowIndex="7" GridPane.columnIndex="0"/>
+        <ComboBox fx:id="categorieComboBox" 
+                 promptText="Sélectionnez la catégorie" 
+                 style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #bdc3c7;"
+                 GridPane.rowIndex="7" GridPane.columnIndex="1"/>
+    </GridPane>
+
+    <!-- Boutons d'action -->
+    <HBox spacing="15" alignment="CENTER_RIGHT">
+        <Button text="Annuler" 
+                onAction="#annuler"
+                style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-background-radius: 5; -fx-padding: 10 20;"/>
+        <Button text="Ajouter" 
+                onAction="#ajouterEvenement"
+                style="-fx-background-color: #2ecc71; -fx-text-fill: white; -fx-background-radius: 5; -fx-padding: 10 20;"/>
+    </HBox>
+
+</VBox>

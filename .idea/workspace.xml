@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="55a3e1c6-e460-47be-a547-a8ab5d612b9d" name="Changes" comment="pagination recherche dynamique filtrage cbonn">
-      <change beforePath="$PROJECT_DIR$/src/main/java/tests/Admin/DossierMedicalFormController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tests/Admin/DossierMedicalFormController.java" afterDir="false" />
-    </list>
+    <list default="true" id="d152d76b-2e36-474f-a83b-0e29113d6215" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -15,268 +13,87 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Interface" />
-        <option value="CSS File" />
-        <option value="FxmlFile" />
         <option value="Class" />
+        <option value="FxmlFile" />
       </list>
     </option>
   </component>
-  <component name="Git.Settings">
-    <branch-grouping />
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-  </component>
-  <component name="GitHubPullRequestSearchHistory">{
-  &quot;lastFilter&quot;: {
-    &quot;state&quot;: &quot;OPEN&quot;,
-    &quot;assignee&quot;: &quot;Mahdi1-1&quot;
-  }
-}</component>
-  <component name="GithubDefaultAccount">
-    <option name="defaultAccountId" value="c7e13da9-92b6-4811-b773-cb8f3918fb2c" />
-  </component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/Mahdi1-1/Pidev-Java.git&quot;,
-    &quot;accountId&quot;: &quot;c7e13da9-92b6-4811-b773-cb8f3918fb2c&quot;
-  }
-}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 6
 }</component>
-  <component name="ProjectId" id="2uZttsfM7gLbWzaa6usbTJkrSqe" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectId" id="2vovKKoF0lBiV8tqHUj7nkRokhL" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "Application.EmailApp.executor": "Run",
-    "Application.MAinDoctor.executor": "Run",
-    "Application.Main.executor": "Run",
-    "Application.MainAdmin.executor": "Run",
-    "Application.MainDoctor.executor": "Run",
-    "Application.MainPatient.executor": "Run",
-    "Application.Prediction.executor": "Run",
-    "Application.Unnamed.executor": "Run",
-    "Application.mail.executor": "Run",
-    "Application.test.executor": "Run",
-    "Application.tests.executor": "Run",
+    "Application.MainFX.executor": "Run",
+    "Maven.testcrud [org.apache.maven.plugins:maven-clean-plugin:3.2.0:clean].executor": "Run",
+    "Maven.testcrud [org.openjfx:javafx-maven-plugin:0.0.8:run].executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/21693/IdeaProjects/pidev2/src/main/resources/fxml/Doctor",
-    "list.type.of.created.stylesheet": "CSS",
+    "last_opened_file_path": "C:/BD/reserve2/jasser",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "onboarding.tips.debug.path": "C:/Users/21693/IdeaProjects/pidev2/src/main/java/org/example/Main.java",
-    "project.structure.last.edited": "SDKs",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2226311",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
     "settings.editor.selected.configurable": "reference.settings.project.maven.repository.indices",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\21693\IdeaProjects\pidev2\src\main\resources\fxml\Doctor" />
-      <recent name="C:\Users\21693\IdeaProjects\pidev2\src\main\resources\fxml\Admin" />
-      <recent name="C:\Users\21693\IdeaProjects\pidev2\src\main\resources\image" />
+      <recent name="C:\Users\mahab\Downloads\Inkspire-BMF-java-main\Inkspire-BMF-java-main\src\main\java\Controllers\Category" />
     </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\21693\IdeaProjects\pidev2\src\main\resources\fxml\Doctor" />
-      <recent name="C:\Users\21693\IdeaProjects\pidev2\src\main\resources\fxml\Patient" />
-      <recent name="C:\Users\21693\IdeaProjects\pidev2\src\main\resources\fxml" />
-      <recent name="C:\Users\21693\IdeaProjects\pidev2\target\classes" />
-      <recent name="C:\Users\21693\IdeaProjects\pidev2\src\main\resources" />
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="service" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.MainDoctor">
-    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="tests.Main.Main" />
-      <module name="pidev2" />
-      <option name="VM_PARAMETERS" value="--module-path &quot;C:\Users\21693\Downloads\openjfx-17.0.14_windows-x64_bin-sdk\javafx-sdk-17.0.14\lib&quot; --add-modules javafx.controls,javafx.fxml" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="tests.Main.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
+  <component name="RunManager">
+    <configuration name="MainFX" type="Application" factoryName="Application">
+      <option name="ALTERNATIVE_JRE_PATH" value="openjdk-24" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <option name="MAIN_CLASS_NAME" value="org.example.MainFX" />
+      <module name="testcrud" />
+      <option name="VM_PARAMETERS" value="--module-path &quot;C:\projetpijava\javafx-sdk-24\lib&quot; --add-modules javafx.controls,javafx.fxml" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="MainAdmin" type="Application" factoryName="Application">
-      <option name="MAIN_CLASS_NAME" value="tests.Main.MainAdmin" />
-      <module name="pidev2" />
-      <option name="VM_PARAMETERS" value="--module-path &quot;C:\Users\21693\Downloads\openjfx-17.0.14_windows-x64_bin-sdk\javafx-sdk-17.0.14\lib&quot; --add-modules javafx.controls,javafx.fxml" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="MainDoctor" type="Application" factoryName="Application">
-      <option name="MAIN_CLASS_NAME" value="tests.Main.MainDoctor" />
-      <module name="pidev2" />
-      <option name="VM_PARAMETERS" value="--module-path &quot;C:\Users\21693\Downloads\openjfx-17.0.14_windows-x64_bin-sdk\javafx-sdk-17.0.14\lib&quot; --add-modules javafx.controls,javafx.fxml" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="MainPatient" type="Application" factoryName="Application">
-      <option name="MAIN_CLASS_NAME" value="tests.Main.MainPatient" />
-      <module name="pidev2" />
-      <option name="VM_PARAMETERS" value="--module-path &quot;C:\Users\21693\Downloads\openjfx-17.0.14_windows-x64_bin-sdk\javafx-sdk-17.0.14\lib&quot; --add-modules javafx.controls,javafx.fxml" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Prediction" type="Application" factoryName="Application">
-      <option name="MAIN_CLASS_NAME" value="tests.DiabetesPredictionClient" />
-      <module name="pidev2" />
-      <option name="VM_PARAMETERS" value="--module-path &quot;C:\Users\21693\Downloads\openjfx-17.0.14_windows-x64_bin-sdk\javafx-sdk-17.0.14\lib&quot; --add-modules javafx.controls,javafx.fxml" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <list>
-      <item itemvalue="Application.MainPatient" />
-      <item itemvalue="Application.Prediction" />
-      <item itemvalue="Application.MainAdmin" />
-      <item itemvalue="Application.MainDoctor" />
-      <item itemvalue="Application.Main" />
-    </list>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Application.Main" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-b114ca120d71-intellij.indexing.shared.core-IU-242.21829.142" />
-        <option value="bundled-js-predefined-d6986cc7102b-7c0b70fcd90d-JavaScript-IU-242.21829.142" />
+        <option value="bundled-jdk-9823dce3aa75-a94e463ab2e7-intellij.indexing.shared.core-IU-243.26053.27" />
+        <option value="bundled-js-predefined-d6986cc7102b-1632447f56bf-JavaScript-IU-243.26053.27" />
       </set>
     </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="55a3e1c6-e460-47be-a547-a8ab5d612b9d" name="Changes" comment="" />
-      <created>1742468143005</created>
+      <changelist id="d152d76b-2e36-474f-a83b-0e29113d6215" name="Changes" comment="" />
+      <created>1744824175410</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1742468143005</updated>
-      <workItem from="1742468143946" duration="5223000" />
-      <workItem from="1742898708282" duration="57452000" />
-      <workItem from="1743805057954" duration="38242000" />
+      <updated>1744824175410</updated>
+      <workItem from="1744824176480" duration="33062000" />
+      <workItem from="1744890386653" duration="7305000" />
+      <workItem from="1744899333967" duration="3352000" />
+      <workItem from="1744902760075" duration="7685000" />
+      <workItem from="1744919414266" duration="2474000" />
+      <workItem from="1744921983112" duration="9021000" />
+      <workItem from="1744967890243" duration="18304000" />
+      <workItem from="1745096529178" duration="3634000" />
     </task>
-    <task id="LOCAL-00001" summary="crud cbon">
-      <option name="closed" value="true" />
-      <created>1743692171126</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1743692171126</updated>
-    </task>
-    <task id="LOCAL-00002" summary="crud cbon">
-      <option name="closed" value="true" />
-      <created>1743692493905</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1743692493905</updated>
-    </task>
-    <task id="LOCAL-00003" summary="crud cbon">
-      <option name="closed" value="true" />
-      <created>1743693399303</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1743693399303</updated>
-    </task>
-    <task id="LOCAL-00004" summary="machine learning et mail cbon">
-      <option name="closed" value="true" />
-      <created>1743958114848</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1743958114848</updated>
-    </task>
-    <task id="LOCAL-00005" summary="machine learning et mail cbon">
-      <option name="closed" value="true" />
-      <created>1743958143746</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1743958143746</updated>
-    </task>
-    <task id="LOCAL-00006" summary="pagination recherche dynamique filtrage cbonn">
-      <option name="closed" value="true" />
-      <created>1744056097299</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1744056097299</updated>
-    </task>
-    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
-  </component>
-  <component name="Vcs.Log.Tabs.Properties">
-    <option name="RECENT_FILTERS">
-      <map>
-        <entry key="User">
-          <value>
-            <list>
-              <RecentGroup>
-                <option name="FILTER_VALUES">
-                  <option value="*" />
-                </option>
-              </RecentGroup>
-            </list>
-          </value>
-        </entry>
-      </map>
-    </option>
-    <option name="TAB_STATES">
-      <map>
-        <entry key="MAIN">
-          <value>
-            <State>
-              <option name="COLUMN_ID_WIDTH">
-                <map>
-                  <entry key="Table.Default.Author.ColumnIdWidth" value="140" />
-                  <entry key="Table.Default.Date.ColumnIdWidth" value="139" />
-                </map>
-              </option>
-            </State>
-          </value>
-        </entry>
-      </map>
-    </option>
-  </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="crud cbon" />
-    <MESSAGE value="machine learning et mail cbon" />
-    <MESSAGE value="pagination recherche dynamique filtrage cbonn" />
-    <option name="LAST_COMMIT_MESSAGE" value="pagination recherche dynamique filtrage cbonn" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <breakpoint enabled="true" type="java-exception">
-          <properties class="java.lang.RuntimeException" package="java.lang" />
-          <option name="timeStamp" value="1" />
-        </breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

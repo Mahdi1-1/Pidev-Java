@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.FlowPane?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="Controllers.Evenement.EvenementDetails"
+      prefWidth="360" maxWidth="360"
+      spacing="10"
+      styleClass="card">
+
+    <!-- Styles CSS intégrés -->
+    <style>
+        /* style.css */
+
+        /* Card principale */
+        .card {
+        -fx-background-color: #ffffff;
+        -fx-background-radius: 15;
+        -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0, 0, 4);
+        -fx-padding: 15;
+        -fx-spacing: 12;
+        }
+
+        /* Icônes (emojis) */
+        .icon {
+        -fx-font-size: 18px;
+        }
+
+        /* Titre principal */
+        .title {
+        -fx-font-size: 20px;
+        -fx-font-weight: bold;
+        -fx-text-fill: #333333;
+        }
+
+        /* Sous-titres et détails */
+        .subtitle {
+        -fx-font-size: 14px;
+        -fx-text-fill: #555555;
+        }
+
+        /* Titre de section */
+        .section-title {
+        -fx-font-size: 16px;
+        -fx-font-weight: bold;
+        -fx-text-fill: #444444;
+        }
+
+        /* Conteneur des catégories */
+        .category-container {
+        -fx-background-color: #f9f9f9;
+        -fx-padding: 10;
+        -fx-background-radius: 10;
+        -fx-border-color: #dddddd;
+        -fx-border-radius: 10;
+        -fx-border-width: 1;
+        }
+
+        /* ImageView pour l'événement */
+        .image-view {
+        -fx-background-radius: 10;
+        -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.08), 6, 0, 0, 2);
+        }
+
+        /* FlowPane: espacement amélioré */
+        FlowPane {
+        -fx-hgap: 10;
+        -fx-vgap: 10;
+        }
+
+        /* Ajout d'une petite animation au survol des labels (optionnel et sympa) */
+        Label:hover {
+        -fx-scale-x: 1.03;
+        -fx-scale-y: 1.03;
+        -fx-cursor: hand;
+        }
+
+        /* Animation légère pour la carte */
+        .card:hover {
+        -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 12, 0, 0, 6);
+        -fx-translate-y: -2;
+        }
+    </style>
+
+    <padding>
+        <Insets top="15" right="15" bottom="15" left="15"/>
+    </padding>
+
+    <!-- Image de l'événement -->
+    <ImageView fx:id="imageView" fitHeight="150" fitWidth="320" preserveRatio="true" styleClass="image-view"/>
+
+    <!-- Titre -->
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <Label text="🎉" styleClass="icon"/>
+        <Label fx:id="titreLabel" styleClass="title"/>
+    </HBox>
+
+    <!-- Description -->
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <Label text="📝" styleClass="icon"/>
+        <Label fx:id="descriptionLabel" styleClass="subtitle"/>
+    </HBox>
+
+    <!-- Lieu -->
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <Label text="📍" styleClass="icon"/>
+        <Label fx:id="lieuLabel" styleClass="subtitle"/>
+        <Label text="Hello World" />
+    </HBox>
+
+    <!-- Date de début -->
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <Label text="📆 Début:" styleClass="icon"/>
+        <Label fx:id="dateDebutLabel" styleClass="subtitle"/>
+    </HBox>
+
+    <!-- Date de fin -->
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <Label text="⏳ Fin:" styleClass="icon"/>
+        <Label fx:id="dateFinLabel" styleClass="subtitle"/>
+    </HBox>
+
+    <!-- Statut -->
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <Label text="⚙️" styleClass="icon"/>
+        <Label fx:id="statutLabel" styleClass="subtitle"/>
+    </HBox>
+
+    <!-- Catégories -->
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <Label text="🗂" styleClass="icon"/>
+        <Label text="Catégories" styleClass="section-title"/>
+    </HBox>
+
+    <!-- Conteneur des catégories -->
+    <FlowPane fx:id="categorieContainer" hgap="10" vgap="10" prefWidth="320" styleClass="category-container"/>
+</VBox>
