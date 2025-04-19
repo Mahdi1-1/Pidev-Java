@@ -1,5 +1,8 @@
 package Controllers.Evenement;
 
+import service.CategorieEvService;  // Incorrectpackage Controllers.Evenement;
+
+import entities.CategorieEv;
 import entities.Evenement;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -9,9 +12,11 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import service.CategorieEvService;
 import utils.SceneSwitch;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class EvenementCard extends VBox {
 
@@ -43,6 +48,7 @@ public class EvenementCard extends VBox {
     private Button voirDetailsButton;
 
     private Evenement evenement;
+    private final CategorieEvService categorieService = new CategorieEvService();
 
     public EvenementCard() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/EvenementCard.fxml"));
@@ -65,7 +71,23 @@ public class EvenementCard extends VBox {
         dateDebutLabel.setText("Début: " + evenement.getDateDebut().toString());
         dateFinLabel.setText("Fin: " + evenement.getDateFin().toString());
         statutLabel.setText("Statut: " + evenement.getStatut());
-        categorieLabel.setText("Catégorie: " + evenement.getCategorieId());
+
+        // Récupérer et afficher le nom de la catégorie
+        try {
+            System.out.println("Récupération de la catégorie avec l'ID: " + evenement.getCategorieId());
+            CategorieEv categorie = categorieService.getById(evenement.getCategorieId());
+            if (categorie != null) {
+                System.out.println("Catégorie trouvée: " + categorie.getNom());
+                categorieLabel.setText("Catégorie: " + categorie.getNom());
+            } else {
+                System.out.println("Aucune catégorie trouvée pour l'ID: " + evenement.getCategorieId());
+                categorieLabel.setText("Catégorie: Non définie");
+            }
+        } catch (SQLException e) {
+            System.err.println("Erreur lors de la récupération de la catégorie: " + e.getMessage());
+            e.printStackTrace();
+            categorieLabel.setText("Catégorie: Erreur");
+        }
 
         // Chargement sécurisé de l’image
         if (evenement.getImage() != null && !evenement.getImage().isEmpty()) {
@@ -92,7 +114,19 @@ public class EvenementCard extends VBox {
         this.dateFinLabel.setText("Fin: " + evenement.getDateFin().toString()); // Afficher la date de fin
         this.lieuLabel.setText("Lieu: " + evenement.getLieu()); // Afficher le lieu
         this.statutLabel.setText("Statut: " + evenement.getStatut()); // Afficher le statut
-        this.categorieLabel.setText("Catégorie: " + evenement.getCategorieId()); // Afficher l'ID de la catégorie
+
+        // Récupérer et afficher le nom de la catégorie
+        try {
+            CategorieEv categorie = categorieService.getById(evenement.getCategorieId());
+            if (categorie != null) {
+                this.categorieLabel.setText("Catégorie: " + categorie.getNom());
+            } else {
+                this.categorieLabel.setText("Catégorie: Non définie");
+            }
+        } catch (SQLException e) {
+            System.err.println("Erreur lors de la récupération de la catégorie: " + e.getMessage());
+            this.categorieLabel.setText("Catégorie: Erreur");
+        }
 
         // Si l'image n'est pas vide ou nulle, l'afficher
         if (evenement.getImage() != null && !evenement.getImage().isEmpty()) {
