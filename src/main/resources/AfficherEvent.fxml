@@ -27,9 +27,7 @@
         <Label text="Trier par :" />
         <ComboBox fx:id="sortComboBox" prefWidth="150.0" />
     </HBox>
-    <Label text="📅 Événements à Venir"
-           style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-text-fill: #ffffff;
-                  -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.6), 5, 0, 0, 2);"/>
+    <Button fx:id="calendarButton" text="Voir le calendrier" onAction="#onCalendarButtonClick" style="-fx-background-color: #2196F3; -fx-text-fill: white; -fx-background-radius: 8px; -fx-padding: 10px; -fx-font-size: 14px;" />
 
     <!-- Zone de défilement des événements -->
     <ScrollPane fx:id="scrollPane" fitToWidth="true" prefHeight="550.0"

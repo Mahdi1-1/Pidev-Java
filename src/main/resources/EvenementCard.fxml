@@ -4,8 +4,8 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.shape.Rectangle?>
-
 <?import javafx.scene.text.Text?>
+
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="Controllers.Evenement.EvenementCard"
@@ -40,6 +40,12 @@
             <HBox spacing="10">
                 <Label text="📍"/>
                 <Label fx:id="lieuLabel" style="-fx-text-fill: #ecf0f1;"/>
+            </HBox>
+
+            <!-- ✅ Coordonnées latitude/longitude -->
+            <HBox spacing="10">
+                <Label text="🗺️"/>
+                <Label fx:id="coordLabel" style="-fx-text-fill: #ecf0f1;"/>
             </HBox>
 
             <HBox spacing="10">

@@ -28,6 +28,9 @@ public class EvenementCard extends VBox {
 
     @FXML
     private Label lieuLabel;
+    @FXML
+    private Label coordLabel;
+
 
     @FXML
     private Label statutLabel;
@@ -67,10 +70,12 @@ public class EvenementCard extends VBox {
         this.evenement = evenement;
         titreLabel.setText(evenement.getTitre());
         descriptionLabel.setText(evenement.getDescription());
-        lieuLabel.setText("Lieu: " + evenement.getLieu());
+        lieuLabel.setText(evenement.getLieu());
+        coordLabel.setText(evenement.getLatitude() + ", " + evenement.getLongitude());
         dateDebutLabel.setText("Début: " + evenement.getDateDebut().toString());
         dateFinLabel.setText("Fin: " + evenement.getDateFin().toString());
         statutLabel.setText("Statut: " + evenement.getStatut());
+
 
         // Récupérer et afficher le nom de la catégorie
         try {
@@ -113,6 +118,7 @@ public class EvenementCard extends VBox {
         this.dateDebutLabel.setText("Début: " + evenement.getDateDebut().toString()); // Afficher la date de début
         this.dateFinLabel.setText("Fin: " + evenement.getDateFin().toString()); // Afficher la date de fin
         this.lieuLabel.setText("Lieu: " + evenement.getLieu()); // Afficher le lieu
+
         this.statutLabel.setText("Statut: " + evenement.getStatut()); // Afficher le statut
 
         // Récupérer et afficher le nom de la catégorie
