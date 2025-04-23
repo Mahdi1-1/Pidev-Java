@@ -60,7 +60,7 @@
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
       <option name="MAIN_CLASS_NAME" value="org.example.MainFX" />
       <module name="testcrud" />
-      <option name="VM_PARAMETERS" value="--module-path &quot;C:\projetpijava\javafx-sdk-24\lib&quot; --add-modules javafx.controls,javafx.fxml" />
+      <option name="VM_PARAMETERS" value="--module-path &quot;C:\projetpijava\javafx-sdk-24\lib&quot; --add-modules javafx.controls,javafx.fxml,javafx.web --add-exports javafx.graphics/com.sun.javafx.sg.prism=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.scene=ALL-UNNAMED --enable-native-access=javafx.graphics,javafx.web" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -90,7 +90,7 @@
       <workItem from="1744921983112" duration="9021000" />
       <workItem from="1744967890243" duration="18304000" />
       <workItem from="1745096529178" duration="3634000" />
-      <workItem from="1745270375999" duration="4575000" />
+      <workItem from="1745270375999" duration="12844000" />
     </task>
     <servers />
   </component>

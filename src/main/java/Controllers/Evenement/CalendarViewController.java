@@ -1,183 +1,170 @@
 package Controllers.Evenement;
 
 import entities.Evenement;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.GridPane;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
 import javafx.stage.Stage;
+import netscape.javascript.JSObject;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.YearMonth;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class CalendarViewController {
 
     @FXML
-    private GridPane calendarGrid;
+    private WebView webView;
 
-    @FXML
-    private Label monthYearLabel;
-
-    @FXML
-    private Button prevMonthButton;
-
-    @FXML
-    private Button nextMonthButton;
-
-    @FXML
-    private Button backButton;
-
-    @FXML
-    private ListView<Evenement> eventListView;
-
+    private WebEngine webEngine;
     private List<Evenement> eventList;
-    private YearMonth currentYearMonth;
 
+    @FXML
+    public void initialize() {
+        webEngine = webView.getEngine();
+
+        // Charger le HTML contenant FullCalendar
+        String htmlContent = getCalendarHtml();
+        webEngine.loadContent(htmlContent);
+
+        // Attendre que la page soit chargée pour injecter les événements
+        webEngine.getLoadWorker().stateProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue == javafx.concurrent.Worker.State.SUCCEEDED) {
+                loadEvents();
+            }
+        });
+    }
+
+    // Setter pour la liste des événements
     public void setEventList(List<Evenement> eventList) {
         this.eventList = eventList;
-        currentYearMonth = YearMonth.now();
-        updateCalendar();
-        // Initialize ListView
-        eventListView.setVisible(false); // Hidden until a date is clicked
-        eventListView.setOnMouseClicked(this::handleEventSelection);
     }
 
-    private void updateCalendar() {
-        calendarGrid.getChildren().clear();
-        monthYearLabel.setText(currentYearMonth.getMonth() + " " + currentYearMonth.getYear());
-
-        String[] days = {"Lun", "Mar", "Mer", "Jeu", "Ven", "Sam", "Dim"};
-        for (int i = 0; i < 7; i++) {
-            Label dayLabel = new Label(days[i]);
-            dayLabel.getStyleClass().add("header-label");
-            calendarGrid.add(dayLabel, i, 0);
-        }
-
-        LocalDate firstOfMonth = currentYearMonth.atDay(1);
-        int dayOfWeek = firstOfMonth.getDayOfWeek().getValue() - 1; // 0 = Monday
-        int daysInMonth = currentYearMonth.lengthOfMonth();
-
-        List<LocalDate> eventDates = eventList.stream()
-                .map(Evenement::getDateDebut)
-                .filter(date -> date.getYear() == currentYearMonth.getYear() &&
-                        date.getMonth() == currentYearMonth.getMonth())
-                .collect(Collectors.toList());
-
-        int row = 1;
-        int col = dayOfWeek;
-        for (int day = 1; day <= daysInMonth; day++) {
-            LocalDate date = currentYearMonth.atDay(day);
-            Label dayLabel = new Label(String.valueOf(day));
-            dayLabel.setPadding(new Insets(10));
-            dayLabel.setAlignment(Pos.CENTER);
-            dayLabel.setPrefSize(60, 40);
-            if (eventDates.contains(date)) {
-                dayLabel.getStyleClass().add("event-day");
-                dayLabel.setOnMouseClicked(e -> showEventsForDate(date));
-            } else {
-                dayLabel.getStyleClass().add("label");
-            }
-
-            calendarGrid.add(dayLabel, col, row);
-            col++;
-            if (col == 7) {
-                col = 0;
-                row++;
-            }
-        }
-    }
-
-    private void showEventsForDate(LocalDate date) {
-        List<Evenement> eventsOnDate = eventList.stream()
-                .filter(e -> e.getDateDebut().equals(date))
-                .collect(Collectors.toList());
-
-        eventListView.getItems().clear();
-        if (eventsOnDate.isEmpty()) {
-            eventListView.setVisible(false);
-        } else {
-            eventListView.getItems().addAll(eventsOnDate);
-            eventListView.setVisible(true);
-        }
-    }
-
-    private void handleEventSelection(MouseEvent event) {
-        Evenement selectedEvent = eventListView.getSelectionModel().getSelectedItem();
-        if (selectedEvent != null) {
-            try {
-                System.out.println("Loading EvenementDetails.fxml from: " + getClass().getResource("/EvenementDetails.fxml"));
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/EvenementDetails.fxml"));
-                if (loader.getLocation() == null) {
-                    throw new IOException("Cannot find EvenementDetails.fxml");
+    // Générer le contenu HTML avec FullCalendar
+    private String getCalendarHtml() {
+        return """
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset='utf-8' />
+            <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.5/main.min.css' rel='stylesheet' />
+            <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.5/main.min.js'></script>
+            <style>
+                body {
+                    margin: 40px 10px;
+                    padding: 0;
+                    font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+                    font-size: 14px;
                 }
-                Parent detailsView = loader.load();
-                EvenementDetails controller = loader.getController();
-                controller.setEvenement(selectedEvent);
+                #calendar {
+                    max-width: 900px;
+                    margin: 0 auto;
+                }
+            </style>
+        </head>
+        <body>
+            <div id='calendar'></div>
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    var calendarEl = document.getElementById('calendar');
+                    window.calendar = new FullCalendar.Calendar(calendarEl, {
+                        initialView: 'dayGridMonth',
+                        headerToolbar: {
+                            left: 'prev,next today',
+                            center: 'title',
+                            right: 'dayGridMonth,timeGridWeek,dayGridDay'
+                        },
+                        events: [], // Les événements seront injectés dynamiquement
+                        eventClick: function(info) {
+                            window.javaEventHandler.eventClicked(info.event.id);
+                        }
+                    });
+                    calendar.render();
+                });
 
-                Stage stage = (Stage) eventListView.getScene().getWindow();
-                Scene scene = new Scene(detailsView);
-                stage.setScene(scene);
-                stage.setTitle("Détails de l'Événement");
-                stage.show();
-            } catch (IOException e) {
-                e.printStackTrace();
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Erreur");
-                alert.setHeaderText("Échec du chargement des détails");
-                alert.setContentText("Impossible de trouver EvenementDetails.fxml. Vérifiez le chemin du fichier.");
-                alert.showAndWait();
+                // Fonction pour charger les événements dynamiquement
+                function loadEvents(events) {
+                    window.calendar.getEvents().forEach(event => event.remove());
+                    events.forEach(event => window.calendar.addEvent(event));
+                    window.calendar.render();
+                }
+            </script>
+        </body>
+        </html>
+        """;
+    }
+
+    // Charger les événements dans FullCalendar
+    private void loadEvents() {
+        if (eventList == null || eventList.isEmpty()) {
+            return;
+        }
+
+        // Convertir les événements en JSON
+        JSONArray eventsArray = new JSONArray();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        for (Evenement event : eventList) {
+            JSONObject eventJson = new JSONObject();
+            eventJson.put("id", event.getId());
+            eventJson.put("title", event.getTitre());
+            eventJson.put("start", event.getDateDebut().format(formatter));
+            eventJson.put("description", event.getDescription());
+            eventJson.put("location", event.getLieu());
+            eventsArray.put(eventJson);
+        }
+
+        // Injecter les événements dans le calendrier via JavaScript
+        webEngine.executeScript("loadEvents(" + eventsArray.toString() + ")");
+
+        // Configurer le handler pour les clics sur les événements
+        JSObject window = (JSObject) webEngine.executeScript("window");
+        window.setMember("javaEventHandler", new EventHandler());
+    }
+
+    // Classe pour gérer les clics sur les événements
+    public class EventHandler {
+        public void eventClicked(String eventId) {
+            Evenement clickedEvent = eventList.stream()
+                    .filter(e -> e.getId().toString().equals(eventId))
+                    .findFirst()
+                    .orElse(null);
+
+            if (clickedEvent != null) {
+                try {
+                    // Charger la vue EvenementDetails.fxml
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/EvenementDetails.fxml"));
+                    if (loader.getLocation() == null) {
+                        throw new IOException("Cannot find EvenementDetails.fxml");
+                    }
+                    Parent eventDetailsView = loader.load();
+
+                    // Passer l'événement au contrôleur EvenementDetails
+                    EvenementDetails controller = loader.getController();
+                    controller.setEvenement(clickedEvent);
+
+                    // Obtenir la scène actuelle et passer à la vue des détails
+                    Stage stage = (Stage) webView.getScene().getWindow();
+                    Scene scene = new Scene(eventDetailsView);
+                    stage.setScene(scene);
+                    stage.setTitle("Détails de l'événement");
+                    stage.show();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Erreur");
+                    alert.setHeaderText("Échec du chargement des détails de l'événement");
+                    alert.setContentText("Impossible de trouver EvenementDetails.fxml. Vérifiez le chemin du fichier.");
+                    alert.showAndWait();
+                }
             }
         }
     }
 
-    @FXML
-    private void onPreviousMonth() {
-        currentYearMonth = currentYearMonth.minusMonths(1);
-        updateCalendar();
-        eventListView.setVisible(false); // Hide ListView when changing months
-    }
-
-    @FXML
-    private void onNextMonth() {
-        currentYearMonth = currentYearMonth.plusMonths(1);
-        updateCalendar();
-        eventListView.setVisible(false); // Hide ListView when changing months
-    }
-
-    @FXML
-    private void onBackButtonClick(ActionEvent event) {
-        try {
-            String fxmlPath = "/AfficherEvent.fxml"; // Update to "/Controllers/Evenement/AfficherEvent.fxml" if in subdirectory
-            System.out.println("Loading AfficherEvent.fxml from: " + getClass().getResource(fxmlPath));
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
-            if (loader.getLocation() == null) {
-                throw new IOException("Cannot find AfficherEvent.fxml");
-            }
-            Parent afficherEventView = loader.load();
-            Stage stage = (Stage) backButton.getScene().getWindow();
-            Scene scene = new Scene(afficherEventView);
-            stage.setScene(scene);
-            stage.setTitle("Liste des Événements");
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Erreur");
-            alert.setHeaderText("Échec du chargement de la liste des événements");
-            alert.setContentText("Impossible de trouver AfficherEvent.fxml. Vérifiez le chemin du fichier.");
-            alert.showAndWait();
-        }
-    }
 }
