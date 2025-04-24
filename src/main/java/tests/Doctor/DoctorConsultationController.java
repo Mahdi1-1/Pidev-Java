@@ -57,7 +57,7 @@ public class DoctorConsultationController implements Initializable {
     @FXML private Label statsPendingLabel;
     @FXML private Label statsTodayLabel;
     
-    private ObservableList<Consultation> consultationsList = FXCollections.observableArrayList();
+    private final ObservableList<Consultation> consultationsList = FXCollections.observableArrayList();
     private ServiceConsultation serviceConsultation;
     private Utilisateur currentUser;
     private int currentPage = 1;
@@ -67,9 +67,9 @@ public class DoctorConsultationController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         try {
             ServiceUtilisateur su = new ServiceUtilisateur();
-            this.currentUser = su.getById(1);
+            this.currentUser = su.getById(2);
             serviceConsultation = new ServiceConsultation();
-            loadConsultations();
+
             // Configure table columns
             colId.setCellValueFactory(new PropertyValueFactory<>("id"));
             colType.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getType().getDisplayName()));
@@ -85,35 +85,51 @@ public class DoctorConsultationController implements Initializable {
                 }
                 return new SimpleStringProperty("");
             });
-            
-            // Initialize filter ComboBoxes
+
+
+            TableColumn<Consultation, String> colDoctor = new TableColumn<>("Médecin");
+            colDoctor.setPrefWidth(150);
+            colDoctor.setCellValueFactory(data -> {
+                Utilisateur medecin = data.getValue().getMedecin();
+                if (medecin != null) {
+                    return new SimpleStringProperty(medecin.getNom() + " " + medecin.getPrenom());
+                }
+                return new SimpleStringProperty("Non assigné");
+            });
+            tableConsultations.getColumns().add(colDoctor);
+
+            // Initialize filters
             initializeFilters();
-            
+
             // Apply filters when values change
             filterStatus.valueProperty().addListener((obs, oldVal, newVal) -> applyFilters());
             filterType.valueProperty().addListener((obs, oldVal, newVal) -> applyFilters());
             filterDate.valueProperty().addListener((obs, oldVal, newVal) -> applyFilters());
             searchField.textProperty().addListener((obs, oldVal, newVal) -> applyFilters());
-            
+
+            // IMPORTANT: Load consultations AFTER initializing everything else
+            loadConsultations();
+            updateDashboardStats();
+
             // Disable buttons initially
             btnAccept.setDisable(true);
             btnReject.setDisable(true);
             btnComplete.setDisable(true);
             btnView.setDisable(true);
             btnOrdonnance.setDisable(true);
-            
+
             // Enable buttons when a row is selected
             tableConsultations.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
                 boolean hasSelection = newSelection != null;
                 btnView.setDisable(!hasSelection);
-                
+
                 if (hasSelection) {
                     String status = newSelection.getStatus();
                     btnAccept.setDisable(!Consultation.STATUS_PENDING.equals(status));
                     btnReject.setDisable(!Consultation.STATUS_PENDING.equals(status));
                     btnComplete.setDisable(!Consultation.STATUS_CONFIRMED.equals(status));
-                    btnOrdonnance.setDisable(!(Consultation.STATUS_CONFIRMED.equals(status) || 
-                                             Consultation.STATUS_COMPLETED.equals(status)));
+                    btnOrdonnance.setDisable(!(Consultation.STATUS_CONFIRMED.equals(status) ||
+                            Consultation.STATUS_COMPLETED.equals(status)));
                 } else {
                     btnAccept.setDisable(true);
                     btnReject.setDisable(true);
@@ -121,7 +137,7 @@ public class DoctorConsultationController implements Initializable {
                     btnOrdonnance.setDisable(true);
                 }
             });
-            
+
         } catch (SQLException e) {
             showAlert(Alert.AlertType.ERROR, "Erreur", "Erreur de connexion à la base de données", e.getMessage());
         }
@@ -132,29 +148,74 @@ public class DoctorConsultationController implements Initializable {
         loadConsultations();
         updateDashboardStats();
     }
-    
+
     private void loadConsultations() {
         try {
             if (currentUser != null) {
+                // CHANGE THIS LINE: Get ALL consultations instead of just for this doctor
+                List<Consultation> allConsultations = serviceConsultation.afficher(); // Use afficher() instead of getByMedecinId()
+
+                // Then apply any filters if necessary
+                List<Consultation> filteredConsultations = allConsultations;
+
                 String status = filterStatus.getValue();
+                if (status != null && !status.isEmpty()) {
+                    filteredConsultations = filteredConsultations.stream()
+                            .filter(c -> status.equals(c.getStatus()))
+                            .collect(Collectors.toList());
+                }
+
                 String type = filterType.getValue();
-                LocalDateTime date = filterDate.getValue() != null ? 
-                    filterDate.getValue().atStartOfDay() : null;
+                if (type != null && !type.isEmpty()) {
+                    filteredConsultations = filteredConsultations.stream()
+                            .filter(c -> type.equalsIgnoreCase(c.getType().toString()))
+                            .collect(Collectors.toList());
+                }
+
+                LocalDate selectedDate = filterDate.getValue();
+                if (selectedDate != null) {
+                    filteredConsultations = filteredConsultations.stream()
+                            .filter(c -> c.getDateC().toLocalDate().equals(selectedDate))
+                            .collect(Collectors.toList());
+                }
+
                 String search = searchField.getText();
-                
-                // Load consultations for the current doctor with filters
-                List<Consultation> consultations = serviceConsultation.filterConsultations(
-                    status, type, date, search, null, 
-                    currentPage, PAGE_SIZE);
-                
-                // Filter to only show consultations for the current doctor
-                consultations = consultations.stream()
-                    .filter(c -> c.getMedecin().getId() == currentUser.getId())
-                    .collect(Collectors.toList());
-                
-                consultationsList.clear();
-                consultationsList.addAll(consultations);
+                if (search != null && !search.isEmpty()) {
+                    String searchLower = search.toLowerCase();
+                    filteredConsultations = filteredConsultations.stream()
+                            .filter(c ->
+                                    (c.getCommentaire() != null && c.getCommentaire().toLowerCase().contains(searchLower)) ||
+                                            (c.getPatient().getNom() + " " + c.getPatient().getPrenom()).toLowerCase().contains(searchLower) ||
+                                            String.valueOf(c.getId()).contains(searchLower)
+                            )
+                            .collect(Collectors.toList());
+                }
+
+                // Apply pagination
+                int fromIndex = (currentPage - 1) * PAGE_SIZE;
+                int toIndex = Math.min(fromIndex + PAGE_SIZE, filteredConsultations.size());
+
+                if (fromIndex < filteredConsultations.size()) {
+                    List<Consultation> pagedConsultations = filteredConsultations.subList(fromIndex, toIndex);
+                    consultationsList.clear();
+                    consultationsList.addAll(pagedConsultations);
+                } else {
+                    // If current page is now empty (due to filtering), go back to first page
+                    currentPage = 1;
+                    loadConsultations(); // Recursive call with adjusted page
+                    return;
+                }
+
                 tableConsultations.setItems(consultationsList);
+
+                // Update debug output
+                System.out.println("Loaded " + consultationsList.size() + " consultations (all doctors)");
+                for (Consultation c : consultationsList) {
+                    System.out.println("  - Consultation ID: " + c.getId() +
+                            ", Doctor: " + (c.getMedecin() != null ? c.getMedecin().getNom() + " " + c.getMedecin().getPrenom() : "N/A") +
+                            ", Status: " + c.getStatus() +
+                            ", Patient: " + c.getPatient().getNom() + " " + c.getPatient().getPrenom());
+                }
             }
         } catch (SQLException e) {
             showAlert(Alert.AlertType.ERROR, "Erreur", "Erreur lors du chargement des consultations", e.getMessage());
@@ -184,7 +245,7 @@ public class DoctorConsultationController implements Initializable {
         try {
             if (currentUser != null) {
                 // Get all consultations for this doctor
-                List<Consultation> allConsultations = serviceConsultation.getByMedecinId(currentUser.getId());
+                List<Consultation> allConsultations = serviceConsultation.afficher(); // Use afficher() instead of getByMedecinId()
                 
                 // Count by status
                 Map<String, Integer> countByStatus = new HashMap<>();
@@ -382,8 +443,20 @@ public class DoctorConsultationController implements Initializable {
     
     @FXML
     private void handleRefresh() {
+        System.out.println("Refreshing consultations...");
+
+        // Reset page to 1 and clear filters
+        currentPage = 1;
+        filterStatus.setValue("");
+        filterType.setValue("");
+        filterDate.setValue(null);
+        searchField.clear();
+
+        // Reload consultations and stats
         loadConsultations();
         updateDashboardStats();
+
+        System.out.println("Refresh complete");
     }
     
     private void showAlert(Alert.AlertType type, String title, String header, String content) {

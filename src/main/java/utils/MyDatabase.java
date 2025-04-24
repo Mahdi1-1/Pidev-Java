@@ -14,10 +14,16 @@ public class MyDatabase {
 
     private MyDatabase() {
         try {
+            // Forcer le chargement du pilote JDBC
+            Class.forName("com.mysql.cj.jdbc.Driver");
             connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
             System.out.println("Connexion établie à MySQL");
         } catch (SQLException e) {
-            System.out.println("Erreur de connexion : " + e.getMessage());
+            System.err.println("Erreur de connexion à la base de données : " + e.getMessage());
+            throw new RuntimeException("Impossible de se connecter à la base de données. Vérifiez que le serveur MySQL est en cours d'exécution.", e);
+        } catch (ClassNotFoundException e) {
+            System.err.println("Pilote JDBC introuvable : " + e.getMessage());
+            throw new RuntimeException("Pilote JDBC MySQL introuvable. Vérifiez vos dépendances.", e);
         }
     }
 
@@ -29,6 +35,17 @@ public class MyDatabase {
     }
 
     public Connection getConnection() {
+        try {
+            // Vérifier si la connexion est fermée ou invalide
+            if (connection == null || connection.isClosed()) {
+                // Tenter de rétablir la connexion
+                connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+                System.out.println("Reconnexion établie à MySQL");
+            }
+        } catch (SQLException e) {
+            System.err.println("Erreur lors de la vérification/reconnexion à la base de données : " + e.getMessage());
+            throw new RuntimeException("Impossible de se connecter à la base de données. Vérifiez que le serveur MySQL est en cours d'exécution.", e);
+        }
         return connection;
     }
 }

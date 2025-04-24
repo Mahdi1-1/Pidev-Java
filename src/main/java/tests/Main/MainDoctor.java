@@ -11,13 +11,16 @@ import java.net.URL;
 
 public class MainDoctor extends Application {
     // ID utilisateur statique pour le docteur
-    private static final String DOCTOR_ID = "1";
+    private static final String DOCTOR_ID = "2";
     
     @Override
     public void start(Stage primaryStage) throws Exception {
-        URL location = getClass().getResource("/fxml/Doctor/DossierMedicalListDoctor.fxml");
+        //URL location = getClass().getResource("/fxml/Doctor/DossierMedicalListDoctor.fxml");
+        URL location = getClass().getResource("/fxml/Doctor/consultation_list.fxml");
         if (location == null) {
-            throw new RuntimeException("Impossible de trouver /fxml/Doctor/DossierMedicalListDoctor.fxml dans les ressources");
+            //throw new RuntimeException("Impossible de trouver /fxml/Doctor/DossierMedicalListDoctor.fxml dans les ressources");
+            throw new RuntimeException("Impossible de trouver /fxml/Doctor/consultation_list.fxml dans les ressources");
+
         }
         
         // Utiliser FXMLLoader pour pouvoir accéder au contrôleur

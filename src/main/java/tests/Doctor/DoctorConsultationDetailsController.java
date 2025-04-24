@@ -42,6 +42,10 @@ public class DoctorConsultationDetailsController implements Initializable {
     @FXML private Button completeButton;
     @FXML private Button prescriptionButton;
     @FXML private Button closeButton;
+    @FXML
+    private Label lblMeetLink;
+    @FXML
+    private Hyperlink hyperlinkMeet;
 
     private Consultation consultation;
     private ServiceConsultation serviceConsultation;
@@ -66,7 +70,29 @@ public class DoctorConsultationDetailsController implements Initializable {
             AlertUtils.showError("Erreur", "Erreur d'initialisation", e.getMessage());
         }
     }
-    
+    public void setConsultation(Consultation consultation) {
+        this.consultation = consultation;
+
+        // ... existing code to populate fields ...
+
+        // Handle meet link for virtual consultations
+        if (consultation.getType().equals("VIRTUELLE") && consultation.getMeetLink() != null) {
+            lblMeetLink.setVisible(true);
+            hyperlinkMeet.setVisible(true);
+            hyperlinkMeet.setText(consultation.getMeetLink());
+            hyperlinkMeet.setOnAction(e -> {
+                try {
+                    java.awt.Desktop.getDesktop().browse(new java.net.URI(consultation.getMeetLink()));
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                    showAlert(Alert.AlertType.ERROR, "Erreur", "Impossible d'ouvrir le lien", ex.getMessage());
+                }
+            });
+        } else {
+            lblMeetLink.setVisible(false);
+            hyperlinkMeet.setVisible(false);
+        }
+    }
     public void setConsultation(Consultation consultation) {
         try {
             // Get fresh data from database to ensure we have the latest

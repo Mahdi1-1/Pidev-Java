@@ -58,8 +58,14 @@ public class PatientConsultationController implements Initializable {
             serviceConsultation = new ServiceConsultation();
             ServiceUtilisateur su = new ServiceUtilisateur();
             // TODO FIX IN INTEGRATION
-            this.currentUser = su.getById(1);
-            loadConsultations();
+            try {
+                this.currentUser = su.getById(1);
+                loadConsultations();
+            } catch (SQLException e) {
+                showAlert(Alert.AlertType.ERROR, "Erreur", "Impossible de récupérer les informations utilisateur", 
+                    "Vérifiez que le serveur MySQL est en cours d'exécution et que l'utilisateur avec ID=1 existe.");
+                throw e; // Propager l'erreur pour éviter l'initialisation incomplète
+            }
                     // Configure table columns
             colId.setCellValueFactory(new PropertyValueFactory<>("id"));
             colType.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getType().getDisplayName()));
@@ -269,4 +275,4 @@ public class PatientConsultationController implements Initializable {
         alert.setContentText(content);
         alert.showAndWait();
     }
-} 
+}

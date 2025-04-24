@@ -13,13 +13,13 @@ public class ServiceUtilisateur implements IService<Utilisateur> {
     private Connection connection;
 
     public ServiceUtilisateur() throws SQLException {
-        connection = MyDatabase.getInstance().getConnection();
-        System.out.println("ServiceUtilisateur instancié");
-
-        System.out.println("test");
-        System.out.println(this.afficher());
-
-
+        try {
+            connection = MyDatabase.getInstance().getConnection();
+            System.out.println("ServiceUtilisateur instancié");
+        } catch (RuntimeException e) {
+            System.err.println("Erreur lors de l'initialisation de ServiceUtilisateur: " + e.getMessage());
+            throw new SQLException("Erreur de connexion à la base de données", e);
+        }
     }
 
     @Override

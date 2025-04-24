@@ -6,6 +6,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
+import utils.MyDatabase;
+import services.ServiceUtilisateur;
 
 import java.net.URL;
 
@@ -14,23 +16,37 @@ public class MainPatient extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        //URL location = getClass().getResource("/fxml/Patient/consultation_list.fxml");
-        URL location = getClass().getResource("/fxml/Doctor/consultation_list.fxml");
+        try {
+            // Vérifier la connexion à la base de données avant de charger l'interface
+            MyDatabase.getInstance().getConnection();
 
-        if (location == null) {
-            throw new RuntimeException("Impossible de trouver /fxml/Admin/DossierMedicalListAdmin.fxml dans les ressources");
+            //URL location = getClass().getResource("/fxml/Patient/consultation_list.fxml");
+            URL location = getClass().getResource("/fxml/Doctor/consultation_list.fxml");
+
+            if (location == null) {
+                throw new RuntimeException("Impossible de trouver /fxml/Patient/consultation_list.fxml dans les ressources");
+            }
+            // Utiliser FXMLLoader pour pouvoir accéder au contrôleur
+            FXMLLoader loader = new FXMLLoader(location);
+            Parent root = loader.load();
+
+            // Accéder au contrôleur et définir l'ID utilisateur
+            tests.Patient.PatientConsultationController controller = loader.getController();
+            controller.setCurrentUser(new ServiceUtilisateur().getById(Integer.parseInt(PATIENT_ID)));
+
+            // Créer une scène avec un fond transparent
+            Scene scene = new Scene(root, 849, 552);
+            scene.setFill(null); // Rendre la scène transparente
+
+            // Configurer la fenêtre
+            primaryStage.setTitle("Gestion Médicale - Patient");
+            primaryStage.setScene(scene);
+            primaryStage.setResizable(true);
+            primaryStage.show();
+        } catch (Exception e) {
+            showAlert("Erreur de démarrage", "Une erreur est survenue lors du démarrage de l'application: " + e.getMessage());
+            throw e;
         }
-        Parent root = FXMLLoader.load(location);
-
-        // Créer une scène avec un fond transparent
-        Scene scene = new Scene(root, 849, 552);
-        scene.setFill(null); // Rendre la scène transparente
-
-        // Configurer la fenêtre
-        primaryStage.setTitle("Gestion Médicale - Admin");
-        primaryStage.setScene(scene);
-        primaryStage.setResizable(true);
-        primaryStage.show();
     }
 
     public static void main(String[] args) {
