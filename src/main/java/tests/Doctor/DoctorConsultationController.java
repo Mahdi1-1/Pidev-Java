@@ -40,29 +40,29 @@ public class DoctorConsultationController implements Initializable {
     @FXML private TableColumn<Consultation, String> colStatus;
     @FXML private TableColumn<Consultation, String> colDate;
     @FXML private TableColumn<Consultation, String> colPatient;
-    
+
     @FXML private ComboBox<String> filterStatus;
     @FXML private ComboBox<String> filterType;
     @FXML private DatePicker filterDate;
     @FXML private TextField searchField;
-    
+
     @FXML private Button btnAccept;
     @FXML private Button btnReject;
     @FXML private Button btnComplete;
     @FXML private Button btnView;
     @FXML private Button btnOrdonnance;
-    
+
     @FXML private PieChart statsPieChart;
     @FXML private Label statsTotalLabel;
     @FXML private Label statsPendingLabel;
     @FXML private Label statsTodayLabel;
-    
+
     private final ObservableList<Consultation> consultationsList = FXCollections.observableArrayList();
     private ServiceConsultation serviceConsultation;
     private Utilisateur currentUser;
     private int currentPage = 1;
     private final int PAGE_SIZE = 10;
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         try {
@@ -142,7 +142,7 @@ public class DoctorConsultationController implements Initializable {
             showAlert(Alert.AlertType.ERROR, "Erreur", "Erreur de connexion à la base de données", e.getMessage());
         }
     }
-    
+
     public void setCurrentUser(Utilisateur user) {
         this.currentUser = user;
         loadConsultations();
@@ -221,49 +221,49 @@ public class DoctorConsultationController implements Initializable {
             showAlert(Alert.AlertType.ERROR, "Erreur", "Erreur lors du chargement des consultations", e.getMessage());
         }
     }
-    
+
     private void initializeFilters() {
         try {
             // Add an empty option
             filterStatus.getItems().add("");
             filterStatus.getItems().addAll(serviceConsultation.getDistinctStatuses());
-            
+
             filterType.getItems().add("");
             filterType.getItems().addAll(serviceConsultation.getDistinctTypes());
-            
+
         } catch (SQLException e) {
             showAlert(Alert.AlertType.ERROR, "Erreur", "Erreur lors de l'initialisation des filtres", e.getMessage());
         }
     }
-    
+
     private void applyFilters() {
         currentPage = 1; // Reset to first page when applying filters
         loadConsultations();
     }
-    
+
     private void updateDashboardStats() {
         try {
             if (currentUser != null) {
                 // Get all consultations for this doctor
                 List<Consultation> allConsultations = serviceConsultation.afficher(); // Use afficher() instead of getByMedecinId()
-                
+
                 // Count by status
                 Map<String, Integer> countByStatus = new HashMap<>();
                 allConsultations.forEach(c -> {
                     countByStatus.put(c.getStatus(), countByStatus.getOrDefault(c.getStatus(), 0) + 1);
                 });
-                
+
                 // Count today's consultations
                 LocalDate today = LocalDate.now();
                 long todayCount = allConsultations.stream()
-                    .filter(c -> c.getDateC().toLocalDate().equals(today))
-                    .count();
-                
+                        .filter(c -> c.getDateC().toLocalDate().equals(today))
+                        .count();
+
                 // Update labels
                 statsTotalLabel.setText("Total: " + allConsultations.size());
                 statsPendingLabel.setText("En attente: " + countByStatus.getOrDefault(Consultation.STATUS_PENDING, 0));
                 statsTodayLabel.setText("Aujourd'hui: " + todayCount);
-                
+
                 // Update chart
                 ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
                 countByStatus.forEach((status, count) -> pieChartData.add(new PieChart.Data(status, count)));
@@ -273,7 +273,7 @@ public class DoctorConsultationController implements Initializable {
             showAlert(Alert.AlertType.ERROR, "Erreur", "Erreur lors de la mise à jour des statistiques", e.getMessage());
         }
     }
-    
+
     @FXML
     private void handleAcceptAction(ActionEvent event) {
         Consultation selectedConsultation = tableConsultations.getSelectionModel().getSelectedItem();
@@ -282,52 +282,52 @@ public class DoctorConsultationController implements Initializable {
                 // Update the status to confirmed
                 selectedConsultation.setStatus(Consultation.STATUS_CONFIRMED);
                 serviceConsultation.modifier(selectedConsultation);
-                
+
                 // Reload consultations and stats
                 loadConsultations();
                 updateDashboardStats();
-                
-                showAlert(Alert.AlertType.INFORMATION, "Succès", 
-                    "Consultation confirmée", "La consultation a été confirmée avec succès.");
-                
+
+                showAlert(Alert.AlertType.INFORMATION, "Succès",
+                        "Consultation confirmée", "La consultation a été confirmée avec succès.");
+
             } catch (SQLException e) {
-                showAlert(Alert.AlertType.ERROR, "Erreur", 
-                    "Erreur lors de la confirmation", e.getMessage());
+                showAlert(Alert.AlertType.ERROR, "Erreur",
+                        "Erreur lors de la confirmation", e.getMessage());
             }
         }
     }
-    
+
     @FXML
     private void handleRejectAction(ActionEvent event) {
         Consultation selectedConsultation = tableConsultations.getSelectionModel().getSelectedItem();
         if (selectedConsultation != null && Consultation.STATUS_PENDING.equals(selectedConsultation.getStatus())) {
             // Ask for confirmation
-            Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION, 
-                "Êtes-vous sûr de vouloir refuser cette consultation ?", 
-                ButtonType.YES, ButtonType.NO);
+            Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION,
+                    "Êtes-vous sûr de vouloir refuser cette consultation ?",
+                    ButtonType.YES, ButtonType.NO);
             confirmation.showAndWait();
-            
+
             if (confirmation.getResult() == ButtonType.YES) {
                 try {
                     // Update the status to cancelled
                     selectedConsultation.setStatus(Consultation.STATUS_CANCELLED);
                     serviceConsultation.modifier(selectedConsultation);
-                    
+
                     // Reload consultations and stats
                     loadConsultations();
                     updateDashboardStats();
-                    
-                    showAlert(Alert.AlertType.INFORMATION, "Succès", 
-                        "Consultation refusée", "La consultation a été refusée avec succès.");
-                    
+
+                    showAlert(Alert.AlertType.INFORMATION, "Succès",
+                            "Consultation refusée", "La consultation a été refusée avec succès.");
+
                 } catch (SQLException e) {
-                    showAlert(Alert.AlertType.ERROR, "Erreur", 
-                        "Erreur lors du refus", e.getMessage());
+                    showAlert(Alert.AlertType.ERROR, "Erreur",
+                            "Erreur lors du refus", e.getMessage());
                 }
             }
         }
     }
-    
+
     @FXML
     private void handleCompleteAction(ActionEvent event) {
         Consultation selectedConsultation = tableConsultations.getSelectionModel().getSelectedItem();
@@ -336,21 +336,21 @@ public class DoctorConsultationController implements Initializable {
                 // Update the status to completed
                 selectedConsultation.setStatus(Consultation.STATUS_COMPLETED);
                 serviceConsultation.modifier(selectedConsultation);
-                
+
                 // Reload consultations and stats
                 loadConsultations();
                 updateDashboardStats();
-                
-                showAlert(Alert.AlertType.INFORMATION, "Succès", 
-                    "Consultation terminée", "La consultation a été marquée comme terminée avec succès.");
-                
+
+                showAlert(Alert.AlertType.INFORMATION, "Succès",
+                        "Consultation terminée", "La consultation a été marquée comme terminée avec succès.");
+
             } catch (SQLException e) {
-                showAlert(Alert.AlertType.ERROR, "Erreur", 
-                    "Erreur lors de la finalisation", e.getMessage());
+                showAlert(Alert.AlertType.ERROR, "Erreur",
+                        "Erreur lors de la finalisation", e.getMessage());
             }
         }
     }
-    
+
     @FXML
     private void handleViewAction(ActionEvent event) {
         Consultation selectedConsultation = tableConsultations.getSelectionModel().getSelectedItem();
@@ -358,72 +358,72 @@ public class DoctorConsultationController implements Initializable {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Doctor/consultation_details.fxml"));
                 Parent root = loader.load();
-                
+
                 DoctorConsultationDetailsController controller = loader.getController();
                 controller.setConsultation(selectedConsultation);
                 controller.setOnUpdateCallback(() -> {
                     loadConsultations();
                     updateDashboardStats();
                 });
-                
+
                 Stage stage = new Stage();
                 stage.initModality(Modality.APPLICATION_MODAL);
                 stage.setTitle("Détails de la Consultation");
                 stage.setScene(new Scene(root));
                 stage.showAndWait();
-                
+
             } catch (IOException e) {
                 showAlert(Alert.AlertType.ERROR, "Erreur", "Erreur lors de l'ouverture des détails", e.getMessage());
                 System.out.println(e.getMessage());
             }
         }
     }
-    
+
     @FXML
     private void handleOrdonnanceAction(ActionEvent event) {
         Consultation selectedConsultation = tableConsultations.getSelectionModel().getSelectedItem();
         if (selectedConsultation != null) {
-            if (Consultation.STATUS_CONFIRMED.equals(selectedConsultation.getStatus()) || 
-                Consultation.STATUS_COMPLETED.equals(selectedConsultation.getStatus())) {
-                
+            if (Consultation.STATUS_CONFIRMED.equals(selectedConsultation.getStatus()) ||
+                    Consultation.STATUS_COMPLETED.equals(selectedConsultation.getStatus())) {
+
                 try {
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Doctor/ordonnance_form.fxml"));
                     Parent root = loader.load();
-                    
+
                     DoctorOrdonnanceFormController controller = loader.getController();
                     controller.setConsultation(selectedConsultation);
                     controller.setOnSaveCallback(() -> {
                         loadConsultations();
                         updateDashboardStats();
                     });
-                    
+
                     Stage stage = new Stage();
                     stage.initModality(Modality.APPLICATION_MODAL);
                     stage.setTitle("Ordonnance");
                     stage.setScene(new Scene(root));
                     stage.showAndWait();
-                    
+
                 } catch (IOException e) {
                     showAlert(Alert.AlertType.ERROR, "Erreur", "Erreur lors de l'ouverture du formulaire d'ordonnance", e.getMessage());
                 }
             }
         }
     }
-    
+
     @FXML
     private void handleNextPage() {
         try {
             String status = filterStatus.getValue();
             String type = filterType.getValue();
-            LocalDateTime date = filterDate.getValue() != null ? 
-                filterDate.getValue().atStartOfDay() : null;
+            LocalDateTime date = filterDate.getValue() != null ?
+                    filterDate.getValue().atStartOfDay() : null;
             String search = searchField.getText();
-            
+
             int totalCount = serviceConsultation.countConsultations(
-                status, type, date, search, null);
-            
+                    status, type, date, search, null);
+
             int maxPage = (int) Math.ceil((double) totalCount / PAGE_SIZE);
-            
+
             if (currentPage < maxPage) {
                 currentPage++;
                 loadConsultations();
@@ -432,7 +432,7 @@ public class DoctorConsultationController implements Initializable {
             showAlert(Alert.AlertType.ERROR, "Erreur", "Erreur de pagination", e.getMessage());
         }
     }
-    
+
     @FXML
     private void handlePreviousPage() {
         if (currentPage > 1) {
@@ -440,7 +440,7 @@ public class DoctorConsultationController implements Initializable {
             loadConsultations();
         }
     }
-    
+
     @FXML
     private void handleRefresh() {
         System.out.println("Refreshing consultations...");
@@ -458,7 +458,7 @@ public class DoctorConsultationController implements Initializable {
 
         System.out.println("Refresh complete");
     }
-    
+
     private void showAlert(Alert.AlertType type, String title, String header, String content) {
         Alert alert = new Alert(type);
         alert.setTitle(title);

@@ -85,7 +85,9 @@ public class DoctorConsultationDetailsController implements Initializable {
                     java.awt.Desktop.getDesktop().browse(new java.net.URI(consultation.getMeetLink()));
                 } catch (Exception ex) {
                     ex.printStackTrace();
-                    showAlert(Alert.AlertType.ERROR, "Erreur", "Impossible d'ouvrir le lien", ex.getMessage());
+                    //showAlert(Alert.AlertType.ERROR, "Erreur", "Impossible d'ouvrir le lien", ex.getMessage());
+                    AlertUtils.showError("Erreur", "Impossible d'ouvrir le lien", ex.getMessage());
+
                 }
             });
         } else {
@@ -93,7 +95,7 @@ public class DoctorConsultationDetailsController implements Initializable {
             hyperlinkMeet.setVisible(false);
         }
     }
-    public void setConsultation(Consultation consultation) {
+    /*public void setConsultation(Consultation consultation) {
         try {
             // Get fresh data from database to ensure we have the latest
             this.consultation = serviceConsultation.getById(consultation.getId());
@@ -106,7 +108,7 @@ public class DoctorConsultationDetailsController implements Initializable {
             AlertUtils.showError("Erreur", "Erreur lors du chargement des détails", e.getMessage());
         }
     }
-    
+    */
     public void setParentController(DoctorConsultationController parentController) {
         this.parentController = parentController;
     }

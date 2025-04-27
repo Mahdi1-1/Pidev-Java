@@ -20,8 +20,8 @@ public class MainPatient extends Application {
             // Vérifier la connexion à la base de données avant de charger l'interface
             MyDatabase.getInstance().getConnection();
 
-            //URL location = getClass().getResource("/fxml/Patient/consultation_list.fxml");
-            URL location = getClass().getResource("/fxml/Doctor/consultation_list.fxml");
+            URL location = getClass().getResource("/fxml/Patient/consultation_list.fxml");
+            //URL location = getClass().getResource("/fxml/Doctor/consultation_list.fxml");
 
             if (location == null) {
                 throw new RuntimeException("Impossible de trouver /fxml/Patient/consultation_list.fxml dans les ressources");

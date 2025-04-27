@@ -37,6 +37,9 @@ import com.google.auth.http.HttpCredentialsAdapter;
 import com.google.auth.oauth2.GoogleCredentials;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.io.IOException;
+import java.util.Properties;
+import java.time.format.DateTimeFormatter;
 
 
 public class PatientConsultationFormController implements Initializable {
@@ -58,9 +61,23 @@ public class PatientConsultationFormController implements Initializable {
     private Runnable onSaveCallback;
     private static HttpTransport HTTP_TRANSPORT = null;
     private static  JsonFactory JSON_FACTORY = GsonFactory.getDefaultInstance();
+    private static final String APPLICATION_NAME;
+    private static final String CREDENTIALS_PATH;
+    private static final List<String> SCOPES;
 
 
     static {
+        // Load Google API configuration
+        Properties props = new Properties();
+        try (InputStream input = PatientConsultationFormController.class.getClassLoader().getResourceAsStream("google_api_config.properties")) {
+            props.load(input);
+            APPLICATION_NAME = props.getProperty("google.application.name");
+            CREDENTIALS_PATH = props.getProperty("google.credentials.path");
+            SCOPES = Arrays.asList(props.getProperty("google.calendar.scopes").split(","));
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to load Google API configuration", e);
+        }
+
         try {
             HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
         } catch (Exception e) {
@@ -69,46 +86,56 @@ public class PatientConsultationFormController implements Initializable {
     }
 
     private GoogleCredentials getCredentials() throws Exception {
-        // Path to your service account key file
-        String credentialsPath = "path/to/your/credentials.json";
-        InputStream credentialsStream = new FileInputStream(credentialsPath);
-
-        return GoogleCredentials.fromStream(credentialsStream)
-                .createScoped(Collections.singletonList("https://www.googleapis.com/auth/calendar"));
+        try (InputStream credentialsStream = new FileInputStream(CREDENTIALS_PATH)) {
+            return GoogleCredentials.fromStream(credentialsStream)
+                    .createScoped(SCOPES);
+        } catch (IOException e) {
+            throw new Exception("Failed to load Google credentials: " + e.getMessage(), e);
+        }
     }
 
-    private String createGoogleMeetLink() {
+    private String createGoogleMeetLink(String title, LocalDateTime startTime, LocalDateTime endTime) {
         try {
-            // This requires Google API credentials and proper OAuth setup
             Calendar service = new Calendar.Builder(HTTP_TRANSPORT, JSON_FACTORY, new HttpCredentialsAdapter(getCredentials()))
-                    .setApplicationName("TBibi Medical App")
+                    .setApplicationName(APPLICATION_NAME)
                     .build();
 
             Event event = new Event()
-                    .setSummary("Consultation Médicale")
-                    .setDescription("Consultation virtuelle");
+                    .setSummary(title)
+                    .setDescription("Consultation virtuelle via Google Meet");
 
+            DateTime startDateTime = new DateTime(java.sql.Timestamp.valueOf(startTime));
             EventDateTime start = new EventDateTime()
-                    .setDateTime(new DateTime(System.currentTimeMillis()))
-                    .setTimeZone("UTC");
-            event.setStart(start);
+                    .setDateTime(startDateTime)
+                    .setTimeZone("Africa/Tunis"); // Set to Tunisia timezone
 
+            DateTime endDateTime = new DateTime(java.sql.Timestamp.valueOf(endTime));
             EventDateTime end = new EventDateTime()
-                    .setDateTime(new DateTime(System.currentTimeMillis() + 3600000)) // 1 hour
-                    .setTimeZone("UTC");
+                    .setDateTime(endDateTime)
+                    .setTimeZone("Africa/Tunis");
+
+            event.setStart(start);
             event.setEnd(end);
 
+            // Add Google Meet conferencing
             ConferenceData conferenceData = new ConferenceData()
-                    .setCreateRequest(new CreateConferenceRequest().setRequestId(UUID.randomUUID().toString()));
+                    .setCreateRequest(new CreateConferenceRequest()
+                            .setRequestId(UUID.randomUUID().toString()));
+
             event.setConferenceData(conferenceData);
 
-            Event createdEvent = service.events().insert("primary", event)
+            // Insert the event with conferencing
+            Event createdEvent = service.events()
+                    .insert("primary", event)
                     .setConferenceDataVersion(1)
                     .execute();
 
+            // Return the Google Meet link
             return createdEvent.getHangoutLink();
         } catch (Exception e) {
             e.printStackTrace();
+            // Log the error for debugging
+            System.err.println("Failed to create Google Meet link: " + e.getMessage());
             // Fallback to a Jitsi link in case of errors
             return "https://meet.jit.si/tbibi-" + UUID.randomUUID().toString().substring(0, 8);
         }
@@ -134,7 +161,7 @@ public class PatientConsultationFormController implements Initializable {
 
                 // Generate Google Meet link
                 String meetLink = GoogleApiUtil.createGoogleMeetLink(
-                        title, patientName, doctorName, startTime, endTime);
+                        title, startTime, endTime);
 
                 consultation.setMeetLink(meetLink);
             }
@@ -298,19 +325,19 @@ public class PatientConsultationFormController implements Initializable {
                 consultation.setCommentaire(textCommentaire.getText());
                 consultation.setDateC(dateTime);
                 consultation.setMedecin(comboMedecin.getValue());
-                // TODO MAKE IT DYNAMIC
-                Utilisateur user = serviceUtilisateur.getById(1);
-                consultation.setPatient(user);
-
                 consultation.setPatient(this.currentUser);
 
-                // Set a meet link for virtual consultations
-               // if (consultation.getType() == TypeConsultation.VIRTUELLE) {
-                    //consultation.setMeetLink("https://meet.tbibi.tn/" + System.currentTimeMillis());
-                   // consultation.setMeetLink("https://meet.google.com/" + generateMeetCode());
-                //}
+                // For virtual consultations, generate a Google Meet link
                 if (consultation.getType() == TypeConsultation.VIRTUELLE) {
-                    consultation.setMeetLink(createGoogleMeetLink());
+                    String title = String.format("Consultation %s - Dr. %s avec %s",
+                        comboType.getValue(),
+                        consultation.getMedecin().getNom(),
+                        consultation.getPatient().getNom()
+                    );
+                    
+                    LocalDateTime endTime = dateTime.plusHours(1); // 1-hour consultation
+                    String meetLink = createGoogleMeetLink(title, dateTime, endTime);
+                    consultation.setMeetLink(meetLink);
                 }
                 
                 // Save to database
@@ -318,7 +345,9 @@ public class PatientConsultationFormController implements Initializable {
                 
                 showAlert(Alert.AlertType.INFORMATION, "Succès", 
                     "Consultation planifiée", 
-                    "Votre demande de consultation a été soumise avec succès. Veuillez attendre la confirmation du médecin.");
+                    "Votre demande de consultation a été soumise avec succès." + 
+                    (consultation.getType() == TypeConsultation.VIRTUELLE ? 
+                    "\nLien de consultation: " + consultation.getMeetLink() : ""));
                 
             } else {
                 // Update existing consultation
@@ -328,14 +357,17 @@ public class PatientConsultationFormController implements Initializable {
                 currentConsultation.setMedecin(comboMedecin.getValue());
                 
                 // Update meet link if type changes to virtual
-               // if (currentConsultation.getType() == TypeConsultation.VIRTUELLE &&
-                 //   (currentConsultation.getMeetLink() == null || currentConsultation.getMeetLink().isEmpty())) {
-                   // currentConsultation.setMeetLink("https://meet.tbibi.tn/" + System.currentTimeMillis());
-                //}
-                // Update meet link if type changes to virtual
                 if (currentConsultation.getType() == TypeConsultation.VIRTUELLE &&
                         (currentConsultation.getMeetLink() == null || currentConsultation.getMeetLink().isEmpty())) {
-                    currentConsultation.setMeetLink(createGoogleMeetLink());
+                    String title = String.format("Consultation %s - Dr. %s avec %s",
+                        comboType.getValue(),
+                        currentConsultation.getMedecin().getNom(),
+                        currentConsultation.getPatient().getNom()
+                    );
+                    
+                    LocalDateTime endTime = dateTime.plusHours(1); // 1-hour consultation
+                    String meetLink = createGoogleMeetLink(title, dateTime, endTime);
+                    currentConsultation.setMeetLink(meetLink);
                 }
                 
                 // Save changes

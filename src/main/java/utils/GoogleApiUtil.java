@@ -1,119 +1,145 @@
 package utils;
 
-import com.google.api.client.auth.oauth2.Credential;
-import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
-import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
-import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
-import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
-import com.google.api.client.http.javanet.NetHttpTransport;
+import com.google.api.client.http.HttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.gson.GsonFactory;
 import com.google.api.client.util.DateTime;
-import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.calendar.Calendar;
 import com.google.api.services.calendar.CalendarScopes;
 import com.google.api.services.calendar.model.ConferenceData;
 import com.google.api.services.calendar.model.CreateConferenceRequest;
 import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.EventDateTime;
+import com.google.auth.http.HttpCredentialsAdapter;
+import com.google.auth.oauth2.GoogleCredentials;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.security.GeneralSecurityException;
+import java.io.InputStream;
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
+import java.util.Properties;
 import java.util.UUID;
 
 public class GoogleApiUtil {
-    private static final String APPLICATION_NAME = "Tbibi Medical Platform";
+    private static final HttpTransport HTTP_TRANSPORT;
     private static final JsonFactory JSON_FACTORY = GsonFactory.getDefaultInstance();
-    private static final String TOKENS_DIRECTORY_PATH = "tokens";
-    private static final String CREDENTIALS_FILE_PATH = "config/google_credentials.json";
-
-    /**
-     * Global instance of the scopes required by this application.
-     * If modifying these scopes, delete your previously saved tokens/ folder.
-     */
+    private static final String APPLICATION_NAME;
+    private static final String CREDENTIALS_PATH;
     private static final List<String> SCOPES = Collections.singletonList(CalendarScopes.CALENDAR);
 
-    /**
-     * Creates an authorized Credential object.
-     *
-     * @param HTTP_TRANSPORT The network HTTP Transport.
-     * @return An authorized Credential object.
-     * @throws IOException If the credentials.json file cannot be found.
-     */
-    private static Credential getCredentials(final NetHttpTransport HTTP_TRANSPORT) throws IOException {
-        // Load client secrets.
-        GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY,
-                new InputStreamReader(new FileInputStream(CREDENTIALS_FILE_PATH)));
+    // Private constructor to prevent instantiation
+    private GoogleApiUtil() {
+        throw new UnsupportedOperationException("This is a utility class and cannot be instantiated");
+    }
 
-        // Build flow and trigger user authorization request.
-        GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
-                HTTP_TRANSPORT, JSON_FACTORY, clientSecrets, SCOPES)
-                .setDataStoreFactory(new FileDataStoreFactory(new java.io.File(TOKENS_DIRECTORY_PATH)))
-                .setAccessType("offline")
-                .build();
-        LocalServerReceiver receiver = new LocalServerReceiver.Builder().setPort(8888).build();
-        return new AuthorizationCodeInstalledApp(flow, receiver).authorize("user");
+    static {
+        try {
+            // Load configuration
+            Properties props = new Properties();
+            try (InputStream input = GoogleApiUtil.class.getClassLoader().getResourceAsStream("google_api_config.properties")) {
+                if (input == null) {
+                    throw new RuntimeException("Could not find google_api_config.properties");
+                }
+                props.load(input);
+                APPLICATION_NAME = props.getProperty("google.application.name");
+                CREDENTIALS_PATH = props.getProperty("google.credentials.path");
+            }
+
+            HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to initialize Google API utilities: " + e.getMessage(), e);
+        }
     }
 
     /**
      * Create a Google Meet link for a consultation
      *
      * @param consultationTitle The title of the consultation
-     * @param patientName The name of the patient
-     * @param doctorName The name of the doctor
      * @param startTime The start time of the consultation
      * @param endTime The end time of the consultation
      * @return The Google Meet link
+     * @throws Exception if creation fails
      */
-    public static String createGoogleMeetLink(String consultationTitle, String patientName, String doctorName,
-                                              java.time.LocalDateTime startTime, java.time.LocalDateTime endTime) {
+    public static String createGoogleMeetLink(String consultationTitle, LocalDateTime startTime, LocalDateTime endTime) throws Exception {
         try {
-            // Build a new authorized API client service.
-            final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
-            Calendar service = new Calendar.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT))
-                    .setApplicationName(APPLICATION_NAME)
-                    .build();
+            System.out.println("Creating Google Meet link for: " + consultationTitle);
+            System.out.println("Start time: " + startTime);
+            System.out.println("End time: " + endTime);
+            
+            // Check if credentials file exists
+            File credFile = new File(CREDENTIALS_PATH);
+            if (!credFile.exists()) {
+                throw new Exception("Credentials file not found at: " + credFile.getAbsolutePath());
+            }
+            System.out.println("Found credentials file at: " + credFile.getAbsolutePath());
+            
+            Calendar service = getCalendarService();
+            System.out.println("Calendar service created successfully");
 
-            // Create event with detailed information
             Event event = new Event()
-                    .setSummary("Consultation: " + consultationTitle)
-                    .setDescription("Consultation virtuelle entre Dr. " + doctorName + " et " + patientName);
+                    .setSummary(consultationTitle)
+                    .setDescription("Consultation virtuelle via Google Meet");
 
-            // Set start time
-            DateTime startDateTime = new DateTime(java.sql.Timestamp.valueOf(startTime).getTime());
+            DateTime startDateTime = new DateTime(java.sql.Timestamp.valueOf(startTime));
             EventDateTime start = new EventDateTime()
                     .setDateTime(startDateTime)
-                    .setTimeZone("UTC");
-            event.setStart(start);
+                    .setTimeZone("Africa/Tunis");
 
-            // Set end time
-            DateTime endDateTime = new DateTime(java.sql.Timestamp.valueOf(endTime).getTime());
+            DateTime endDateTime = new DateTime(java.sql.Timestamp.valueOf(endTime));
             EventDateTime end = new EventDateTime()
                     .setDateTime(endDateTime)
-                    .setTimeZone("UTC");
+                    .setTimeZone("Africa/Tunis");
+
+            event.setStart(start);
             event.setEnd(end);
 
-            // Add conference data request
+            System.out.println("Event configured with times: " + startDateTime + " to " + endDateTime);
+
+            // Add Google Meet conferencing
             ConferenceData conferenceData = new ConferenceData()
-                    .setCreateRequest(new CreateConferenceRequest().setRequestId(UUID.randomUUID().toString()));
+                    .setCreateRequest(new CreateConferenceRequest()
+                            .setRequestId(UUID.randomUUID().toString()));
+
             event.setConferenceData(conferenceData);
 
-            // Insert the event and get the created event with the meet link
-            Event createdEvent = service.events().insert("primary", event)
+            System.out.println("Attempting to create calendar event with Meet...");
+            // Insert the event with conferencing
+            Event createdEvent = service.events()
+                    .insert("primary", event)
                     .setConferenceDataVersion(1)
                     .execute();
 
-            // Return the Google Meet link
-            return createdEvent.getHangoutLink();
+            String meetLink = createdEvent.getHangoutLink();
+            System.out.println("Created event. Meet link: " + meetLink);
+            
+            if (meetLink == null || meetLink.isEmpty()) {
+                throw new Exception("Google Meet link was not generated");
+            }
+            return meetLink;
         } catch (Exception e) {
+            System.err.println("Failed to create Google Meet link: " + e.getMessage());
             e.printStackTrace();
-            // Fallback to a Jitsi link in case of errors
-            return "https://meet.jit.si/tbibi-" + UUID.randomUUID().toString().substring(0, 8);
+            throw new Exception("Failed to create Google Meet link: " + e.getMessage(), e);
+        }
+    }
+
+    private static Calendar getCalendarService() throws Exception {
+        GoogleCredentials credentials = getCredentials();
+        return new Calendar.Builder(HTTP_TRANSPORT, JSON_FACTORY, new HttpCredentialsAdapter(credentials))
+                .setApplicationName(APPLICATION_NAME)
+                .build();
+    }
+
+    private static GoogleCredentials getCredentials() throws Exception {
+        try (InputStream credentialsStream = new FileInputStream(CREDENTIALS_PATH)) {
+            return GoogleCredentials.fromStream(credentialsStream)
+                    .createScoped(SCOPES);
+        } catch (IOException e) {
+            throw new Exception("Failed to load Google credentials: " + e.getMessage(), e);
         }
     }
 
@@ -124,13 +150,8 @@ public class GoogleApiUtil {
      */
     public static boolean testConnection() {
         try {
-            // Build a new authorized API client service.
-            final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
-            Calendar service = new Calendar.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT))
-                    .setApplicationName(APPLICATION_NAME)
-                    .build();
-
-            // List the next 10 events from the primary calendar.
+            Calendar service = getCalendarService();
+            // Try to list one event to test the connection
             service.events().list("primary").setMaxResults(1).execute();
             return true;
         } catch (Exception e) {

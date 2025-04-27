@@ -113,12 +113,39 @@ public class PatientConsultationDetailsController implements Initializable {
     @FXML
     private void handleMeetLinkAction() {
         if (consultation.getMeetLink() != null && !consultation.getMeetLink().isEmpty()) {
-            // Open the URL in the default browser
             try {
-                java.awt.Desktop.getDesktop().browse(new java.net.URI(consultation.getMeetLink()));
+                String meetLink = consultation.getMeetLink();
+                System.out.println("Opening meet link: " + meetLink);
+                
+                // Check if the link is a valid URL
+                java.net.URL url = new java.net.URL(meetLink);
+                
+                // Try to open in default browser
+                if (java.awt.Desktop.isDesktopSupported() && java.awt.Desktop.getDesktop().isSupported(java.awt.Desktop.Action.BROWSE)) {
+                    System.out.println("Opening with Desktop.browse()");
+                    java.awt.Desktop.getDesktop().browse(url.toURI());
+                } else {
+                    // Fallback for systems where Desktop.browse() is not supported
+                    System.out.println("Desktop.browse() not supported, trying Runtime.exec()");
+                    String os = System.getProperty("os.name").toLowerCase();
+                    if (os.contains("win")) {
+                        Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + meetLink);
+                    } else if (os.contains("mac")) {
+                        Runtime.getRuntime().exec("open " + meetLink);
+                    } else if (os.contains("nix") || os.contains("nux")) {
+                        Runtime.getRuntime().exec("xdg-open " + meetLink);
+                    }
+                }
             } catch (Exception e) {
-                showAlert(Alert.AlertType.ERROR, "Erreur", "Impossible d'ouvrir le lien", e.getMessage());
+                e.printStackTrace();
+                showAlert(Alert.AlertType.ERROR, "Erreur", 
+                    "Impossible d'ouvrir le lien", 
+                    "Erreur: " + e.getMessage() + "\nLien: " + consultation.getMeetLink());
             }
+        } else {
+            showAlert(Alert.AlertType.WARNING, "Attention", 
+                "Lien non disponible", 
+                "Aucun lien de réunion n'est disponible pour cette consultation.");
         }
     }
     

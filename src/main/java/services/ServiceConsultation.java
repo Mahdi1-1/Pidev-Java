@@ -32,7 +32,7 @@ public class ServiceConsultation implements IService<Consultation> {
             stmt.setInt(6, consultation.getMedecin().getId());
             stmt.setInt(7, consultation.getPatient().getId());
             stmt.executeUpdate();
-            
+
             try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
                     consultation.setId(generatedKeys.getInt(1));
@@ -66,7 +66,7 @@ public class ServiceConsultation implements IService<Consultation> {
             // Supprimer l'ordonnance associée
             serviceOrdonnance.supprimer(ordonnance.getId());
         }
-        
+
         // Supprimer la consultation
         String query = "DELETE FROM consultation WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
@@ -79,10 +79,10 @@ public class ServiceConsultation implements IService<Consultation> {
     public List<Consultation> afficher() throws SQLException {
         List<Consultation> consultations = new ArrayList<>();
         String query = "SELECT c.*, u1.id as medecin_id, u1.nom as medecin_nom, u1.prenom as medecin_prenom, " +
-                      "u2.id as patient_id, u2.nom as patient_nom, u2.prenom as patient_prenom " +
-                      "FROM consultation c " +
-                      "JOIN utilisateur u1 ON c.medecin_id = u1.id " +
-                      "JOIN utilisateur u2 ON c.patient_id = u2.id";
+                "u2.id as patient_id, u2.nom as patient_nom, u2.prenom as patient_prenom " +
+                "FROM consultation c " +
+                "JOIN utilisateur u1 ON c.medecin_id = u1.id " +
+                "JOIN utilisateur u2 ON c.patient_id = u2.id";
         try (Statement stmt = connection.createStatement();
              ResultSet rs = stmt.executeQuery(query)) {
             while (rs.next()) {
@@ -95,10 +95,10 @@ public class ServiceConsultation implements IService<Consultation> {
     public List<Consultation> afficherConsultation() throws SQLException {
         List<Consultation> consultations = new ArrayList<>();
         String query = "SELECT c.*, u1.id as medecin_id, u1.nom as medecin_nom, u1.prenom as medecin_prenom, " +
-                      "u2.id as patient_id, u2.nom as patient_nom, u2.prenom as patient_prenom " +
-                      "FROM consultation c " +
-                      "JOIN utilisateur u1 ON c.medecin_id = u1.id " +
-                      "JOIN utilisateur u2 ON c.patient_id = u2.id";
+                "u2.id as patient_id, u2.nom as patient_nom, u2.prenom as patient_prenom " +
+                "FROM consultation c " +
+                "JOIN utilisateur u1 ON c.medecin_id = u1.id " +
+                "JOIN utilisateur u2 ON c.patient_id = u2.id";
         try (Statement stmt = connection.createStatement();
              ResultSet rs = stmt.executeQuery(query)) {
             while (rs.next()) {
@@ -110,11 +110,11 @@ public class ServiceConsultation implements IService<Consultation> {
 
     public Consultation getById(int id) throws SQLException {
         String query = "SELECT c.*, u1.id as medecin_id, u1.nom as medecin_nom, u1.prenom as medecin_prenom, " +
-                      "u2.id as patient_id, u2.nom as patient_nom, u2.prenom as patient_prenom " +
-                      "FROM consultation c " +
-                      "JOIN utilisateur u1 ON c.medecin_id = u1.id " +
-                      "JOIN utilisateur u2 ON c.patient_id = u2.id " +
-                      "WHERE c.id = ?";
+                "u2.id as patient_id, u2.nom as patient_nom, u2.prenom as patient_prenom " +
+                "FROM consultation c " +
+                "JOIN utilisateur u1 ON c.medecin_id = u1.id " +
+                "JOIN utilisateur u2 ON c.patient_id = u2.id " +
+                "WHERE c.id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setInt(1, id);
             try (ResultSet rs = stmt.executeQuery()) {
@@ -125,15 +125,15 @@ public class ServiceConsultation implements IService<Consultation> {
         }
         return null;
     }
-    
+
     public List<Consultation> getByPatientId(int patientId) throws SQLException {
         List<Consultation> consultations = new ArrayList<>();
         String query = "SELECT c.*, u1.id as medecin_id, u1.nom as medecin_nom, u1.prenom as medecin_prenom, " +
-                      "u2.id as patient_id, u2.nom as patient_nom, u2.prenom as patient_prenom " +
-                      "FROM consultation c " +
-                      "JOIN utilisateur u1 ON c.medecin_id = u1.id " +
-                      "JOIN utilisateur u2 ON c.patient_id = u2.id " +
-                      "WHERE c.patient_id = ?";
+                "u2.id as patient_id, u2.nom as patient_nom, u2.prenom as patient_prenom " +
+                "FROM consultation c " +
+                "JOIN utilisateur u1 ON c.medecin_id = u1.id " +
+                "JOIN utilisateur u2 ON c.patient_id = u2.id " +
+                "WHERE c.patient_id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setInt(1, patientId);
             try (ResultSet rs = stmt.executeQuery()) {
@@ -144,15 +144,15 @@ public class ServiceConsultation implements IService<Consultation> {
         }
         return consultations;
     }
-    
+
     public List<Consultation> getByMedecinId(int medecinId) throws SQLException {
         List<Consultation> consultations = new ArrayList<>();
         String query = "SELECT c.*, u1.id as medecin_id, u1.nom as medecin_nom, u1.prenom as medecin_prenom, " +
-                      "u2.id as patient_id, u2.nom as patient_nom, u2.prenom as patient_prenom " +
-                      "FROM consultation c " +
-                      "JOIN utilisateur u1 ON c.medecin_id = u1.id " +
-                      "JOIN utilisateur u2 ON c.patient_id = u2.id " +
-                      "WHERE c.medecin_id = ?";
+                "u2.id as patient_id, u2.nom as patient_nom, u2.prenom as patient_prenom " +
+                "FROM consultation c " +
+                "JOIN utilisateur u1 ON c.medecin_id = u1.id " +
+                "JOIN utilisateur u2 ON c.patient_id = u2.id " +
+                "WHERE c.medecin_id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setInt(1, medecinId);
             try (ResultSet rs = stmt.executeQuery()) {
@@ -163,15 +163,15 @@ public class ServiceConsultation implements IService<Consultation> {
         }
         return consultations;
     }
-    
+
     public List<Consultation> getByStatus(String status) throws SQLException {
         List<Consultation> consultations = new ArrayList<>();
         String query = "SELECT c.*, u1.id as medecin_id, u1.nom as medecin_nom, u1.prenom as medecin_prenom, " +
-                      "u2.id as patient_id, u2.nom as patient_nom, u2.prenom as patient_prenom " +
-                      "FROM consultation c " +
-                      "JOIN utilisateur u1 ON c.medecin_id = u1.id " +
-                      "JOIN utilisateur u2 ON c.patient_id = u2.id " +
-                      "WHERE c.status = ?";
+                "u2.id as patient_id, u2.nom as patient_nom, u2.prenom as patient_prenom " +
+                "FROM consultation c " +
+                "JOIN utilisateur u1 ON c.medecin_id = u1.id " +
+                "JOIN utilisateur u2 ON c.patient_id = u2.id " +
+                "WHERE c.status = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setString(1, status);
             try (ResultSet rs = stmt.executeQuery()) {
@@ -182,11 +182,11 @@ public class ServiceConsultation implements IService<Consultation> {
         }
         return consultations;
     }
-    
+
     private Consultation extractConsultationFromResultSet(ResultSet rs) throws SQLException {
         Consultation consultation = new Consultation();
         consultation.setId(rs.getInt("id"));
-        
+
         // Handle legacy type values from database
         String typeStr = rs.getString("type").toUpperCase();
         if (typeStr.equals("EN LIGNE")) {
@@ -194,26 +194,26 @@ public class ServiceConsultation implements IService<Consultation> {
         } else {
             consultation.setType(TypeConsultation.fromString(typeStr));
         }
-        
+
         consultation.setStatus(rs.getString("status"));
         consultation.setCommentaire(rs.getString("commentaire"));
         consultation.setDateC(rs.getTimestamp("date_c").toLocalDateTime());
         consultation.setMeetLink(rs.getString("meet_link"));
-        
+
         // Create and set the doctor user
         Utilisateur medecin = new Utilisateur();
         medecin.setId(rs.getInt("medecin_id"));
         medecin.setNom(rs.getString("medecin_nom"));
         medecin.setPrenom(rs.getString("medecin_prenom"));
         consultation.setMedecin(medecin);
-        
+
         // Create and set the patient user
         Utilisateur patient = new Utilisateur();
         patient.setId(rs.getInt("patient_id"));
         patient.setNom(rs.getString("patient_nom"));
         patient.setPrenom(rs.getString("patient_prenom"));
         consultation.setPatient(patient);
-        
+
         // Check if an ordonnance is associated
         try {
             ServiceOrdonnance serviceOrdonnance = new ServiceOrdonnance();
@@ -224,22 +224,23 @@ public class ServiceConsultation implements IService<Consultation> {
         } catch (SQLException e) {
             System.out.println("Erreur lors de la récupération de l'ordonnance : " + e.getMessage());
         }
-        
+
         return consultation;
     }
-    
+
+    // Méthode pour filtrer et paginer les consultations
     // Méthode pour filtrer et paginer les consultations
     public List<Consultation> filterConsultations(String status, String type, LocalDateTime date, String searchText, String patientId, int page, int pageSize) throws SQLException {
         List<Consultation> consultations = new ArrayList<>();
         StringBuilder query = new StringBuilder("SELECT c.*, u1.id as medecin_id, u1.nom as medecin_nom, u1.prenom as medecin_prenom, " +
-                                              "u2.id as patient_id, u2.nom as patient_nom, u2.prenom as patient_prenom " +
-                                              "FROM consultation c " +
-                                              "JOIN utilisateur u1 ON c.medecin_id = u1.id " +
-                                              "JOIN utilisateur u2 ON c.patient_id = u2.id " +
-                                              "WHERE 1=1");
+                "u2.id as patient_id, u2.nom as patient_nom, u2.prenom as patient_prenom " +
+                "FROM consultation c " +
+                "JOIN utilisateur u1 ON c.medecin_id = u1.id " +
+                "JOIN utilisateur u2 ON c.patient_id = u2.id " +
+                "WHERE 1=1");
 
         List<Object> params = new ArrayList<>();
-        
+
         // Add patient ID filter
         if (patientId != null && !patientId.isEmpty()) {
             query.append(" AND c.patient_id = ?");
@@ -250,10 +251,20 @@ public class ServiceConsultation implements IService<Consultation> {
             query.append(" AND c.status = ?");
             params.add(status);
         }
+
+        // Fix for type filter - same as in countConsultations
         if (type != null && !type.isEmpty()) {
-            query.append(" AND UPPER(c.type) = UPPER(?)");
-            params.add(type);
+            // Handle the special case for VIRTUELLE/EN LIGNE
+            if (type.equalsIgnoreCase("VIRTUELLE")) {
+                query.append(" AND (UPPER(c.type) = ? OR UPPER(c.type) = ?)");
+                params.add("VIRTUELLE");
+                params.add("EN LIGNE");
+            } else {
+                query.append(" AND UPPER(c.type) = UPPER(?)");
+                params.add(type);
+            }
         }
+
         if (date != null) {
             query.append(" AND DATE(c.date_c) = ?");
             params.add(Date.valueOf(date.toLocalDate()));
@@ -287,12 +298,12 @@ public class ServiceConsultation implements IService<Consultation> {
         return consultations;
     }
 
-    // Méthode pour compter le nombre total de consultations (pour la pagination)
+    // Also update the count method to match the same filtering logic
     public int countConsultations(String status, String type, LocalDateTime date, String searchText, String patientId) throws SQLException {
         StringBuilder query = new StringBuilder("SELECT COUNT(*) FROM consultation c " +
-                                              "JOIN utilisateur u1 ON c.medecin_id = u1.id " +
-                                              "JOIN utilisateur u2 ON c.patient_id = u2.id " +
-                                              "WHERE 1=1");
+                "JOIN utilisateur u1 ON c.medecin_id = u1.id " +
+                "JOIN utilisateur u2 ON c.patient_id = u2.id " +
+                "WHERE 1=1");
         List<Object> params = new ArrayList<>();
 
         // Add patient ID filter
@@ -305,10 +316,20 @@ public class ServiceConsultation implements IService<Consultation> {
             query.append(" AND c.status = ?");
             params.add(status);
         }
+
+        // Fix for type filter - same as in filterConsultations
         if (type != null && !type.isEmpty()) {
-            query.append(" AND UPPER(c.type) = UPPER(?)");
-            params.add(type);
+            // Handle the special case for VIRTUELLE/EN LIGNE
+            if (type.equalsIgnoreCase("VIRTUELLE")) {
+                query.append(" AND (UPPER(c.type) = ? OR UPPER(c.type) = ?)");
+                params.add("VIRTUELLE");
+                params.add("EN LIGNE");
+            } else {
+                query.append(" AND UPPER(c.type) = UPPER(?)");
+                params.add(type);
+            }
         }
+
         if (date != null) {
             query.append(" AND DATE(c.date_c) = ?");
             params.add(Date.valueOf(date.toLocalDate()));
@@ -336,7 +357,7 @@ public class ServiceConsultation implements IService<Consultation> {
         }
         return 0;
     }
-    
+
     // Méthode pour récupérer les statuts distincts (pour remplir le ChoiceBox)
     public List<String> getDistinctStatuses() throws SQLException {
         List<String> statuses = new ArrayList<>();
@@ -349,7 +370,7 @@ public class ServiceConsultation implements IService<Consultation> {
         }
         return statuses;
     }
-    
+
     // Méthode pour récupérer les types distincts (pour remplir le ChoiceBox)
     public List<String> getDistinctTypes() throws SQLException {
         List<String> types = new ArrayList<>();
@@ -361,5 +382,9 @@ public class ServiceConsultation implements IService<Consultation> {
             }
         }
         return types;
+    }
+
+    public List<Consultation> getByPatient(int patientId) throws SQLException {
+        return getByPatientId(patientId);
     }
 }
