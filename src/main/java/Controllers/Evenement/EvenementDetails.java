@@ -2,21 +2,19 @@ package Controllers.Evenement;
 
 import entities.Evenement;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 import service.CategorieEvService;
 import service.EvenementService;
+import utils.SceneSwitch;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
@@ -81,11 +79,6 @@ public class EvenementDetails implements javafx.fxml.Initializable {
         String imagePath = evenement.getImage();
         if (imagePath != null && !imagePath.isEmpty()) {
             try {
-                // Nettoyer le chemin de l'image pour enlever le préfixe "file:" s'il existe
-                if (imagePath.startsWith("file:")) {
-                    imagePath = imagePath.replace("file:", "");
-                }
-
                 Image image;
                 if (imagePath.startsWith("http")) {
                     // Gestion des images basées sur une URL
@@ -124,27 +117,12 @@ public class EvenementDetails implements javafx.fxml.Initializable {
 
     @FXML
     private void onBackClick() {
-        try {
-            // Charger la vue CalendarView.fxml (ou AfficherEvent.fxml selon ton besoin)
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/CalendarView.fxml"));
-            Parent calendarView = loader.load();
-
-            // Obtenir la scène actuelle et passer à la vue précédente
-            Stage stage = (Stage) backButton.getScene().getWindow();
-            Scene scene = new Scene(calendarView);
-            stage.setScene(scene);
-            stage.setTitle("Calendrier des événements");
-            stage.show();
-
-            // Réinitialiser la liste des événements dans CalendarViewController
-            CalendarViewController controller = loader.getController();
-            controller.setEventList(evenementService.recuperer());
-        } catch (IOException e) {
-            e.printStackTrace();
-            showErrorAlert("Erreur", "Impossible de charger la vue précédente.");
-        } catch (SQLException e) {
-            e.printStackTrace();
-            showErrorAlert("Erreur", "Impossible de récupérer les événements.");
+        Node node = backButton.getScene().getRoot().lookup("#mainRouter");
+        if (node instanceof Pane) {
+            SceneSwitch.switchScene((Pane) node, "/AfficherEvent.fxml");
+            System.out.println("Retour à la vue des événements réussi");
+        } else {
+            System.out.println("Impossible de trouver mainRouter pour la navigation");
         }
     }
 

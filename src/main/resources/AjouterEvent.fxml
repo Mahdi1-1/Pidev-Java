@@ -2,7 +2,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.web.WebView?>
 
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
@@ -17,7 +17,7 @@
     <Label text="Ajouter un Événement"
            style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
 
-    <GridPane vgap="15" hgap="15" style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 10;">
+    <GridPane fx:id="formGridPane" vgap="15" hgap="15" style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 10;">
 
         <!-- Titre -->
         <Label text="Titre de l'événement :" GridPane.rowIndex="0" GridPane.columnIndex="0"
@@ -50,53 +50,59 @@
         <!-- Lieu -->
         <Label text="Lieu :" GridPane.rowIndex="4" GridPane.columnIndex="0"
                style="-fx-font-size: 14px; -fx-text-fill: #2c3e50; -fx-font-weight: bold;"/>
-        <TextField fx:id="lieuField" promptText="Entrez le lieu"
+        <TextField fx:id="lieuField" promptText="Sélectionnez sur la carte"
                    style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #bdc3c7;"
                    GridPane.rowIndex="4" GridPane.columnIndex="1"/>
 
-        <!-- Latitude -->
-        <Label text="Latitude :" GridPane.rowIndex="5" GridPane.columnIndex="0"
+        <!-- Map -->
+        <Label text="Carte :" GridPane.rowIndex="5" GridPane.columnIndex="0"
                style="-fx-font-size: 14px; -fx-text-fill: #2c3e50; -fx-font-weight: bold;"/>
-        <TextField fx:id="latitudeField" promptText="Ex: 36.8065"
-                   style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #bdc3c7;"
-                   GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+        <WebView fx:id="mapView" prefHeight="400" prefWidth="600" minHeight="400" minWidth="600"
+                 GridPane.rowIndex="5" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS"/>
 
-        <!-- Longitude -->
-        <Label text="Longitude :" GridPane.rowIndex="6" GridPane.columnIndex="0"
+        <!-- Latitude -->
+        <Label text="Latitude :" GridPane.rowIndex="6" GridPane.columnIndex="0"
                style="-fx-font-size: 14px; -fx-text-fill: #2c3e50; -fx-font-weight: bold;"/>
-        <TextField fx:id="longitudeField" promptText="Ex: 10.1815"
+        <TextField fx:id="latitudeField" promptText="Sélectionnez sur la carte" editable="false"
                    style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #bdc3c7;"
                    GridPane.rowIndex="6" GridPane.columnIndex="1"/>
 
+        <!-- Longitude -->
+        <Label text="Longitude :" GridPane.rowIndex="7" GridPane.columnIndex="0"
+               style="-fx-font-size: 14px; -fx-text-fill: #2c3e50; -fx-font-weight: bold;"/>
+        <TextField fx:id="longitudeField" promptText="Sélectionnez sur la carte" editable="false"
+                   style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #bdc3c7;"
+                   GridPane.rowIndex="7" GridPane.columnIndex="1"/>
+
         <!-- Statut -->
-        <Label text="Statut :" GridPane.rowIndex="7" GridPane.columnIndex="0"
+        <Label text="Statut :" GridPane.rowIndex="8" GridPane.columnIndex="0"
                style="-fx-font-size: 14px; -fx-text-fill: #2c3e50; -fx-font-weight: bold;"/>
         <ComboBox fx:id="statutComboBox" promptText="Sélectionnez le statut"
                   style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #bdc3c7;"
-                  GridPane.rowIndex="7" GridPane.columnIndex="1"/>
+                  GridPane.rowIndex="8" GridPane.columnIndex="1"/>
 
         <!-- Image -->
-        <Label text="Image :" GridPane.rowIndex="8" GridPane.columnIndex="0"
+        <Label text="Image :" GridPane.rowIndex="9" GridPane.columnIndex="0"
                style="-fx-font-size: 14px; -fx-text-fill: #2c3e50; -fx-font-weight: bold;"/>
         <Label fx:id="imagePathLabel" text="Aucune image choisie"
                style="-fx-text-fill: #7f8c8d;"
-               GridPane.rowIndex="8" GridPane.columnIndex="1"/>
-        <Button text="Choisir une image" onAction="#chooseImage"
+               GridPane.rowIndex="9" GridPane.columnIndex="1"/>
+        <Button fx:id="chooseImageButton" text="Choisir une image" onAction="#chooseImage"
                 style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-background-radius: 5;"
-                GridPane.rowIndex="8" GridPane.columnIndex="2"/>
+                GridPane.rowIndex="9" GridPane.columnIndex="2"/>
 
         <!-- Catégorie -->
-        <Label text="Catégorie :" GridPane.rowIndex="9" GridPane.columnIndex="0"
+        <Label text="Catégorie :" GridPane.rowIndex="10" GridPane.columnIndex="0"
                style="-fx-font-size: 14px; -fx-text-fill: #2c3e50; -fx-font-weight: bold;"/>
         <ComboBox fx:id="categorieComboBox" promptText="Sélectionnez la catégorie"
                   style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #bdc3c7;"
-                  GridPane.rowIndex="9" GridPane.columnIndex="1"/>
+                  GridPane.rowIndex="10" GridPane.columnIndex="1"/>
     </GridPane>
 
     <HBox spacing="15" alignment="CENTER_RIGHT">
         <Button text="Annuler" onAction="#annuler"
                 style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-background-radius: 5; -fx-padding: 10 20;"/>
-        <Button text="Ajouter" onAction="#ajouterEvenement"
+        <Button text="Ajouter" onAction="#ajouter"
                 style="-fx-background-color: #2ecc71; -fx-text-fill: white; -fx-background-radius: 5; -fx-padding: 10 20;"/>
     </HBox>
 

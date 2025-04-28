@@ -2,6 +2,9 @@ package entities;
 
 import java.time.LocalDate;
 
+/**
+ * Represents an event with details such as title, description, dates, location, and coordinates.
+ */
 public class Evenement {
     private Integer id;
     private String titre;
@@ -12,6 +15,8 @@ public class Evenement {
     private String statut;
     private String image;
     private int categorieId;
+    private double latitude;  // Stored in DB
+    private double longitude; // Stored in DB
 
     public Evenement() {
     }
@@ -26,6 +31,8 @@ public class Evenement {
         this.statut = e.statut;
         this.image = e.image;
         this.categorieId = e.categorieId;
+        this.latitude = e.latitude;
+        this.longitude = e.longitude;
     }
 
     public Evenement(String titre, String description, LocalDate dateDebut, LocalDate dateFin, String lieu, String statut, String image) {
@@ -122,39 +129,6 @@ public class Evenement {
         this.categorieId = categorieId;
     }
 
-    @Override
-    public String toString() {
-        return "Evenement{" +
-                "id=" + id +
-                ", titre='" + titre + '\'' +
-                ", description='" + description + '\'' +
-                ", dateDebut=" + dateDebut +
-                ", dateFin=" + dateFin +
-                ", lieu='" + lieu + '\'' +
-                ", statut='" + statut + '\'' +
-                ", image='" + image + '\'' +
-                ", categorieId=" + categorieId +
-                '}';
-    }
-
-    public String getTitle() {
-        return titre;
-    }
-    public void setTitle(String titre) {
-        this.titre = titre;
-    }
-
-    public String getLocation() {
-        return description;
-    }
-    public void setLocation(String lieu) {
-        this.lieu = lieu;
-    }
-    private double latitude;
-    private double longitude;
-
-    // Constructeurs, getters et setters
-
     public double getLatitude() {
         return latitude;
     }
@@ -171,4 +145,36 @@ public class Evenement {
         this.longitude = longitude;
     }
 
+    @Override
+    public String toString() {
+        return "Evenement{" +
+                "id=" + id +
+                ", titre='" + titre + '\'' +
+                ", description='" + description + '\'' +
+                ", dateDebut=" + dateDebut +
+                ", dateFin=" + dateFin +
+                ", lieu='" + lieu + '\'' +
+                ", statut='" + statut + '\'' +
+                ", image='" + image + '\'' +
+                ", categorieId=" + categorieId +
+                ", latitude=" + latitude +
+                ", longitude=" + longitude +
+                '}';
+    }
+
+    public String getTitle() {
+        return titre;
+    }
+
+    public void setTitle(String titre) {
+        this.titre = titre;
+    }
+
+    public String getLocation() {
+        return lieu;
+    }
+
+    public void setLocation(String lieu) {
+        this.lieu = lieu;
+    }
 }
